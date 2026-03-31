@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fahrenheit 451"
+  short_description: "Ruthless docs purge and consolidation"
+  default_prompt: "Use $fahrenheit-451 to perform a zero-based documentation purge and consolidation pass over markdown and plaintext notes."
