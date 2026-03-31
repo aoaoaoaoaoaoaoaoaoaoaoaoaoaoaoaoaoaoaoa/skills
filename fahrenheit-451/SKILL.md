@@ -47,7 +47,7 @@ Create a path shaped like:
 /tmp/fahrenheit-451-<repo-or-dir>-<subtree-slug>.md
 ```
 
-Use [references/tmp-worklog-template.md](references/tmp-worklog-template.md).
+Seed it with the embedded worklog skeleton from `Embedded Forms`.
 
 The worklog must hold:
 
@@ -70,13 +70,13 @@ Use fast file discovery, for example:
 rg --files <subtree> -g '*.md' -g '*.txt' -g '*.rst' -g '*.adoc' -g '*.org'
 ```
 
-Use [references/file-manifest-template.md](references/file-manifest-template.md).
+Write the manifest in the embedded form from `Embedded Forms`.
 
 ### 2. Plan logical cliques
 
 Group manifest files into small logical cliques before deep reading.
 
-Use [references/read-cluster-template.md](references/read-cluster-template.md).
+Write each clique wave in the embedded form from `Embedded Forms`.
 
 Good clique causes:
 
@@ -111,7 +111,7 @@ Do not read a 9th file until that checkpoint exists.
 
 After every file has been inspected at least once, assign each file a provisional disposition.
 
-Use [references/file-decision-ledger-template.md](references/file-decision-ledger-template.md).
+Record the decisions in the embedded ledger form from `Embedded Forms`.
 
 For every file, record:
 
@@ -138,7 +138,7 @@ Ask:
 - does another doc supersede it?
 - if there is a contradiction, is precedence obvious?
 
-If precedence is not obvious, move the file to `flag_contradiction` and record the issue in [references/contradiction-register-template.md](references/contradiction-register-template.md).
+If precedence is not obvious, move the file to `flag_contradiction` and record the issue in the embedded contradiction register form from `Embedded Forms`.
 
 ### 6. Execute the purge and consolidation
 
@@ -178,6 +178,128 @@ After edits and deletions:
 - confirm every surviving spec-like file was reconciled against code
 - update the contradiction register and residual summary in the worklog
 
+## Embedded Forms
+
+### Worklog Skeleton
+
+```text
+worklog_path:
+scope_root:
+inspection_mode: audit_only | audit_plus_refactor
+wave_size_limit: 8
+
+manifest:
+
+clique_plan:
+
+wave_checkpoints:
+
+file_decision_ledger:
+
+contradiction_register:
+
+residual_summary:
+```
+
+Rules:
+
+- create this file before the first file read
+- update it after every 8-file wave before reading more files
+- treat it as the durable source of truth for the run
+- report the final worklog path in the user-facing response
+
+### File Manifest
+
+```text
+scope_root:
+inspection_mode: audit_only | audit_plus_refactor
+wave_size_limit: 8
+
+files:
+- [ ] docs/file_a.md
+- [ ] docs/file_b.txt
+- [ ] notes/file_c.org
+```
+
+Rules:
+
+- include every plaintext doc-like file in scope
+- mark files as inspected only after reading them
+- allow files to appear in multiple clique waves
+- reuse the same manifest for the final residual sweep
+
+### Clique Wave Checkpoint
+
+```text
+clique_id:
+purpose:
+why_these_files_belong_together:
+wave_size:
+
+files:
+- path/to/file_a.md
+- path/to/file_b.txt
+
+checkpoint:
+- deletion candidates:
+- merger candidates:
+- possible keepers:
+- likely rereads:
+- code surfaces to reconcile:
+```
+
+Rules:
+
+- `wave_size` must never exceed `8`
+- write the checkpoint into the `/tmp` worklog after every wave before reading more files
+- a file may appear in multiple cliques when supersession or duplication reasoning demands it
+- name the clique by the relationship it is testing, not by arbitrary adjacency
+
+### File Decision Ledger
+
+Use one row per file.
+
+```text
+| path | doc_kind | audience | disposition | keep_or_delete_basis | superseded_by_or_merge_target | rewrite_needed | code_reconciliation_target |
+|------|----------|----------|-------------|----------------------|-------------------------------|----------------|----------------------------|
+| docs/protocol.md | formal_spec | developers | keep_as_is | foundational definition already vetted | | no | crates/protocol/src/lib.rs |
+| docs/roadmap.md | roadmap | internal | delete | shipped history plus stale plans | | no | |
+| docs/setup.md | runbook | operators | rewrite_from_scratch | still needed but bloated and partially stale | | yes | scripts/deploy.sh |
+| notes/old-api.md | feature_doc | developers | merge_then_delete | scarce useful material belongs in docs/api.md | docs/api.md | no | crates/api/src/lib.rs |
+```
+
+Allowed `disposition` values:
+
+- `delete`
+- `merge_then_delete`
+- `rewrite_from_scratch`
+- `light_edit`
+- `keep_as_is`
+- `flag_contradiction`
+
+Rules:
+
+- every file must end in exactly one disposition
+- `keep_or_delete_basis` can be short, but it must be concrete
+- `rewrite_needed` should normally be `yes` for any surviving non-foundational doc
+- `code_reconciliation_target` is required for every surviving or contradiction-flagged file
+
+### Contradiction Register
+
+Use this for genuine doc-vs-code contradictions where supersession is unclear.
+
+```text
+| doc_path | code_anchor | contradiction | possible_precedence | why_unclear | action_needed |
+|----------|-------------|---------------|---------------------|-------------|---------------|
+| docs/protocol.md | crates/protocol/src/lib.rs | doc says field is required; code treats it as optional | doc_or_code_unclear | public contract vs implementation drift | human decision |
+```
+
+Rules:
+
+- record only real contradictions, not vague doubts
+- if precedence is obvious, update the loser instead of logging it here
+- unresolved entries must be surfaced in the final response
+
 ## Final Response
 
 Always include:
@@ -207,11 +329,3 @@ If you edited docs, also include:
 - do not preserve stale docs by moving them into archive folders
 - do not keep a spec-like file without reconciling it against code
 - do not resolve genuine code-vs-doc contradictions by guessing at supersession
-
-## Resources
-
-- [references/file-manifest-template.md](references/file-manifest-template.md)
-- [references/read-cluster-template.md](references/read-cluster-template.md)
-- [references/file-decision-ledger-template.md](references/file-decision-ledger-template.md)
-- [references/contradiction-register-template.md](references/contradiction-register-template.md)
-- [references/tmp-worklog-template.md](references/tmp-worklog-template.md)
