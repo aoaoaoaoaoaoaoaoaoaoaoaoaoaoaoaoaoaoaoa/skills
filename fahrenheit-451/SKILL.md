@@ -47,7 +47,7 @@ Create a path shaped like:
 /tmp/fahrenheit-451-<repo-or-dir>-<subtree-slug>.md
 ```
 
-Use [references/tmp-worklog-template.md](/home/main/projects/skills/fahrenheit-451/references/tmp-worklog-template.md).
+Use [references/tmp-worklog-template.md](references/tmp-worklog-template.md).
 
 The worklog must hold:
 
@@ -70,13 +70,13 @@ Use fast file discovery, for example:
 rg --files <subtree> -g '*.md' -g '*.txt' -g '*.rst' -g '*.adoc' -g '*.org'
 ```
 
-Use [references/file-manifest-template.md](/home/main/projects/skills/fahrenheit-451/references/file-manifest-template.md).
+Use [references/file-manifest-template.md](references/file-manifest-template.md).
 
 ### 2. Plan logical cliques
 
 Group manifest files into small logical cliques before deep reading.
 
-Use [references/read-cluster-template.md](/home/main/projects/skills/fahrenheit-451/references/read-cluster-template.md).
+Use [references/read-cluster-template.md](references/read-cluster-template.md).
 
 Good clique causes:
 
@@ -111,7 +111,7 @@ Do not read a 9th file until that checkpoint exists.
 
 After every file has been inspected at least once, assign each file a provisional disposition.
 
-Use [references/file-decision-ledger-template.md](/home/main/projects/skills/fahrenheit-451/references/file-decision-ledger-template.md).
+Use [references/file-decision-ledger-template.md](references/file-decision-ledger-template.md).
 
 For every file, record:
 
@@ -138,7 +138,7 @@ Ask:
 - does another doc supersede it?
 - if there is a contradiction, is precedence obvious?
 
-If precedence is not obvious, move the file to `flag_contradiction` and record the issue in [references/contradiction-register-template.md](/home/main/projects/skills/fahrenheit-451/references/contradiction-register-template.md).
+If precedence is not obvious, move the file to `flag_contradiction` and record the issue in [references/contradiction-register-template.md](references/contradiction-register-template.md).
 
 ### 6. Execute the purge and consolidation
 
@@ -210,8 +210,8 @@ If you edited docs, also include:
 
 ## Resources
 
-- [references/file-manifest-template.md](/home/main/projects/skills/fahrenheit-451/references/file-manifest-template.md)
-- [references/read-cluster-template.md](/home/main/projects/skills/fahrenheit-451/references/read-cluster-template.md)
-- [references/file-decision-ledger-template.md](/home/main/projects/skills/fahrenheit-451/references/file-decision-ledger-template.md)
-- [references/contradiction-register-template.md](/home/main/projects/skills/fahrenheit-451/references/contradiction-register-template.md)
-- [references/tmp-worklog-template.md](/home/main/projects/skills/fahrenheit-451/references/tmp-worklog-template.md)
+- [references/file-manifest-template.md](references/file-manifest-template.md)
+- [references/read-cluster-template.md](references/read-cluster-template.md)
+- [references/file-decision-ledger-template.md](references/file-decision-ledger-template.md)
+- [references/contradiction-register-template.md](references/contradiction-register-template.md)
+- [references/tmp-worklog-template.md](references/tmp-worklog-template.md)
