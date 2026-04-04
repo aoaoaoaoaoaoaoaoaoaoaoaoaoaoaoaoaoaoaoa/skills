@@ -1,0 +1,4 @@
+interface:
+  display_name: "Redline"
+  short_description: "Ruthless wallclock optimization"
+  default_prompt: "Use $redline to run a logic-preserving wallclock optimization loop for a named basket of invocations."

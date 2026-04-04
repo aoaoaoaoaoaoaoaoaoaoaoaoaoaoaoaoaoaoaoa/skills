@@ -6,3 +6,4 @@ Current skills:
 
 - `fahrenheit-451`: zero-based documentation purge and consolidation for markdown and plaintext notes
 - `haussmann`: zero-based Rust source-tree audit and reorganization for layout, module topology, and shared support placement
+- `redline`: logic-preserving wallclock optimization for a locked basket of invocations with measurement-first discipline
