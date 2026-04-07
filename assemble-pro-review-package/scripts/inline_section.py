@@ -48,12 +48,14 @@ LANGUAGE_BY_SUFFIX = {
     ".yml": "yaml",
 }
 
+HARD_MAX_TOKENS = 100_000
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
             "Append a labeled markdown section containing a file or excerpt to a "
-            "target document, while enforcing a hard total token budget."
+            "target document, while enforcing the skill's fixed 100k-token hard budget."
         )
     )
     parser.add_argument("source", type=Path, help="Source file to inline.")
@@ -90,12 +92,6 @@ def parse_args() -> argparse.Namespace:
             "Optional model name for encoding lookup. If unavailable, the script falls "
             "back to --encoding."
         ),
-    )
-    parser.add_argument(
-        "--max-tokens",
-        type=int,
-        default=100_000,
-        help="Hard maximum for the full target document after append. Defaults to 100000.",
     )
     return parser.parse_args()
 
@@ -217,10 +213,10 @@ def main() -> None:
     section_tokens = len(encoding.encode(section))
     existing_tokens = len(encoding.encode(existing))
 
-    if total_tokens > args.max_tokens:
+    if total_tokens > HARD_MAX_TOKENS:
         fail(
             "refusing append because the projected document would exceed the hard budget: "
-            f"{total_tokens} > {args.max_tokens} ({encoding_label}; existing={existing_tokens}; "
+            f"{total_tokens} > {HARD_MAX_TOKENS} ({encoding_label}; existing={existing_tokens}; "
             f"section={section_tokens})"
         )
 
