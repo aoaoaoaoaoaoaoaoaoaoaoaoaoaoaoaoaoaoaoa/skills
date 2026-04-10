@@ -19,7 +19,7 @@ artifacts, or companion files. If a textual artifact cannot be inlined under the
 cut it.
 
 Use `scripts/inline_section.py` to append labeled sections into the document and enforce
-the skill's fixed hard ceiling of 100k tokens, counted with `o200k_base`. It is not an
+the skill's fixed hard ceiling of 75k tokens, counted with `o200k_base`. It is not an
 objective to reduce the token count, and there is no harm in going all the way up to the
 limit if the material being included is genuinely relevant and the problem is complex.
 Spend the ceiling on material that sharpens the review question. Cut material whose

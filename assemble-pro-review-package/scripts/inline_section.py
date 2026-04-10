@@ -7,7 +7,11 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
+import fcntl
 import sys
+import tempfile
+from collections.abc import Iterator
 from pathlib import Path
 
 import tiktoken
@@ -48,14 +52,15 @@ LANGUAGE_BY_SUFFIX = {
     ".yml": "yaml",
 }
 
-HARD_MAX_TOKENS = 100_000
+HARD_MAX_TOKENS = 75_000
+GLOBAL_APPEND_LOCK = Path(tempfile.gettempdir()) / "assemble-pro-review-package-inline-section.lock"
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
             "Append a labeled markdown section containing a file or excerpt to a "
-            "target document, while enforcing the skill's fixed 100k-token hard budget."
+            "target document, while enforcing the skill's fixed 75k-token hard budget."
         )
     )
     parser.add_argument("source", type=Path, help="Source file to inline.")
@@ -104,19 +109,14 @@ def fail(message: str) -> "NoReturn":
 def normalize_span(start: int, end: int | None, total_lines: int) -> tuple[int, int]:
     if start < 1:
         fail("--start must be at least 1")
-    resolved_end = total_lines if end is None else end
-    if resolved_end < start:
-        fail("--end must be greater than or equal to --start")
     if start > total_lines:
         fail(
             f"--start {start} exceeds the source length of {total_lines} line"
             f"{'' if total_lines == 1 else 's'}"
         )
-    if resolved_end > total_lines:
-        fail(
-            f"--end {resolved_end} exceeds the source length of {total_lines} line"
-            f"{'' if total_lines == 1 else 's'}"
-        )
+    resolved_end = total_lines if end is None else min(end, total_lines)
+    if resolved_end < start:
+        fail("--end must be greater than or equal to --start")
     return start, resolved_end
 
 
@@ -144,6 +144,17 @@ def choose_fence(body: str) -> str:
         else:
             current_run = 0
     return "`" * max(3, longest_run + 1)
+
+
+@contextlib.contextmanager
+def hold_global_append_lock() -> Iterator[None]:
+    GLOBAL_APPEND_LOCK.parent.mkdir(parents=True, exist_ok=True)
+    with GLOBAL_APPEND_LOCK.open("a+", encoding="utf-8") as lock_file:
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
 
 
 def render_section(
@@ -199,29 +210,30 @@ def main() -> None:
         heading_level=args.heading_level,
     )
 
-    existing = ""
-    if target.exists():
-        if target.is_dir():
-            fail(f"target is a directory: {target}")
-        existing = target.read_text(encoding="utf-8", errors="replace")
-
-    separator = "\n\n" if existing else ""
-    rendered = f"{existing}{separator}{section}"
-
     encoding, encoding_label = load_encoding(args.model, args.encoding)
-    total_tokens = len(encoding.encode(rendered))
     section_tokens = len(encoding.encode(section))
-    existing_tokens = len(encoding.encode(existing))
 
-    if total_tokens > HARD_MAX_TOKENS:
-        fail(
-            "refusing append because the projected document would exceed the hard budget: "
-            f"{total_tokens} > {HARD_MAX_TOKENS} ({encoding_label}; existing={existing_tokens}; "
-            f"section={section_tokens})"
-        )
+    with hold_global_append_lock():
+        existing = ""
+        if target.exists():
+            if target.is_dir():
+                fail(f"target is a directory: {target}")
+            existing = target.read_text(encoding="utf-8", errors="replace")
 
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(rendered, encoding="utf-8")
+        separator = "\n\n" if existing else ""
+        rendered = f"{existing}{separator}{section}"
+        total_tokens = len(encoding.encode(rendered))
+        existing_tokens = len(encoding.encode(existing))
+
+        if total_tokens > HARD_MAX_TOKENS:
+            fail(
+                "refusing append because the projected document would exceed the hard budget: "
+                f"{total_tokens} > {HARD_MAX_TOKENS} ({encoding_label}; existing={existing_tokens}; "
+                f"section={section_tokens})"
+            )
+
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(rendered, encoding="utf-8")
 
     print(f"appended: {label}")
     print(f"source: {source}")
