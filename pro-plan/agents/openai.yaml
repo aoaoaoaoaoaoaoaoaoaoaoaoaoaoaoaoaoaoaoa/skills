@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pro Plan"
+  short_description: "Assemble Pro implementation plans"
+  default_prompt: "Use $pro-plan to lock this rough implementation ask and assemble a Pro planning prompt."
