@@ -1,4 +1,4 @@
 interface:
   display_name: "Bare Metal ALARA"
-  short_description: "Drive runtime as low as reasonably achievable"
-  default_prompt: "Use $bare-metal-alara to lock the workload, write a .goals/ performance contract, install it as a Codex /goal, and execute the optimization pass."
+  short_description: "Standalone wallclock optimization campaign"
+  default_prompt: "Use $bare-metal-alara to lock the workload, create a /tmp performance ledger, profile, optimize, verify behavior, and drive runtime as low as reasonably achievable."
