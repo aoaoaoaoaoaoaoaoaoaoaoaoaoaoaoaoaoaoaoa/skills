@@ -44,6 +44,7 @@ constraints:
 environment:
 baseline:
 profile_summary:
+memory_sanity:
 
 experiment_ledger:
 
@@ -66,6 +67,14 @@ If the benchmark is unstable, improve the measurement harness before optimizing.
 Use the standard profiler, tracer, benchmark harness, flamegraph, allocation tool, query planner, runtime instrumentation, or language-specific equivalent appropriate to the target. Do not rewrite from vibes when profiling is practical.
 
 The point of profiling is not ritual. The point is to find the current limiting structure: algorithm, representation, allocation, layout, dispatch, I/O, synchronization, cache behavior, parsing, serialization, query shape, or benchmark harness overhead.
+
+## Memory Sanity
+
+Wallclock is the primary score, but memory is often the hidden throttle. During baseline or profiling, ask whether peak RSS, allocation rate, retained heap, cache footprint, page faults, copy volume, or allocator churn could dominate the workload or silently regress during speed work.
+
+Do not run a full memory profiler by rote. If the workload is tiny, bounded, streaming, or obviously not memory-sensitive, record that judgment in one line. If memory could plausibly matter, take the cheapest useful measurement first: peak RSS, allocation counts, heap profile, allocator trace, or language/runtime equivalent. Escalate only when the cheap signal suggests bloat, churn, leaks, pathological retention, or a speedup that buys time by exploding memory.
+
+Treat runaway memory as an ALARA defect even when wallclock improves. A change that is faster only by allocating absurdly more memory does not automatically pay rent; keep it only if the workload and constraints justify the trade.
 
 ## Experiment Loop
 
@@ -112,7 +121,7 @@ Always include:
 - baseline measurement
 - final measurement and speedup
 - benchmark and correctness commands used
-- main profiling evidence
+- main profiling evidence, including memory sanity result when relevant
 - kept optimization batches
 - reverted or rejected experiments, if important
 - residual opportunities judged unreasonable or out of scope
