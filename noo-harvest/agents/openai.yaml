@@ -1,0 +1,4 @@
+interface:
+  display_name: "Noo-Harvest"
+  short_description: "Resolve open scholarly PDFs and source manifests."
+  default_prompt: "Use this skill to resolve a scholarly URL, DOI, or identifier into a validated open-access source set, preferably a direct PDF plus manifest."

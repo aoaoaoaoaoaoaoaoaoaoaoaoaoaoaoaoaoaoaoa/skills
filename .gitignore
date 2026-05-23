@@ -1,5 +1,13 @@
 /.codex
 /meltdown/
-/noo-harvest/
+/noo-harvest/*
+!/noo-harvest/SKILL.md
+!/noo-harvest/agents/
+!/noo-harvest/agents/openai.yaml
+!/noo-harvest/scripts/
+!/noo-harvest/scripts/*.py
+!/noo-harvest/vendor/
+!/noo-harvest/vendor/deepseek_ocr2_nooharvest/
+!/noo-harvest/vendor/deepseek_ocr2_nooharvest/*.py
 __pycache__/
 *.py[cod]

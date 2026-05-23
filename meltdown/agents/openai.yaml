@@ -1,0 +1,4 @@
+interface:
+  display_name: "Meltdown"
+  short_description: "Distill scholarly sources into dense agent-facing nodes."
+  default_prompt: "Use this skill to fetch one or more scholarly sources, crush them into semantic core, and emit meltdown/<slug>/core.md plus appendix.md."
