@@ -52,7 +52,7 @@ LANGUAGE_BY_SUFFIX = {
     ".yml": "yaml",
 }
 
-HARD_MAX_TOKENS = 75_000
+HARD_MAX_TOKENS = 200_000
 GLOBAL_APPEND_LOCK = Path(tempfile.gettempdir()) / "assemble-pro-review-package-inline-section.lock"
 
 
@@ -60,7 +60,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
             "Append a labeled markdown section containing a file or excerpt to a "
-            "target document, while enforcing the skill's fixed 75k-token hard budget."
+            "target document, while enforcing the skill's fixed 200k-token hard budget."
         )
     )
     parser.add_argument("source", type=Path, help="Source file to inline.")
