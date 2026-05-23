@@ -7,6 +7,7 @@ Austere standalone Codex skills. No parent project, no ceremony.
 - `fahrenheit-451` — burn weak documentation down to the surviving truth.
 - `goal-smith` — distill a rough long-running objective into a terse Codex goal contract.
 - `haussmann` — raze and rebuild incoherent Rust source-tree topology.
+- `majestic-magisteria` — reconcile project-wide type silos into a lawful shared algebra.
 - `pro-plan` — lock a rough implementation ask, then summon a high-leverage Pro plan.
 - `redline` — drive a fixed command basket faster with measurement-first discipline.
 - `zero-based-assimilation` — own an upstream repo by keeping the essence and discarding the husk.

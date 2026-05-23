@@ -1,0 +1,4 @@
+interface:
+  display_name: "Majestic Magisteria"
+  short_description: "Reconcile project-wide type silos"
+  default_prompt: "Use $majestic-magisteria to audit a narrow data-model region across the whole project, identify accidental type silos and conversion pinball, and produce a canonicalization report or execute it when requested."
