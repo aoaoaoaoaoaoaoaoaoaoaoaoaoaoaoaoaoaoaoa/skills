@@ -1,0 +1,4 @@
+interface:
+  display_name: "Style Doctrine"
+  short_description: "Load the house coding doctrine"
+  default_prompt: "Use $style-doctrine to load the house coding style doctrine and apply the relevant universal or language-specific guide before writing, reviewing, or refactoring code."

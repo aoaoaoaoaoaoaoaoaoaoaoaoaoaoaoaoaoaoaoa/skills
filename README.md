@@ -11,4 +11,5 @@ Austere standalone Codex skills. No parent project, no ceremony.
 - `pro-plan` — lock a rough implementation ask, then summon a high-leverage Pro plan.
 - `qui-custodit` — watch the watcher; cull duplicate, ghost, and barnacle tests.
 - `redline` — drive a fixed command basket faster with measurement-first discipline.
+- `style-doctrine` — load the house coding doctrine and language guides.
 - `zero-based-assimilation` — own an upstream repo by keeping the essence and discarding the husk.
