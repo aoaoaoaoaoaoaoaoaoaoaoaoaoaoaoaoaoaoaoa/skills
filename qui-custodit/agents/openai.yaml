@@ -1,0 +1,4 @@
+interface:
+  display_name: "Qui Custodit"
+  short_description: "Cull redundant and ghost tests"
+  default_prompt: "Use $qui-custodit to audit and purify a test suite: delete duplicates, consolidate near-duplicates, prune ghost and barnacle tests, and preserve coverage of useful live behavior."
