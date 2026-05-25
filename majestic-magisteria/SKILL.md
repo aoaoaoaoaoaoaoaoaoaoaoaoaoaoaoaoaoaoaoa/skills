@@ -48,12 +48,42 @@ conversion_edges:
 silo_clusters:
 legitimate_boundaries:
 canonical_atoms:
+read_waves:
+report_checkpoints:
 implementation_order:
 verification:
 residual_uncertainty:
 ```
 
 Do not over-ledger. The ledger exists to preserve global orientation across a wide scan.
+
+## Read Budget And Write Barriers
+
+Context is mortal. Do not wait for the perfect whole-project atlas before writing. Create both the ledger and concordance report skeleton before deep reading.
+
+Use broad indexing freely: `rg`, file manifests, symbol lists, type-name searches, conversion-name searches, and LSP reference counts may scan the whole project. Deep semantic reading is gated.
+
+A deep-read wave may inspect at most:
+
+- 8 source files, or
+- 20 anchored symbols/conversion edges, or
+- one coherent type cluster,
+
+whichever comes first.
+
+After each wave, stop reading and write out:
+
+- new atlas entries
+- conversion edges discovered
+- candidate silo clusters
+- boundary/projection judgments
+- canonical atom hypotheses
+- open questions
+- next read wave
+
+Append this to the `/tmp` ledger and update the concordance report draft. The report should grow throughout the audit, not appear at the end.
+
+Do not begin another deep-read wave until the current evidence has been reduced into durable text. If the current state is incomplete, write the incompleteness explicitly under `Residual Questions` and continue.
 
 ## Type Atlas
 
@@ -212,3 +242,4 @@ Include:
 - do not leave conversion pinball intact
 - do not treat aliases as semantic unification
 - do not edit before the concordance report unless the user explicitly requested a narrow hotfix
+- do not perform more than one deep-read wave without updating the ledger and concordance report
