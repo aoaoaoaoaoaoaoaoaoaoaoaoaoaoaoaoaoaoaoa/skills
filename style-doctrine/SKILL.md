@@ -11,6 +11,7 @@ Read [references/universal.md](references/universal.md) first. Then read the lan
 
 - Rust: [references/rust.md](references/rust.md)
 - Python: [references/python.md](references/python.md)
+- Java: [references/java.md](references/java.md)
 
 If no language-specific guide exists, apply the universal guide directly.
 
