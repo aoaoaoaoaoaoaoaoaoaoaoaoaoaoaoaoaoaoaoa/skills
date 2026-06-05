@@ -21,7 +21,7 @@ The objective is a smaller, sharper suite with equal or better protection of use
 
 Require a concrete project root or test subtree. If the user names only a repo, choose the narrowest plausible test surface after a quick manifest scan and state the assumption.
 
-Use the project's test runner, language server, coverage tooling, mutation/fuzz/property tools, and source references where available. For Rust, use `cargo test`, `cargo nextest`, `cargo llvm-cov`, and `rust_analyzer` as appropriate.
+Use the project's test runner, language server, coverage tooling, mutation/fuzz/property tools, and source references where available. For Rust, use `cargo test`, `cargo nextest`, `cargo llvm-cov`, `proptest`, and `rust_analyzer` as appropriate.
 
 ## Ledger
 
@@ -43,6 +43,7 @@ manifest:
 read_waves:
 duplicate_clusters:
 ghost_tests:
+potemkin_tests:
 consolidation_plan:
 deletions:
 verification:
@@ -68,7 +69,7 @@ After each wave, write out:
 
 - duplicate or near-duplicate clusters
 - tests whose protected behavior is unclear
-- suspected ghosts or barnacles
+- suspected ghosts, barnacles, or Potemkin veneers
 - fixture/setup duplication
 - slow or heavyweight tests
 - candidates to consolidate, delete, or keep
@@ -112,10 +113,25 @@ Classify each cluster:
 - `keep_distinct`: similar tests cover different live laws
 - `ghost`: asserts gone, forbidden, deprecated, or impossible functionality
 - `barnacle`: historical regression test whose risk is now erased by types, architecture, or removed code
+- `potemkin`: duplicates defaults, constants, config, schemas, mappings, or other declarations instead of protecting behavior
 - `boundary_sentinel`: expensive or awkward test is justified because it protects a real boundary
 - `needs_user_judgment`: behavior is policy-laden and not inferable from code
 
 The hard question is: what live invariant would become less protected if this test vanished?
+
+## Potemkin Tests
+
+A Potemkin test is a veneer test whose oracle is just a duplicated copy of the thing under test: defaults, constants, config values, enum member lists, schema shapes, route strings, labels, mapping tables, fixture defaults, snapshots, or mock call choreography.
+
+Delete them aggressively. They are not behavioral protection; they are a second source of truth.
+
+A test must not merely prove that a declaration still says what the test says it says. It must protect a live behavior, invariant, boundary, regression risk, or external contract. Configuration is not behavior until something consumes it.
+
+Ask:
+
+> If this fails, did real behavior break, or did a copied literal drift?
+
+If only a copied literal drifted, the test is guilty.
 
 ## Purification Moves
 
@@ -125,11 +141,12 @@ Preferred moves:
 
 - exact duplicate → delete all but the best-named/best-placed case
 - near-duplicate examples → table-driven test
-- many examples of one law → property/fuzz/invariant test when cheap and idiomatic
+- many examples of one law → property/fuzz/invariant test when cheap and idiomatic; in Rust, actively look for good `proptest` replacements for manual unrolls
 - repeated fixtures → one builder/helper, or inline the trivial setup and delete the helper
 - snapshot sprawl → keep only snapshots that expose meaningful external shape
 - compatibility ghost → delete with the compatibility shim
 - removal/absence ghost → delete unless the absence is a live security/safety invariant
+- Potemkin veneer → delete, or replace with a behavioral test if a real invariant exists behind it
 - slow integration clone → keep one boundary sentinel, delete narrower duplicates or replace with unit coverage
 - ignored/flaky test → fix, delete, or quarantine explicitly; do not let it rot silently
 
@@ -151,6 +168,16 @@ Before editing, record baseline runtime when cheap. After editing, run the affec
 
 If coverage tooling is available and cheap, use it to ensure deleted tests did not remove the only coverage for live code. Do not worship line coverage; use it as a smoke alarm, not a moral law.
 
+## Incidental Tier-0 Gap Ledger
+
+Qui Custodit is not a coverage-expansion skill. Do not hunt for missing tests.
+
+While sweeping the suite, keep a separate passive ledger only for gaps so blatant they cannot be unseen:
+
+```text
+/tmp/qui-custodit-gaps-<repo>-<scope>.md
+```
+
 ## Verification
 
 A successful pass should show at least one structural win:
@@ -158,6 +185,7 @@ A successful pass should show at least one structural win:
 - duplicate tests deleted
 - near-duplicates consolidated
 - ghost/barnacle tests removed
+- Potemkin tests removed
 - fixture scaffolding reduced
 - snapshots/goldens reduced
 - suite runtime reduced
@@ -174,6 +202,7 @@ Include:
 - baseline and final runtime when measured
 - duplicate clusters found
 - ghost/barnacle tests removed
+- Potemkin tests removed
 - consolidations performed
 - tests deliberately kept despite similarity
 - verification result
@@ -184,6 +213,7 @@ Include:
 - do not treat tests as sacred
 - do not delete legal/security/wire-compatibility sentinels by mistaking them for ghosts
 - do not preserve duplicates because they are green
+- do not preserve Potemkin tests because they mirror a setting that feels important
 - do not replace many small tests with one opaque mega-test
 - do not keep snapshots that only encode churn
 - do not let ignored/flaky tests survive unclassified
