@@ -4,6 +4,14 @@ Python must be written as if it were statically compiled. The target is not "Pyt
 
 Use strict typing to the hilt. Ban ambient `Any` in core code; quarantine untyped third-party and IO surfaces behind typed façades. Use `Protocol`, `NewType`, `Literal`, `Final`, `TypeAlias`, `Self`, generics, overloads, `Never`/`assert_never`, `TypeGuard`/`TypeIs`, `dataclass(slots=True, frozen=True)`, enums, and ADT-like unions aggressively. If a primitive carries domain semantics, give it static shape. Prefer total constructors and narrow parser boundaries over repeated checks.
 
+## Latest Syntax
+
+Use the latest Python syntax, full stop. Do not preserve syntactic backward compatibility with older Python versions. If dependency constraints do not force an older interpreter, target the latest viable Python and write code in that dialect.
+
+This is not only about types. Use newer syntax wherever it saves tokens, sharpens static structure, or deletes compatibility ceremony: 3.12+ generic syntax (`class Box[T]`, `def f[T](x: T) -> T`, `type Json = ...`) instead of `TypeVar` scaffolding, builtin containers and modern abstract interfaces (`dict`, `list`, `set`, `tuple`, `collections.abc.Mapping`) instead of `typing.Dict`-style fossils, `A | B` instead of `Union`/`Optional`, structural `match`/`case` when it collapses branching, assignment expressions when they eliminate honest duplication, exception groups when the problem is truly aggregate, and any newer spelling that makes the program smaller and more exact.
+
+This list is illustrative, not exhaustive. If newer syntax exists and the project can run it, use it. Ruff's pyupgrade rules (`UP`) are mandatory: enable them, run them, apply them, and finish any remaining modernization by hand.
+
 Defensive programming is a bloating disease. Do not sprinkle `.get` defaults with no honest semantics, `None` guards proven impossible by construction, catch-and-limp wrappers, optional bags, or runtime validation theater. Fail early, loudly, and close to the violated invariant. Inside already-typed code, trust the typed representation.
 
 Prefer algebraic, compositional Python: pure transforms, `match`/`case`, table-driven dispatch, protocols, higher-order functions, compact comprehensions, and small domain modules. Decorators and metaprogramming are legitimate when they reduce call-site noise or enforce uniformity. Operator overloading is encouraged when the operation has the expected algebraic meaning.
