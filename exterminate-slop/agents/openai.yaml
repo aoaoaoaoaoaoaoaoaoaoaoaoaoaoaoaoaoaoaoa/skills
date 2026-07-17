@@ -1,0 +1,4 @@
+interface:
+  display_name: "Exterminate Slop"
+  short_description: "Contract code without rewriting its contract"
+  default_prompt: "Use $exterminate-slop to audit a bounded semantic surface for aggressive behavior-preserving contraction and produce an executable report."
