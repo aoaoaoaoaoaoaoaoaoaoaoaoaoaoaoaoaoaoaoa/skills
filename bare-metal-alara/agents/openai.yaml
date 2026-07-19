@@ -1,4 +1,4 @@
 interface:
   display_name: "Bare Metal ALARA"
-  short_description: "Standalone wallclock optimization campaign"
-  default_prompt: "Use $bare-metal-alara to lock the workload, create a /tmp performance ledger, profile, optimize, verify behavior, and drive runtime as low as reasonably achievable."
+  short_description: "High-leverage wallclock optimization campaign"
+  default_prompt: "Use $bare-metal-alara to lock a performance claim, pursue the steepest causal runtime gains, preserve semantics, and stop at the economic frontier."

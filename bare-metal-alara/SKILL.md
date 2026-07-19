@@ -1,137 +1,141 @@
 ---
 name: bare-metal-alara
-description: "Use when the user wants a standalone Bare Metal ALARA performance pass: lock the workload and correctness oracle, create a /tmp optimization ledger, profile, optimize, verify behavior, and drive wallclock runtime as low as reasonably achievable without semantic drift or gratuitous uglification."
+description: "Use when the user wants a standalone, evidence-driven wallclock optimization campaign: lock a falsifiable performance claim and semantic envelope, keep a session-resumable /tmp ledger, pursue the highest-leverage causal gains, verify behavior, and stop at the economic frontier."
 ---
 
 # Bare Metal ALARA
 
-Bring the specified implementation's wallclock runtime As Low As Reasonably Achievable for the agreed workload while preserving existing business behavior and public contracts. Use measurement and profiling to discover the true limiting structure, then reshape code, data, and algorithms freely when the result is materially faster and not gratuitously contorted.
+Drive authoritative end-to-end wallclock runtime for the agreed workload As Low As Reasonably Achievable.
 
-## Lock The Target
+ALARA is neither local performance cleanup nor maximal optimization at any price. Lock the claim, preserve its semantic envelope, pursue the steepest credible runtime gradients, and stop where the remaining gain no longer pays for the structure required to obtain it.
 
-Before optimizing, identify:
+Treat the whole causal execution path as a reasoning surface. Mutate only the authorized surface. Existing decomposition, implementation details, and compatibility survive only when the locked envelope requires them.
 
-- target implementation surface
-- representative workload
-- benchmark command or measurement method
-- primary performance metric, defaulting to wallclock runtime
-- correctness oracle
-- scope boundary
-- forbidden tradeoffs, if any
+## Lock The Claim
 
-Inspect enough of the repo to find likely commands and surfaces. If any material uncertainty remains about the workload, input distribution, correctness oracle, public contract, benchmark command, or forbidden tradeoff, explicitly ask the user to clarify. Do not optimize a guessed workload.
+Before editing, make precise what execution is being made faster, what observable behavior must survive, what measurement adjudicates changes, and which specialization or resource constraints apply.
 
-## Create The Ledger
+Derive the claim from explicit user intent and repository evidence. Ask only when materially different plausible interpretations would change the campaign. Do not optimize a guessed claim.
 
-Before the first optimization edit, create one persistent ledger:
+The benchmark is an instrument for the claim, not the claim itself. Use the smallest measurement design that can honestly distinguish gains from noise. Add repetition, controls, corroborating workloads, or secondary metrics only when uncertainty requires them.
+
+Never improve the score by silently narrowing the agreed workload, weakening its semantic or generality obligations, or moving work outside the measured boundary.
+
+A correctness oracle is evidence for the semantic envelope, not its definition. If a proposed transformation crosses an oracle blind spot, strengthen the oracle before trusting the result.
+
+## Open The Campaign Ledger
+
+Once the claim is locked, create the ledger before the first campaign measurement or source edit:
 
 ```text
-/tmp/bare-metal-alara-<repo-or-dir>-<target-slug>.md
+/tmp/bare-metal-alara-<repo-or-dir>-<campaign-slug>.md
 ```
+
+Resume an existing ledger only when it represents the same claim and source lineage. Otherwise choose a distinct campaign slug.
 
 Use this shape:
 
 ```text
 ledger_path:
-target:
-scope:
-workload:
-metric:
-correctness_oracle:
-benchmark_command:
-constraints:
 
-environment:
+claim:
+  target:
+  score_workload:
+  metric:
+  semantic_envelope:
+  mutation_authority:
+  specialization_and_resource_constraints:
+  measurement_contract:
+
+source_identity:
 baseline:
-profile_summary:
-memory_sanity:
 
-experiment_ledger:
+incumbent:
+causal_model:
+frontier:
 
-verification:
-final_measurement:
-speedup:
-residual_opportunities:
+experiments:
+
+final_verification:
+closure:
 ```
 
-The ledger is the durable campaign state. Chat is summary only. If interrupted or resumed, reopen the same ledger before continuing.
+The ledger has three layers:
 
-## Baseline
+- **Frozen contract:** `claim`, initial `source_identity`, and `baseline`. Log any authorized revision rather than silently rewriting history.
+- **Mutable campaign head:** `incumbent`, `causal_model`, and `frontier`. Keep these current so another model can resume without reconstructing the campaign from old experiments.
+- **Append-only evidence:** `experiments`. Preserve unfavorable and falsifying results.
 
-Run the correctness oracle first if cheap. Then establish a baseline for the agreed workload. Capture the exact command, inputs, environment facts that matter, and enough repeated measurements to distinguish a real gain from noise.
+`source_identity` anchors the source, binary, toolchain, and measurement context underlying the baseline. `incumbent` records the corresponding identity for the current accepted state. If the environment drifts enough to invalidate direct comparison, open a named measurement epoch or establish a fresh control; do not splice incompatible numbers together.
 
-If the benchmark is unstable, improve the measurement harness before optimizing. Do not launder noise into progress.
+`causal_model` is the current concise account of where runtime goes and why. `frontier` holds the strongest live hypotheses, blockers, and unresolved measurement questions.
 
-## Profile
+The ledger is session-resumable campaign state. Chat is a summary surface.
 
-Use the standard profiler, tracer, benchmark harness, flamegraph, allocation tool, query planner, runtime instrumentation, or language-specific equivalent appropriate to the target. Do not rewrite from vibes when profiling is practical.
+## Establish The Baseline
 
-The point of profiling is not ritual. The point is to find the current limiting structure: algorithm, representation, allocation, layout, dispatch, I/O, synchronization, cache behavior, parsing, serialization, query shape, or benchmark harness overhead.
+Before changing source, establish that the baseline satisfies the strongest practical correctness evidence for the affected behavior and measure it under the locked contract. If a full oracle is prohibitively expensive, run a credible targeted baseline and record the deferred final gate.
 
-## Memory Sanity
+Capture enough source, binary, workload, and environmental identity to make later comparisons honest. If the score is unstable, improve the measurement design or use a contemporaneous control before optimizing. Do not launder drift into progress.
 
-Wallclock is the primary score, but memory is often the hidden throttle. During baseline or profiling, ask whether peak RSS, allocation rate, retained heap, cache footprint, page faults, copy volume, or allocator churn could dominate the workload or silently regress during speed work.
+Use whatever causal evidence best resolves the current uncertainty; no profiler, counter, or experimental form is a mandatory rite. Update the causal model and frontier as evidence changes them.
 
-Do not run a full memory profiler by rote. If the workload is tiny, bounded, streaming, or obviously not memory-sensitive, record that judgment in one line. If memory could plausibly matter, take the cheapest useful measurement first: peak RSS, allocation counts, heap profile, allocator trace, or language/runtime equivalent. Escalate only when the cheap signal suggests bloat, churn, leaks, pathological retention, or a speedup that buys time by exploding memory.
+## Attack The Dominant Cost
 
-Treat runaway memory as an ALARA defect even when wallclock improves. A change that is faster only by allocating absurdly more memory does not automatically pay rent; keep it only if the workload and constraints justify the trade.
+Pursue the largest credible reductions in authoritative end-to-end runtime first. Prefer eliminating work, improving asymptotics, and choosing better representations when they dominate narrower tuning.
 
-## Experiment Loop
+This is an ordering principle, not a tactic hierarchy. Specialized, generated, platform-specific, or unsafe machinery is welcome when its measured payoff justifies its lasting complexity and proof burden. Judge the residue left in the system, not the apparent difficulty or conventionality of the edit.
 
-For each optimization attempt, append a ledger row:
+Any implementation layer is admissible within the semantic envelope and mutation authority. Do not polish a local hotspot merely because it is easy to see when a larger causal lever remains.
+
+Treat memory and other secondary resources according to the locked claim. Measure them when they constrain the workload, explain wallclock, or could invalidate a candidate. Trading memory for time is lawful when the envelope justifies it; memory work is not a ritual side campaign.
+
+## Run Causal Experiments
+
+Record every experiment whose result changes code, the incumbent, the causal model, or the frontier. Routine navigation, compilation, and measurement commands belong in the evidence for their enclosing experiment rather than receiving ceremonial rows.
+
+Use one causal thesis per row. A thesis may require a coherent batch of mechanically inseparable edits.
 
 ```text
 id:
-hypothesis:
+thesis:
 evidence:
-planned_change:
-risk:
-pre_measurement:
-edit_summary:
-correctness_result:
-post_measurement:
-decision: keep | revert | revise | superseded
-next:
+intervention:
+comparison:
+semantic_result:
+resource_effects:
+disposition:
+consequence:
 ```
 
-Prefer one hypothesis per experiment unless several changes are mechanically inseparable. Keep changes that materially improve the agreed metric without semantic drift or disproportionate complexity. Revert or revise changes that do not pay rent.
+`comparison` records the adjudication that was actually valid: before/after, interleaved control, counterfactual binary, mechanical count, or another honest design. Reference named baselines and epochs instead of duplicating them.
 
-Continue while evidence or strong mechanical reasoning suggests meaningful runtime remains available at reasonable complexity and risk. Stop when remaining plausible gains require semantic change, ungrounded workload assumptions, unacceptable fragility, unsafe or unjustified low-level tricks, platform contortions, or noise-scale wins.
+`disposition` states what happened without a closed verdict taxonomy. `consequence` states how the result changes the incumbent, causal model, and frontier. Mark provisional changes explicitly. Never erase a failed experiment.
 
-## Reasonable Means Ruthless, Not Reckless
+Promote a candidate into the incumbent only after appropriate semantic adjudication and credible performance evidence. Recheck the authoritative score and causal model after structural wins; yesterday's hotspot hierarchy is not today's.
 
-Low-level code is allowed. Algorithmic change is allowed. Data representation change is allowed. API reshaping inside the scoped implementation is allowed unless the user froze compatibility.
+## Stop At The Economic Frontier
 
-Gratuitous cleverness is not allowed. Benchmark gaming is not allowed. Semantic drift is not allowed. Hidden global state, precision loss, lossy approximation, concurrency hazards, cache invalidation traps, and platform-specific contortions require explicit justification and usually explicit user permission.
+After each meaningful gain, remeasure and reconsider the remaining causal frontier. Stop when the plausible residual improvement is small relative to the permanent complexity, proof burden, fragility, or expected useful lifetime of the optimized code.
 
-Unsafe code is not forbidden in principle, but it is never a casual move. Exhaust ordinary representation, algorithmic, allocation, traversal, and runtime-configuration wins first unless the project is already an unsafe or low-level domain.
+Continue into the tail when the remaining move is cheap, durable, or operationally valuable. Do not stop merely because the next move is difficult or unconventional.
 
-## Verification
+Code expected to change soon discounts bespoke tail machinery heavily. Conversely, a small gain may remain reasonable when it is nearly free, broadly shared, or multiplied across an important workload.
 
-After each kept batch, run the correctness oracle and remeasure. After the final batch, run the narrowest meaningful full verification for the touched surface, then widen if the optimization crosses module, package, crate, service, or runtime boundaries.
+## Verify And Close
 
-Behavior preservation beats speed. Wallclock performance on the agreed workload is the primary score. Secondary metrics explain the result; they do not replace it.
+Behavior preservation beats speed. Run the relevant oracle whenever a candidate enters the incumbent. At campaign close, run the strongest proportionate verification for the changed causal surface, then re-establish the final score against a still-valid baseline or control.
 
-## Final Response
+Closure must record:
 
-Always include:
+- final incumbent and source identity
+- baseline, final measurement, and speedup
+- authoritative measurement and correctness commands
+- final causal model and kept transformations
+- important falsified or rejected avenues
+- material resource effects
+- residual frontier and the economic reason each live avenue stopped, deferred, or remained blocked
 
-- `/tmp` ledger path
-- target and workload
-- baseline measurement
-- final measurement and speedup
-- benchmark and correctness commands used
-- main profiling evidence, including memory sanity result when relevant
-- kept optimization batches
-- reverted or rejected experiments, if important
-- residual opportunities judged unreasonable or out of scope
+In the final response, report the ledger path and summarize the closure rather than reproducing the ledger.
 
-## Hard Failure Modes
-
-- do not optimize a guessed workload
-- do not skip the `/tmp` ledger
-- do not report speedups without baseline and final measurements
-- do not treat passing tests as proof of performance
-- do not treat faster benchmarks as permission for semantic drift
-- do not hide unfavorable experiments
-- do not preserve compatibility by default when compatibility is the bottleneck
+Campaign integrity is nonnegotiable: log claim changes, never compare incompatible measurement contexts, never win by hiding work or narrowing semantics, never mutate outside the authorized surface, and never discard unfavorable evidence.
