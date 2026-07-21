@@ -1,0 +1,17 @@
+# Universal Product Doctrine
+
+The user's system is sovereign territory. Software enters as a guest with a narrow charter. Every byte written, process spawned, permission claimed, network request made, watt burned, notification raised, and namespace occupied must serve the user's intent, live in its lawful place, and possess an explicit lifecycle.
+
+The user owns the machine, its resources, their attention, and the durable products of their work. The application owns only the machinery needed to discharge its charter. Authority must be no broader or longer-lived than the operation requires; surprising persistence, ambient privilege, involuntary networking, and unbidden background work are defects even when technically convenient.
+
+Classify every artifact by meaning rather than convenience: user data, application data, configuration, durable state, rebuildable cache, or ephemeral runtime material. Give each truth one canonical owner and placement. Never disguise state as configuration, cache as data, or internal debris as a user document. Namespaces are finite: do not colonize the home directory, environment, process table, ports, logs, menus, or notifications.
+
+Side effects must be local, proportional, attributable, and bounded. Idle software should be silent at rest. Work should scale with the value delivered, release resources promptly, and leave neither orphan processes nor abandoned locks, sockets, temporary files, mounts, registrations, or partial transactions. Cleanup is part of the operation, including after cancellation, failure, and crash.
+
+The whole lifecycle is a product surface. First run, ordinary use, upgrade, downgrade where promised, migration, recovery, reset, and removal must preserve their declared invariants. Writes and migrations must fail coherently rather than corrupting the last good state. Removal withdraws application-owned machinery cleanly; deletion of user data or other irreplaceable material requires a separate, explicit purge contract.
+
+Behave as a native citizen of the host. Honor platform conventions, administrative policy, configured locations, accessibility and integration mechanisms, and the user's chosen tools. Do not replace a mature system facility with a private parallel universe merely because the private path is easier to implement.
+
+Be honest about cost and agency. Permissions, persistence, networking, telemetry, destructive actions, automatic changes, and meaningful resource consumption must be legible at the point where the user can govern them. Defaults may be decisive, but they may not smuggle in a different product than the interface appears to offer.
+
+Judge the product from outside the happy-path process. A worthy implementation leaves the system more useful and no less intelligible: it starts cleanly, works precisely, survives adversity, yields control, and departs without residue. Agentic abundance raises this floor; it is not a license to externalize implementation slop onto the user.
