@@ -1,331 +1,207 @@
 ---
 name: fahrenheit-451
-description: Perform a zero-based documentation purge and consolidation pass over markdown and other plaintext note files. Use when Codex needs to inspect every doc-like file in a subtree, presume each file should be deleted, classify each file into a hard disposition, reconcile kept docs against code, and flag unresolved contradictions instead of guessing at supersession.
+description: Audit an entire repository-owned documentation corpus from a presumption of deletion. Use when Codex should burn obsolete, redundant, historical, or code-mirroring prose; prove which documents still earn existence; and hand necessary reconstruction or contradiction repair to a documentation-authoring pass. Defaults to a read-only purge report and never rewrites surviving documentation on its own.
 ---
 
 # Fahrenheit 451
 
-Use this skill for markdown and plaintext notes. It is not language-specific, but it is still codebase-aware: any kept documentation must be reconciled against the code.
+## Mandate
 
-## Contract
+Reduce a bounded documentation corpus to the smallest set of durable prose surfaces that still deserve to exist.
 
-- Require a concrete subtree.
-- Default plaintext scope to `*.md`, `*.txt`, `*.rst`, `*.adoc`, and `*.org`, plus obvious repo-local note files.
-- Presume every file should be deleted.
-- If a file survives deletion, presume it should be rewritten from scratch in condensed form unless there is clear justification for `light_edit` or `keep_as_is`.
-- Inspect every file in scope. No sampling.
-- Create one persistent `/tmp` worklog before the first file read. Chat is summary only; the worklog is the durable source of truth.
-- Partition the manifest into intentional logical cliques before deep reading.
-- Read at most 8 files per wave.
-- Write a `/tmp` checkpoint after every wave before reading more files.
-- Give every file exactly one final disposition.
-- Reconcile every kept or spec-like file against the code.
-- When a document contradicts code and precedence is unclear, do not guess. Record it in the contradiction register.
+This is a purge, not a documentation-improvement campaign. Presume every document should be deleted. A file survives only by carrying a current contract, enabling a necessary user, operator, or developer act, or owning durable truth that cannot be recovered more lawfully elsewhere. Git history is the archive; historical interest, sunk effort, and fear of deletion confer no present value.
 
-Git history is the archive. Do not preserve dead docs by moving them into a graveyard folder.
+Fahrenheit decides what may burn. It does not delicately repair, rewrite, merge, or create living documentation. When necessary truth is trapped in a damaged, duplicated, misplaced, or contradictory surface, preserve the evidence and hand the constructive work to Chronicler.
 
-## File Dispositions
+Default to `purge_report`. Delete files only when the user explicitly authorizes `purge_execute`, and only after the complete report exists.
 
-Every file must end in exactly one of these:
+## Scope And Authority
 
-- `delete`
-- `merge_then_delete`
-- `rewrite_from_scratch`
-- `light_edit`
-- `keep_as_is`
-- `flag_contradiction`
+Require a concrete repository or subtree. Census every repository-owned doc-like file in scope: markdown and conventional plaintext documentation, plans, notes, runbooks, ADRs, instruction files, and other prose artifacts regardless of filename. Source doc comments belong to Chronicler, not this corpus.
 
-Use `keep_as_is` rarely. Use `light_edit` only when the file is basically correct and materially worth preserving. Use `rewrite_from_scratch` as the default survival mode.
+Do not mistake licenses, legal notices, test fixtures, prompt fixtures, generated artifacts, vendored material, or machine-consumed text for ordinary documentation. Include ambiguous plaintext in the census, establish its role, and exempt it explicitly when it is outside the purge corpus. Do not inflate the census to every machine file containing comments or every binary linked by prose; include a nonconventional artifact only when its primary repository role could plausibly be durable documentation.
 
-## Flow
+Code, configuration, tests, generated behavior, current documentation, and history are evidence. None is automatically sovereign. A document may state an intended public or architectural contract that the implementation violates. When precedence is not established, preserve the conflict rather than declaring whichever artifact is newer the winner.
 
-### 0. Create the worklog
+## Survival Standard
 
-Create a path shaped like:
+Ask the zero-based question continuously:
+
+> If this file vanished today, what present capability, governing contract, or durable truth would be lost?
+
+The answer must name a real audience and consequence. Prose that merely narrates code, commemorates completed work, accumulates abandoned intention, duplicates a stronger owner, or could be regenerated cheaply does not survive. A surviving document must have a coherent role, a stable owner, and authority commensurate with its claims.
+
+Do not preserve a whole file for a few valuable sentences. If those sentences belong in another living surface, the file is a Chronicler handoff pending extraction, not a keeper and not yet safe to delete.
+
+The handoff burden is strict. `chronicler_handoff` is not a refuge for any stale document: deletion must otherwise destroy a necessary documentary role or scarce durable truth that cannot be reconstructed cheaply from code and history. A code-mirroring architecture narrative does not earn transfer merely because a better architecture document could later be written.
+
+A doomed file may also require a handoff when deletion depends on constructive surgery to a living surface, such as removing or redirecting an inbound navigation link. State that dependency exactly and transfer no content by implication; the file remains doomed, and the handoff does not rehabilitate it.
+
+Fahrenheit adjudicates existence, not full documentary correctness. Establish that a survivor has a live role, a lawful owner, and no decisive supersession or contradiction visible from proportionate evidence. Chronicler owns exhaustive truth reconciliation, link checking, line editing, and reconstruction.
+
+## Protocol
+
+### 0. Open The Run
+
+When the environment permits, create resumable state before deep reading:
 
 ```text
-/tmp/fahrenheit-451-<repo-or-dir>-<subtree-slug>.md
+/tmp/fahrenheit-451-<repo>-<scope>-<run-id>.md
+/tmp/fahrenheit-451-<repo>-<scope>-<run-id>-report.md
 ```
 
-Seed it with the embedded worklog skeleton from `Embedded Forms`.
+Record mode, repository identity, scope, corpus rules, context budget, manifest, reductions, fold hierarchy, judgments, contradictions, and handoffs. Keep the worklog compact; the report owns the final argument. If all writes are forbidden, preserve the same structure in the final response and mark the run nonresumable. Read-only execution is a supported audit mode.
 
-The worklog must hold:
+### 1. Lock The Census And Budget
 
-- the manifest
-- the clique plan
-- every wave checkpoint
-- the file decision ledger
-- the contradiction register
-- the residual summary
+Use broad discovery rather than a trusted hand-maintained list. Record every candidate path, its physical lines and bytes, and its provisional role. The census becomes immutable except for logged corrections.
 
-If interrupted or resumed, reopen the same worklog before continuing.
+Use these default circuit breakers for all raw text brought into one deep-reading clique:
 
-### 1. Lock scope and manifest
-
-Enumerate every plaintext file in scope and write the manifest into the worklog immediately.
-
-Use fast file discovery, for example:
-
-```bash
-rg --files <subtree> -g '*.md' -g '*.txt' -g '*.rst' -g '*.adoc' -g '*.org'
+```text
+context_line_ceiling: 3000
+context_byte_ceiling: 131072
 ```
 
-Write the manifest in the embedded form from `Embedded Forms`.
+Either ceiling trips the budget. They are ceilings, not packing targets. Count documents, source, configuration, fixtures, dependency code, history, and command output whenever their contents enter working context. Broad path indexes and narrow anchored probes may range beyond a clique; voluminous search output is a deep read, not a loophole. Split oversized documents into coherent ranges whose union accounts for the whole file.
 
-### 2. Plan logical cliques
+### 2. Build An Adaptive Clique Cover
 
-Group manifest files into small logical cliques before deep reading.
+Group the corpus into overlapping semantic cliques large enough to expose supersession, duplication, audience, authority, and lifecycle relationships while remaining under budget. Let the corpus reveal the useful decomposition; do not march through arbitrary directory batches or force every clique through a fixed audit-lens menu.
 
-Write each clique wave in the embedded form from `Embedded Forms`.
+A compact corpus should remain in one working clique unless its relationships genuinely require separation. Do not manufacture cliques to reset the context budget.
 
-Good clique causes:
+Every census entry must belong to at least one planned clique or carry an evidenced exemption. Revise the cover when reading reveals a truer relationship.
 
-- same topic or subsystem
-- same audience
-- same lifecycle stage such as planning, reference, runbook, migration note, or historical residue
-- likely supersession relationship
-- duplicate content clusters
-- same code surface or command surface
+### 3. Read And Reduce
 
-Cliques may overlap. A file may appear in multiple cliques. Keep cliques to 2-8 files.
+Read every document in each clique deeply enough to judge its function, claims, authority, neighbors, code anchors, and deletion consequences. Reconcile claims against implementation evidence only as far as needed to adjudicate existence. Once further evidence cannot change the disposition, deletion safety, or handoff dependency, stop probing. A doomed document needs decisive evidence, not an inventory of every stale sentence; a machine-consumed fixture needs enough inspection to establish its role and relevant supersession, not automatic line-by-line review.
 
-### 3. Run bounded coverage waves
+Navigate evidence by definitions, references, manifests, and bounded ranges. Never compensate for uncertainty by dumping whole source files, registries, parent workspaces, Git internals, or broad search matches into context. Consult an external owner only when resolving a real authority or transfer question, and charge that material to the same budget. Do not launch network or release-surface validation merely to certify a document that already earns existence; transient external correctness belongs to Chronicler unless it determines deletion or documentary ownership.
 
-For each clique wave:
+Before opening another clique, reduce the current one into the smallest durable account from which another intelligent model can integrate its judgment without rereading the documents. Preserve evidence anchors, proposed dispositions, unresolved authority, cross-clique dependencies, and the open frontier. A file is not covered merely because it was opened or skimmed.
 
-- read at most 8 files
-- decide what the clique is trying to resolve: duplication, supersession, condensation, contradiction, or audience split
-- update the manifest coverage
-- write a `/tmp` checkpoint containing:
-  - clique id and purpose
-  - files inspected in the wave
-  - deletion candidates
-  - merger candidates
-  - files that look keep-worthy
-  - likely rereads in later cliques
-  - likely code surfaces to reconcile
+### 4. Fold Without Flooding Context
 
-Do not read a 9th file until that checkpoint exists.
+Fold related clique reductions into bounded branch syntheses, then fold branches until one corpus-level purge thesis remains. Higher folds consume reductions rather than raw documents. A fold obeys the same line and byte ceilings; introduce another level whenever necessary. A fold that does not materially compress its inputs has failed to reduce them.
 
-### 4. Make first-pass file decisions
+Use bounded bridge reductions for relationships that cross branches. Reopen raw evidence only to resolve a material conflict or uncertainty.
 
-After every file has been inspected at least once, assign each file a provisional disposition.
+### 5. Adjudicate Every Entry
 
-Record the decisions in the embedded ledger form from `Embedded Forms`.
+Give every census entry exactly one terminal disposition:
 
-For every file, record:
+- `delete`: destruction loses no living truth or required capability.
+- `survive`: the current file and its role earn continued existence without material reconstruction.
+- `chronicler_handoff`: constructive work on a living surface must precede deletion or acceptance, whether to receive necessary truth, reconstruct a required role, or sever an inbound dependency on an otherwise doomed file.
+- `blocked`: authority, legal obligation, or contradiction is genuinely unresolved; leave the evidence intact and name the decision required.
+- `exempt`: the artifact is not repository-owned documentation subject to this purge; state its actual role.
 
-- path
-- apparent doc kind
-- intended audience
-- provisional disposition
-- short keep-or-delete basis
-- superseded_by_or_merge_target if applicable
-- rewrite_needed
-- code_reconciliation_target
+These are actions, not audit lenses. Follow the evidence freely, but leave no `maybe`, implicit omission, or unclassified file.
 
-The keep burden is intentionally light but real. A short justification is enough if it is concrete.
+Deletion safety is cohort-level. A file is not independently deletable when its disappearance would strand navigation, references, required fragments, or documentary ownership. Such a cohort remains a Chronicler handoff until the receiving surface exists.
 
-### 5. Reconcile surviving docs against code
+### 6. Close The Corpus
 
-For every file with provisional disposition `rewrite_from_scratch`, `light_edit`, `keep_as_is`, or `flag_contradiction`, reconcile it against the code, tests, commands, config, or generated behavior it claims to describe.
+Continue until every census entry is deeply covered or evidenced as exempt, every clique has a reduction, cross-clique supersession and duplication are resolved, every entry has a terminal disposition, and no open frontier could materially change a disposition or the corpus-level thesis.
 
-Ask:
+Do not manufacture work for clean documents. Do not let an alarming incidental discovery trigger rectification or truncate corpus coverage; record it separately and continue.
 
-- does the code still do what this file says?
-- is this file obviously stale?
-- is this a stable formal definition, ADR, public contract, runbook, or reference that still earns its keep?
-- does another doc supersede it?
-- if there is a contradiction, is precedence obvious?
+### 7. Report, Then Optionally Burn
 
-If precedence is not obvious, move the file to `flag_contradiction` and record the issue in the embedded contradiction register form from `Embedded Forms`.
+Write a complete report from the folds rather than concatenating notes. The report must establish the purge thesis, exhaustive coverage, deletion cohorts, survivors and their burden of proof, constructive handoffs, and blocked authority questions.
 
-### 6. Execute the purge and consolidation
-
-Apply the final dispositions.
-
-Meaning of the dispositions:
-
-- `delete`: remove the file outright
-- `merge_then_delete`: fold the scarce useful material into the target file, then delete the source
-- `rewrite_from_scratch`: keep the file path or merge target, but rewrite the content in condensed form
-- `light_edit`: keep the file and patch it narrowly
-- `keep_as_is`: keep untouched with a concrete justification
-- `flag_contradiction`: keep or quarantine only as needed while reporting the unresolved conflict
-
-Default victims:
-
-- roadmaps
-- done feature docs
-- stale checklists
-- obsolete migration notes
-- narrative implementation notes whose only job is to duplicate the code
-
-Default survivors:
-
-- durable formal specs
-- crisp reference docs
-- active operator runbooks
-- ADR-like decision records
-- public-facing contracts that still match reality
-
-### 7. Verify the resulting doc set
-
-After edits and deletions:
-
-- re-scan the same manifest scope
-- confirm every original file received a disposition
-- confirm every surviving spec-like file was reconciled against code
-- update the contradiction register and residual summary in the worklog
+Stop after the report unless execution was explicit. In `purge_execute`, delete only complete `delete` cohorts whose dependencies remain satisfied. Do not rewrite survivors or improvise the Chronicler work. Re-scan the corpus and references after deletion, account for every changed path, and report any cohort withheld because the evidence drifted.
 
 ## Embedded Forms
 
-### Worklog Skeleton
+### Run State
 
 ```text
+mode: purge_report | purge_execute
+repository:
+source_identity:
+scope:
 worklog_path:
-scope_root:
-inspection_mode: audit_only | audit_plus_refactor
-wave_size_limit: 8
+report_path:
+context_line_ceiling: 3000
+context_byte_ceiling: 131072
 
-manifest:
-
-clique_plan:
-
-wave_checkpoints:
-
-file_decision_ledger:
-
-contradiction_register:
-
-residual_summary:
+census:
+clique_cover:
+clique_reductions:
+fold_hierarchy:
+live_judgments:
+contradictions:
+chronicler_handoffs:
+frontier:
+root_purge_thesis:
+execution:
+residual:
 ```
 
-Rules:
-
-- create this file before the first file read
-- update it after every 8-file wave before reading more files
-- treat it as the durable source of truth for the run
-- report the final worklog path in the user-facing response
-
-### File Manifest
+### Corpus Ledger
 
 ```text
-scope_root:
-inspection_mode: audit_only | audit_plus_refactor
-wave_size_limit: 8
-
-files:
-- [ ] docs/file_a.md
-- [ ] docs/file_b.txt
-- [ ] notes/file_c.org
+| path | role | lines | bytes | cliques | disposition | basis | anchors_or_dependency | coverage |
+|------|------|-------|-------|---------|-------------|-------|-----------------------|----------|
 ```
 
-Rules:
-
-- include every plaintext doc-like file in scope
-- mark files as inspected only after reading them
-- allow files to appear in multiple clique waves
-- reuse the same manifest for the final residual sweep
-
-### Clique Wave Checkpoint
+### Clique Reduction
 
 ```text
 clique_id:
 purpose:
-why_these_files_belong_together:
-wave_size:
+documents:
+document_lines:
+document_bytes:
+coverage_delta:
 
-files:
-- path/to/file_a.md
-- path/to/file_b.txt
+reduction:
 
-checkpoint:
-- deletion candidates:
-- merger candidates:
-- possible keepers:
-- likely rereads:
-- code surfaces to reconcile:
+provisional_dispositions:
+cross_clique_dependencies:
+contradictions:
+frontier:
+supersedes:
 ```
 
-Rules:
+### Purge Report
 
-- `wave_size` must never exceed `8`
-- write the checkpoint into the `/tmp` worklog after every wave before reading more files
-- a file may appear in multiple cliques when supersession or duplication reasoning demands it
-- name the clique by the relationship it is testing, not by arbitrary adjacency
+```markdown
+# Fahrenheit 451 Report: <scope>
 
-### File Decision Ledger
+## Executive Judgment
+## Corpus And Coverage
+## Purge Thesis
+## Deletion Cohorts
+## Survivors
+## Chronicler Handoffs
+## Blocked Authority And Contradictions
+## Exempt Artifacts
+## Incidental High-Severity Findings
+## Execution Safety And Order
+## Residual Unknowns
 
-Use one row per file.
+### Complete Disposition Ledger
 
-```text
-| path | doc_kind | audience | disposition | keep_or_delete_basis | superseded_by_or_merge_target | rewrite_needed | code_reconciliation_target |
-|------|----------|----------|-------------|----------------------|-------------------------------|----------------|----------------------------|
-| docs/protocol.md | formal_spec | developers | keep_as_is | foundational definition already vetted | | no | crates/protocol/src/lib.rs |
-| docs/roadmap.md | roadmap | internal | delete | shipped history plus stale plans | | no | |
-| docs/setup.md | runbook | operators | rewrite_from_scratch | still needed but bloated and partially stale | | yes | scripts/deploy.sh |
-| notes/old-api.md | feature_doc | developers | merge_then_delete | scarce useful material belongs in docs/api.md | docs/api.md | no | crates/api/src/lib.rs |
+| path | disposition | judgment | evidence | dependencies |
+|------|-------------|----------|----------|--------------|
 ```
 
-Allowed `disposition` values:
+## Hard Failures
 
-- `delete`
-- `merge_then_delete`
-- `rewrite_from_scratch`
-- `light_edit`
-- `keep_as_is`
-- `flag_contradiction`
-
-Rules:
-
-- every file must end in exactly one disposition
-- `keep_or_delete_basis` can be short, but it must be concrete
-- `rewrite_needed` should normally be `yes` for any surviving non-foundational doc
-- `code_reconciliation_target` is required for every surviving or contradiction-flagged file
-
-### Contradiction Register
-
-Use this for genuine doc-vs-code contradictions where supersession is unclear.
-
-```text
-| doc_path | code_anchor | contradiction | possible_precedence | why_unclear | action_needed |
-|----------|-------------|---------------|---------------------|-------------|---------------|
-| docs/protocol.md | crates/protocol/src/lib.rs | doc says field is required; code treats it as optional | doc_or_code_unclear | public contract vs implementation drift | human decision |
-```
-
-Rules:
-
-- record only real contradictions, not vague doubts
-- if precedence is obvious, update the loser instead of logging it here
-- unresolved entries must be surfaced in the final response
-
-## Final Response
-
-Always include:
-
-- the `/tmp` worklog path
-- manifest coverage summary
-- clique-wave summary
-- file disposition counts
-- contradiction register summary
-
-If you edited docs, also include:
-
-- deleted files
-- merge targets
-- rewritten files
-- lightly edited files
-- untouched keepers with justification
-
-## Hard Failure Modes
-
-- do not inspect only “important” docs
-- do not keep checkpoint state only in chat
-- do not read more than 8 files without a persisted checkpoint
-- do not keep a file because deleting it feels scary
-- do not leave a file in a vague “maybe keep” limbo
-- do not keep roadmap, checklist, or done-feature residue by inertia
-- do not preserve stale docs by moving them into archive folders
-- do not keep a spec-like file without reconciling it against code
-- do not resolve genuine code-vs-doc contradictions by guessing at supersession
+- do not sample, skim, or silently omit the corpus
+- do not keep dead prose as an archive or move it to a graveyard
+- do not equate newer implementation with authoritative intent
+- do not preserve a file merely because some fragment within it matters
+- do not launder stale, code-derivable prose into a Chronicler handoff
+- do not delete scarce truth before its lawful owner exists
+- do not rewrite, merge, or create living documentation in this campaign
+- do not exempt evidentiary code, fixtures, history, dependencies, or command output from the context budget
+- do not keep probing after the evidence can no longer change the disposition or its dependencies
+- do not perform Chronicler's exhaustive correctness or external-link audit under the guise of proving survival
+- do not exceed a clique or fold budget to avoid decomposition
+- do not use one unbounded global context fold
+- do not turn the worklog into a shadow report
+- do not edit before the complete purge report or without explicit authorization

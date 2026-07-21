@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chronicler"
+  short_description: "Reconcile durable documentation with reality"
+  default_prompt: "Use $chronicler to reconcile this project’s durable documentation and source-level API commentary with the current system."
