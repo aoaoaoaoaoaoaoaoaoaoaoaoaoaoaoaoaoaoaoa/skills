@@ -1,4 +1,4 @@
 interface:
   display_name: "Majestic Magisteria"
-  short_description: "Reconcile project-wide type silos"
-  default_prompt: "Use $majestic-magisteria to audit a narrow data-model region across the whole project, identify accidental type silos and conversion pinball, and produce a canonicalization report or execute it when requested."
+  short_description: "Rectify the project's semantic representation topology"
+  default_prompt: "Use $majestic-magisteria to reconcile this project's data model into canonical owners and lawful representation families."
