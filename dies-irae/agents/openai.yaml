@@ -1,0 +1,4 @@
+interface:
+  display_name: "DIES IRAE"
+  short_description: "Convene the tribunal and compile its judgment"
+  default_prompt: "Use $dies-irae to run the applicable specialist audits in parallel, read-only, and compile their ledgers into one prioritized, source-typed defect register."
