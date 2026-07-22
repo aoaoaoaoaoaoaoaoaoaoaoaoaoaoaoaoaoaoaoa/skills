@@ -10,4 +10,5 @@ Austere standalone Codex skills. No parent project, no ceremony.
 - `pro-plan` — lock a rough implementation ask, then summon a high-leverage Pro plan.
 - `qui-custodit` — watch the watcher; cull duplicate, ghost, and barnacle tests.
 - `style-doctrine` — load the house coding doctrine and language guides.
+- `vox-nihili` — contract expository prose sentence by sentence into exact null voice.
 - `x11-gui-testing` — test real X11 GUI surfaces without touching the live desktop.

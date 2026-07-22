@@ -1,0 +1,4 @@
+interface:
+  display_name: "Vox Nihili"
+  short_description: "Reduce prose to semantic necessity"
+  default_prompt: "Use $vox-nihili to contract this prose sentence by sentence into exact null-voice exposition."
