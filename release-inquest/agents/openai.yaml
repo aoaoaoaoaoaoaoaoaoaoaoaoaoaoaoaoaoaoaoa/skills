@@ -1,0 +1,4 @@
+interface:
+  display_name: "Release Inquest"
+  short_description: "Prove a release candidate deserves shipment"
+  default_prompt: "Use $release-inquest to conduct a hostile release-readiness inquest against this project and return an evidence-backed ship or hold verdict."

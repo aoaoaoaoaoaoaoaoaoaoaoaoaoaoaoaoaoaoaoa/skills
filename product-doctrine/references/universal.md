@@ -12,6 +12,10 @@ The whole lifecycle is a product surface. First run, ordinary use, upgrade, down
 
 Behave as a native citizen of the host. Honor platform conventions, administrative policy, configured locations, accessibility and integration mechanisms, and the user's chosen tools. Do not replace a mature system facility with a private parallel universe merely because the private path is easier to implement.
 
+The author is not an implicit input or platform. No undeclared fact of the author's machine, identity, locale, geography, timezone, accounts, data, accumulated state, network, or habits may become product law. Hold the declared charter fixed and vary ambient coordinates; behavior may depend on them only where the contract requires it, and then through explicit user intent or lawful host policy rather than an author-shaped fallback. This does not broaden the product's charter. It makes every claimed path real.
+
+First contact must be self-sufficient. A new user may be expert, but arrives without repository history, private vocabulary, remembered bootstrap ritual, preexisting application state, privileged credentials, or knowledge of the author's workstation. Within the declared audience and prerequisites, the entrypoint, state, costs, next actions, and failures must be intelligible without author memory. Sophistication is welcome; occult initiation is not.
+
 Be honest about cost and agency. Permissions, persistence, networking, telemetry, destructive actions, automatic changes, and meaningful resource consumption must be legible at the point where the user can govern them. Defaults may be decisive, but they may not smuggle in a different product than the interface appears to offer.
 
 Judge the product from outside the happy-path process. A worthy implementation leaves the system more useful and no less intelligible: it starts cleanly, works precisely, survives adversity, yields control, and departs without residue. Agentic abundance raises this floor; it is not a license to externalize implementation slop onto the user.
