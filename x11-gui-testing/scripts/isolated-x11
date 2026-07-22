@@ -1,0 +1,173 @@
+#!/bin/sh
+set -eu
+
+usage() {
+    printf '%s\n' \
+        'usage: isolated-x11 [--wgpu] [--software-gl] [--dbus]' \
+        '                    [--screen WIDTHxHEIGHTxDEPTH] [--xdg-root DIR]' \
+        '                    -- COMMAND [ARG...]' >&2
+    exit 64
+}
+
+screen=1440x920x24
+xdg_root=
+owned_root=0
+with_dbus=0
+with_wgpu=0
+with_software_gl=0
+lavapipe=${X11_GUI_TEST_LAVAPIPE:-${XDG_DATA_HOME:-$HOME/.local/share}/x11-gui-testing/lavapipe}
+
+while [ "$#" -gt 0 ]; do
+    case $1 in
+        --wgpu)
+            with_wgpu=1
+            shift
+            ;;
+        --software-gl)
+            with_software_gl=1
+            shift
+            ;;
+        --dbus)
+            with_dbus=1
+            shift
+            ;;
+        --screen)
+            [ "$#" -ge 2 ] || usage
+            screen=$2
+            shift 2
+            ;;
+        --xdg-root)
+            [ "$#" -ge 2 ] || usage
+            xdg_root=$2
+            shift 2
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -* | '')
+            usage
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+[ "$#" -gt 0 ] || usage
+case $screen in
+    *[!0-9x]* | *x*x*x*) usage ;;
+    [0-9]*x[0-9]*x[0-9]*) ;;
+    *) usage ;;
+esac
+
+if [ "$with_wgpu" -eq 1 ] && [ "$with_software_gl" -eq 1 ]; then
+    printf '%s\n' '--wgpu and --software-gl are mutually exclusive' >&2
+    exit 64
+fi
+
+xvfb_log=
+cleanup() {
+    status=$?
+    trap - EXIT HUP INT TERM
+    if [ -n "$xvfb_log" ] && [ "$status" -ne 0 ] && [ -s "$xvfb_log" ]; then
+        printf '%s\n' '--- Xvfb log ---' >&2
+        sed -n '1,240p' "$xvfb_log" >&2
+    fi
+    if [ -n "$xvfb_log" ]; then
+        rm -f "$xvfb_log"
+    fi
+    if [ "$owned_root" -eq 1 ]; then
+        rm -rf "$xdg_root"
+    fi
+    exit "$status"
+}
+trap cleanup EXIT HUP INT TERM
+
+if [ -z "$xdg_root" ]; then
+    xdg_root=$(mktemp -d "${TMPDIR:-/tmp}/codex-x11.XXXXXX") || exit 1
+    owned_root=1
+else
+    case $xdg_root in
+        /*) ;;
+        *)
+            printf '%s\n' '--xdg-root must be absolute' >&2
+            exit 64
+            ;;
+    esac
+    mkdir -p "$xdg_root" || exit 1
+fi
+xvfb_log=$(mktemp "${TMPDIR:-/tmp}/codex-xvfb.XXXXXX.log") || exit 1
+
+mkdir -p \
+    "$xdg_root/config" \
+    "$xdg_root/cache" \
+    "$xdg_root/state" \
+    "$xdg_root/data" \
+    "$xdg_root/runtime"
+chmod 700 \
+    "$xdg_root" \
+    "$xdg_root/config" \
+    "$xdg_root/cache" \
+    "$xdg_root/state" \
+    "$xdg_root/data" \
+    "$xdg_root/runtime"
+
+server_args="-screen 0 $screen -dpi 96 -noreset"
+if [ "$with_software_gl" -eq 0 ] && [ "$with_wgpu" -eq 0 ]; then
+    server_args="$server_args -extension GLX"
+fi
+
+run_child() {
+    xvfb-run -a -e "$xvfb_log" -s "$server_args" sh -eu -c '
+    xdg_root=$1
+    with_wgpu=$2
+    with_software_gl=$3
+    with_dbus=$4
+    lavapipe=$5
+    shift 5
+
+    umask 077
+    export XDG_CONFIG_HOME="$xdg_root/config"
+    export XDG_CACHE_HOME="$xdg_root/cache"
+    export XDG_STATE_HOME="$xdg_root/state"
+    export XDG_DATA_HOME="$xdg_root/data"
+    export XDG_RUNTIME_DIR="$xdg_root/runtime"
+    export GDK_BACKEND=x11
+    export GDK_SCALE=1
+    export QT_QPA_PLATFORM=xcb
+    export QT_SCALE_FACTOR=1
+    export SDL_VIDEODRIVER=x11
+    export WINIT_X11_SCALE_FACTOR=1
+    unset WAYLAND_DISPLAY I3SOCK SWAYSOCK SESSION_MANAGER DBUS_SESSION_BUS_ADDRESS
+    if [ "$with_wgpu" -eq 1 ]; then
+        export WGPU_BACKEND=vulkan
+        local_icd="$lavapipe/usr/share/vulkan/icd.d/lvp_icd.json"
+        system_icd=/usr/share/vulkan/icd.d/lvp_icd.json
+        if [ -f "$local_icd" ]; then
+            export LD_LIBRARY_PATH="$lavapipe/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+            export VK_DRIVER_FILES="$local_icd"
+            export VK_ICD_FILENAMES="$local_icd"
+        elif [ -f "$system_icd" ]; then
+            export VK_DRIVER_FILES="$system_icd"
+            export VK_ICD_FILENAMES="$system_icd"
+        else
+            printf "%s\n" "lavapipe is missing; run x11-gui-testing/scripts/install-lavapipe" >&2
+            exit 69
+        fi
+    fi
+    if [ "$with_software_gl" -eq 1 ]; then
+        export LIBGL_ALWAYS_SOFTWARE=1
+    fi
+    if [ "$with_dbus" -eq 1 ]; then
+        exec dbus-run-session -- "$@"
+    fi
+    exec "$@"
+' isolated-x11 "$xdg_root" "$with_wgpu" "$with_software_gl" "$with_dbus" "$lavapipe" "$@"
+}
+
+if [ "$with_software_gl" -eq 1 ] || [ "$with_wgpu" -eq 1 ]; then
+    export __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/50_mesa.json
+    export LIBGL_ALWAYS_SOFTWARE=1
+fi
+run_child "$@"

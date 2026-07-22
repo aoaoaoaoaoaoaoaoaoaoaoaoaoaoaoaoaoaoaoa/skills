@@ -1,0 +1,4 @@
+interface:
+  display_name: "X11 GUI Testing"
+  short_description: "Test X11 GUIs without touching the desktop"
+  default_prompt: "Use $x11-gui-testing to test this GUI safely off-screen."

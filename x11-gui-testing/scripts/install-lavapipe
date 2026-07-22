@@ -1,0 +1,50 @@
+#!/bin/sh
+set -eu
+
+destination=${1:-${XDG_DATA_HOME:-$HOME/.local/share}/x11-gui-testing/lavapipe}
+parent=$(dirname "$destination")
+mkdir -p "$parent"
+work=$(mktemp -d "$parent/.lavapipe-work.XXXXXX")
+root=$work/root
+mkdir "$root"
+
+cleanup() {
+    status=$?
+    trap - EXIT HUP INT TERM
+    rm -rf "$work"
+    exit "$status"
+}
+trap cleanup EXIT HUP INT TERM
+
+found=0
+for url in $(pacman -Sp vulkan-swrast); do
+    case $url in
+        *vulkan-swrast-*.pkg.tar.zst | *vulkan-mesa-implicit-layers-*.pkg.tar.zst)
+            found=$((found + 1))
+            package="$work/package-$found.pkg.tar.zst"
+            curl -fL -o "$package" "$url"
+            curl -fL -o "$package.sig" "$url.sig"
+            pacman-key --verify "$package.sig" "$package"
+            bsdtar -xf "$package" -C "$root"
+            ;;
+    esac
+done
+
+if [ "$found" -ne 2 ] || [ ! -f "$root/usr/lib/libvulkan_lvp.so" ]; then
+    printf '%s\n' 'could not resolve both signed lavapipe packages' >&2
+    exit 1
+fi
+
+if [ -e "$destination" ]; then
+    backup="$parent/lavapipe.previous.$$"
+    mv "$destination" "$backup"
+    if ! mv "$root" "$destination"; then
+        mv "$backup" "$destination"
+        exit 1
+    fi
+    rm -rf "$backup"
+else
+    mv "$root" "$destination"
+fi
+
+printf 'installed lavapipe under %s\n' "$destination"
