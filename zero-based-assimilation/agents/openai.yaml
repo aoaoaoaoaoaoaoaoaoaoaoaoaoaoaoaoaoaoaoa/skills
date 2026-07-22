@@ -1,4 +1,0 @@
-interface:
-  display_name: "Zero-Based Assimilation"
-  short_description: "Own the upstream essence; discard the husk"
-  default_prompt: "Use $zero-based-assimilation to take ownership of an upstream repository by keeping only the functional essence needed for local build/use/modify work and purging CI, docs, headers, release machinery, and upstream baggage."

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Haussmann"
-  short_description: "Ruthless Rust tree reorganization"
-  default_prompt: "Use $haussmann to perform a zero-based Rust source-tree reorganization pass."
