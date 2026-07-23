@@ -31,7 +31,7 @@ Language visibility is evidence of an audience, not always proof of an intended 
 
 Freeze product behavior and public contracts unless the user separately authorizes their change. Code, tests, configuration, generated behavior, documentation, history, standards, and upstream contracts are evidence; none is automatically sovereign. When authority is genuinely unclear, expose the decision instead of laundering one side into documentation.
 
-Read repository instructions and applicable style and product doctrine before editing source commentary or user-facing contracts. Preserve the project's voice, but not its accidents.
+Read repository instructions and applicable style and product doctrine before judging or editing source commentary and user-facing contracts. Preserve the project's voice, but not its accidents.
 
 ## Placement Law
 

@@ -10,7 +10,7 @@ Side effects must be local, proportional, attributable, and bounded. Idle softwa
 
 The whole lifecycle is a product surface. First run, ordinary use, upgrade, downgrade where promised, migration, recovery, reset, and removal must preserve their declared invariants. Writes and migrations must fail coherently rather than corrupting the last good state. Removal withdraws application-owned machinery cleanly; deletion of user data or other irreplaceable material requires a separate, explicit purge contract.
 
-Behave as a native citizen of the host. Honor platform conventions, administrative policy, configured locations, accessibility and integration mechanisms, and the user's chosen tools. Do not replace a mature system facility with a private parallel universe merely because the private path is easier to implement.
+Behave as a native citizen of the host. Within the declared product surface, honor platform conventions, administrative policy, configured locations, accessibility and integration mechanisms, and the user's chosen tools. This does not invent support outside the charter. Do not replace a mature system facility with a private parallel universe merely because the private path is easier to implement.
 
 The author is not an implicit input or platform. No undeclared fact of the author's machine, identity, locale, geography, timezone, accounts, data, accumulated state, network, or habits may become product law. Hold the declared charter fixed and vary ambient coordinates; behavior may depend on them only where the contract requires it, and then through explicit user intent or lawful host policy rather than an author-shaped fallback. This does not broaden the product's charter. It makes every claimed path real.
 

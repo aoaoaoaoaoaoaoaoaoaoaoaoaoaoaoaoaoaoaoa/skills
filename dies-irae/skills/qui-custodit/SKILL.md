@@ -27,6 +27,8 @@ A configured lint, test command, or policy is an intended witness, not accomplis
 
 Under `execute_after_report`, authorization covers test code, test-only modules, fixtures, harnesses, snapshots, and verification configuration. It does not authorize production behavior or architecture changes. If a lawful witness requires a production seam or refactor, specify that dependency and stop there unless the user separately authorizes it.
 
+Read repository instructions and load product doctrine when it establishes obligations in the frozen envelope. Load the applicable style doctrine before judging or changing verification code and machinery.
+
 ## Proof Topology
 
 Reason in two dimensions:

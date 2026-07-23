@@ -15,6 +15,8 @@ DIES IRAE is an orchestrator and compiler. It does not perform an object-level a
 
 Exhaustiveness is relative to the declared case. Every material surface within the chosen jurisdictions must be judged or recorded as uncovered; the tribunal does not invent features, audiences, platforms, or obligations outside the project's charter.
 
+The product charter and public contract are the human axiological boundary of the case. Judges may expose contradictions, identify a controlled major-version desire path, or show that the boundary lacks authority; neither a judge nor the compiler may revise it. Only explicit user authority changes the case.
+
 ## The Bench
 
 The judges live under [skills/](skills/):
@@ -32,7 +34,7 @@ Honor an explicit user-selected subset. Otherwise inspect the repository only en
 
 ## Convene
 
-Lock the repository root, source identity, dirty-state digest, scope, and user-selected jurisdictions before dispatch. Create a run directory shaped like:
+Lock the repository root, source identity, dirty-state digest, scope, authoritative user constraints, frozen outer contract, and user-selected jurisdictions before dispatch. Create a run directory shaped like:
 
 ```text
 /tmp/dies-irae-<repo>-<run-id>/
@@ -43,11 +45,14 @@ Record the case identity and bench in `case.md`. Assign each judge a private sub
 Launch one independent worker per selected judge, in parallel when the environment permits. Give every worker:
 
 - the same case identity and scope
+- the same authoritative user constraints and frozen outer contract
 - the exact specialist skill to follow
 - its report-only mode
 - read-only authority over the repository
 - its private output directory
 - no conclusions from sibling judges
+
+Standalone `/tmp/<specialist>-...` paths in child skills are fallbacks. In a tribunal run, the assigned private subdirectory governs artifact placement; preserve the specialist's native schemas and filenames within it.
 
 Use the strongest available read-only enforcement. Permission to write the tribunal run directory is not permission to mutate the case. If enforcement is unavailable, instruct the boundary explicitly and verify afterward that the source identity and dirty-state digest are unchanged.
 
@@ -59,11 +64,13 @@ After every worker has terminated, compile the heterogeneous native ledgers and 
 
 The desired artifact is one prioritized defect register, not a concatenation of reports. Preserve evidence and auditing provenance, combine or distinguish findings according to their actual semantics, expose unresolved contradictions, and retain clean judgments so absence of findings is not mistaken for absence of inspection. If the combined material exceeds context, fold it without discarding the source reports on disk.
 
+Preflight compilation inputs with `wc -l -c`. No fold may ingest more than 3000 lines or 131072 bytes of report or reduction material; introduce bounded branch and bridge folds until the root judgment fits. Higher folds consume reductions, not raw ledgers or reports.
+
 ### Severity
 
 Severity describes the credible consequence of leaving a defect in place within the declared case. It does not describe the prestige of its source domain, the cost of its fix, or the intensity of a judge's prose.
 
-- `critical`: credible catastrophic or irreversible harm, fundamental compromise, or a product unsafe to release or operate; immediate stop
+- `critical`: credible catastrophic or irreversible harm, fundamental compromise, or a product unsafe to release or operate; the affected release or operation must stop pending containment, while tribunal coverage continues
 - `high`: material breach of a core contract or serious harm to correctness, data, security, privacy, the user's system, or release integrity; must close before the affected release or use
 - `medium`: real consequential defect with bounded reach or recoverable impact; warrants deliberate correction but does not independently invalidate the whole product
 - `low`: genuine localized defect with limited consequence; worth correcting, but not merely a disagreement in taste
@@ -84,6 +91,8 @@ Write `/tmp/dies-irae-<repo>-<run-id>/judgment.md` in this form:
 source_identity:
 dirty_state:
 scope:
+authoritative_user_constraints:
+frozen_outer_contract:
 
 ## Jurisdiction
 

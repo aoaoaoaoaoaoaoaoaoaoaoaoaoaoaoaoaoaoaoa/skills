@@ -27,7 +27,7 @@ Freeze supported behavior and the outer public contract unless the user separate
 
 Documentation is evidence and may acquire obligations from the new topology, but documentary authorship belongs to Chronicler. Record those obligations as handoffs rather than rewriting or resurrecting prose under this skill. Honor any current Fahrenheit or Chronicler dispositions supplied with the run.
 
-Read repository instructions and applicable style doctrine before designing the canonical model. Use the language at full power. Traits, generics, macros, associated types, phantom distinctions, generated projections, and similarly strong machinery are first-class when they reduce independent truths or make laws inexpressible to violate.
+Read repository instructions and applicable style doctrine before designing the canonical model. Load product doctrine when a representation governs persistence, configuration, identity, lifecycle, or other user-system conduct. Use the language at full power. Traits, generics, macros, associated types, phantom distinctions, generated projections, and similarly strong machinery are first-class when they reduce independent truths or make laws inexpressible to violate.
 
 ## Semantic Law
 

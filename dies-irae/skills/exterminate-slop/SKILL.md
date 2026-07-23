@@ -12,6 +12,8 @@ Read the target repository's `AGENTS.md` files first. Load every language note t
 - Python: [references/languages/python.md](references/languages/python.md)
 - TypeScript: [references/languages/typescript.md](references/languages/typescript.md)
 
+Load the applicable `style-doctrine` guides. Load `product-doctrine` as well when the surface governs conduct on the user's system. Apply both within the frozen semantic envelope; doctrine sharpens the judgment but does not authorize a contract change.
+
 ## Mandate
 
 Make a bounded semantic surface look as though its present responsibilities had been implemented once, coherently, without historical sediment.
@@ -150,7 +152,7 @@ Out-of-envelope lesions may be named and evidenced tersely. Do not elaborate the
 
 ### 7. Write The Report
 
-Write a complete, proportional, directly executable report using the embedded report form. Do not demand or reward length. Do not use a closed `kind` taxonomy.
+Write a complete, proportional, implementation-ready report using the embedded report form. Do not demand or reward length. Do not use a closed `kind` taxonomy.
 
 The report must synthesize one coherent contraction thesis rather than dump checkpoint notes. Every required finding field is a proof obligation; if no material concern exists for a field, say so tersely rather than omitting it.
 
