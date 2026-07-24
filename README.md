@@ -8,7 +8,7 @@ Repository-owned Codex skills, including the DIES IRAE audit family.
 - `bare-metal-alara` — profile and crush wallclock runtime against a locked workload.
 - `goal-smith` — distill a rough long-running objective into a terse Codex goal contract.
 - `pro-plan` — lock a rough implementation ask, then summon a high-leverage Pro plan.
-- `vox-nihili` — contract expository prose sentence by sentence into exact null voice.
+- `vox-nihili` — govern all English prose by the exact null-voice semantic fixed point.
 - `x11-gui-testing` — test real X11 GUI surfaces without touching the live desktop.
 
 ## DIES IRAE
@@ -22,4 +22,4 @@ Repository-owned Codex skills, including the DIES IRAE audit family.
 - `chronicler` — reconcile durable documentation, doc comments, and scarce rationale.
 - `release-inquest` — render an evidence-backed release or hold verdict over the actual product.
 
-The family is governed by `style-doctrine` and `product-doctrine`; doctrines inform judgments but are not parallel audits.
+`style-doctrine` governs code, `vox-nihili` governs English prose by default, and `product-doctrine` governs product conduct; doctrines inform judgments but are not parallel audits.
