@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shopping"
+  short_description: "Optimize a bill of materials across sellers"
+  default_prompt: "Use $shopping to find the cheapest landed-cost purchase plan for this bill of materials."
