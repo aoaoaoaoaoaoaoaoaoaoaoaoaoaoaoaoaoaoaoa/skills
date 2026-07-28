@@ -4,6 +4,7 @@ Repository-owned Codex skills, including the DIES IRAE audit family.
 
 ## Standalone
 
+- `ad-fontes` — retain each external source once with a neutral synopsis and compact corpus index.
 - `assemble-pro-review-package` — forge one dense external-review prompt from relevant repository context.
 - `bare-metal-alara` — profile and crush wallclock runtime against a locked workload.
 - `goal-smith` — distill a rough long-running objective into a terse Codex goal contract.

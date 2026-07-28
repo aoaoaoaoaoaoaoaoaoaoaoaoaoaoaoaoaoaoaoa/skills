@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ad Fontes"
+  short_description: "Curate durable reference corpora"
+  default_prompt: "Use $ad-fontes to retain this source once, write a neutral synopsis, and update the local reference index."
