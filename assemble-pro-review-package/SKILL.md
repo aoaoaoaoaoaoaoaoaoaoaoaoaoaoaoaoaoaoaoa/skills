@@ -1,86 +1,111 @@
 ---
 name: assemble-pro-review-package
-description: Assemble a throwaway review bundle for an external expert or professional reviewer. Use when the user asks for a pro review package, reviewer handoff, expert audit bundle, or similar package that should include a single synthesized review prompt, the most relevant current design/spec/audit material for a specific goal, and aggressively inlined code, logs, and other text surfaces from the local repo plus any relevant rival or prior-art codebases.
+description: Assemble a throwaway review handoff for an external expert with efficient GitHub access. Use when the user asks for a pro review package, reviewer handoff, expert audit bundle, or similar artifact that should contain one synthesized review prompt, exact GitHub coordinates for relevant implementation, and selectively inlined non-code evidence such as specifications, audits, logs, metrics, or literature. Excludes first-party code by default.
 ---
 
 # Assemble Pro Review Package
 
-You are creating a design or implementation review package for an out-of-band expert
-reviewer. This package should focus on the task or subproblem supplied by the user in
-context. If you feel the problem is too vague for targeted review, push back and help the
-user sharpen it.
+Create a design or implementation review package for an out-of-band expert reviewer.
+Lock the task or subproblem supplied by the user; resolve any ambiguity that would
+materially change the review.
+
+Treat GitHub as the implementation transport and the document as the semantic handoff.
+Do not duplicate first-party code that the reviewer can inspect directly. Identify the
+exact source identity and inspection surface instead.
 
 Create the package in a subdir of `/tmp` unless the user asks otherwise. Do not
 commit it. Echo back the path you've used when done.
 
-The deliverable is one markdown document. Inline all review-relevant textual material into
-that document as labeled sections. Do not create attachments, helper zips, overflow
-artifacts, or companion files. If a textual artifact cannot be inlined under the ceiling,
-cut it.
+The deliverable is one markdown document containing the review contract, a source map,
+and labeled inlined evidence. Do not create attachments, helper zips, overflow artifacts,
+or companion files.
 
-Use `scripts/inline_section.py` to append labeled sections into the document and enforce
-the skill's fixed hard ceiling of 200k tokens, counted with `o200k_base`. It is not an
-objective to reduce the token count, and there is no harm in going all the way up to the
-limit if the material being included is genuinely relevant and the problem is complex.
-Spend the ceiling on material that sharpens the review question. Cut material whose
-relevance you cannot defend. The standard is the most clarifying document under the
-ceiling, not the broadest dump.
+Select material by one rule: include it only when it materially sharpens the review
+question or the reviewer's understanding of intended behavior, active pressure, or the
+relevant solution space. Cut anything whose relevance cannot be defended.
+
+Use `scripts/inline_section.py` to append sections and enforce the fixed hard ceiling of
+200k tokens, counted with `o200k_base`. The ceiling is a constraint, not a target:
+neither minimize nor fill it. Optimize only clarifying value within it.
+
+## Source Policy
+
+By default, inline only non-code material: objectives and constraints, normative
+specifications, design rationale, audit or review reports, benchmark results, logs and
+traces, experiment ledgers, issue or discussion prose, and relevant literature.
+Normative pseudocode may be inlined when it defines intended behavior rather than
+reproducing an implementation.
+
+Treat source, tests, schemas, manifests, build and packaging logic, patches and diffs,
+generated output, and code excerpts embedded in prose as code-bearing material. Do not
+inline them by default, regardless of ownership. Do not evade the rule by transcribing
+source into the review narrative.
+
+For first-party implementation, record:
+
+- canonical GitHub repository identity
+- immutable commit, or PR or branch together with its head commit
+- relevant paths and symbols
+- the question each surface should answer
+
+Prefer the same stable coordinates for public rival or prior-art code. Inline a
+code-bearing span only under an explicit user override; state why a stable source
+reference is insufficient and include the smallest decisive span.
+
+Do not pretend uncommitted or unpushed first-party code is visible on GitHub. If such
+state can materially change the review, obtain a published source identity or an
+explicit code-inline override before assembling the handoff.
 
 ## Workflow
 
 1. Infer the review target.
    Determine the specific implementation goal, design question, or problem statement.
 
-2. Open the document with the front-matter note below, then state:
+2. Lock the source map.
+   Resolve each relevant repository and exact revision, then identify the paths and
+   symbols the reviewer should inspect. Record material dirty or unpublished state.
+
+3. Open the document with the front-matter note below, then state:
    - broad objective
    - current tactical objective
    - live benchmark, failure regime, or open uncertainty
    - the exact question the reviewer should focus on
 
-3. Inline the relevant material as labeled sections. Inline from these categories as
-   applicable:
-   - current pseudocode or normative spec
-   - current design, audit, or experiment notes
-   - core local implementation files
-   - comparable mechanisms in rival implementations, reference literature, and tightly
-     relevant logs or metrics
+4. Present the source map before the inlined evidence. Give direct inspection
+   instructions rather than summaries of code the reviewer can read.
 
-   Every section must bear directly on the review question. Irrelevant bulk degrades
-   review quality. Do not dump entire source trees, unfiltered logs, or large files unless
-   the review turns on them.
+5. Inline only material admitted by the source policy and selection rule. Use the
+   decisive span rather than an entire file when possible.
 
-4. Verify the document reads as one coherent handoff rather than a stack of fragments.
-   Use explicit section headings. Refer to inlined material by section label.
+6. Verify the document reads as one coherent handoff rather than a stack of fragments.
+   Use explicit section headings and refer to inlined material by section label. Confirm
+   that every code reference resolves through the source map and that no unauthorized
+   code-bearing material was inlined.
 
 ## Reviewer-Facing Copy Rules
 
 - Address the reviewer as `you`.
 - Write as direct instruction and context handoff, not as notes about how the document was assembled.
 - Do not use `this package`, `the package`, or any other bundling metaphor.
-- Do not refer to anything outside the document.
+- Except for an explicitly authorized code-inline section, refer to implementation only
+  through the exact GitHub coordinates in the source map.
+- Do not refer to local paths, unspecified repositories, or ambient conversation.
 - Apart from the front-matter note below, do not comment on the prompt's size or construction.
 
 ## Front-Matter Note
 
 Place this near the top of the document and do not elaborate on it:
 
-> You are receiving a large inlined prompt. This is deliberate. The relevant source,
-> logs, and reference material are included directly in this document.
+> First-party code is intentionally omitted. Inspect the exact GitHub repositories,
+> revisions, paths, and symbols named below. The inlined sections contain the review
+> contract and non-code evidence.
 
-## Selection Rule
-
-Inline a file only if it:
-- defines intended behavior
-- explains the active failure or design pressure
-- implements the hot path in question
-- implements the external mechanism or reference point being compared, when such a comparison is relevant
-- records the measurement motivating the review
-
-Inline the relevant span rather than merely listing the file path.
+If the user explicitly authorized a code-inline exception, amend the first sentence to
+name each authorized section as the sole exception.
 
 ## Output
 
 Report only:
 - package root
 - main review prompt doc path
-- a short note on what was inlined
+- a short note on the code identities referenced and non-code evidence inlined

@@ -1,4 +1,4 @@
 interface:
   display_name: "Assemble Pro Review Package"
-  short_description: "Build reviewer handoff bundles"
-  default_prompt: "Use $assemble-pro-review-package to assemble a throwaway reviewer handoff with one aggressively inlined giga-prompt as the primary payload."
+  short_description: "Build GitHub-native expert handoffs"
+  default_prompt: "Use $assemble-pro-review-package to build a GitHub-native expert handoff that references exact first-party code identities and inlines only decisive non-code evidence by default."
