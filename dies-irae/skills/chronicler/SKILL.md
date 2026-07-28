@@ -99,7 +99,9 @@ Use the fold to rectify names, choose canonical owners, eliminate duplicated tru
 
 Turn the ownership model into a dependency-ordered program precise enough to execute without repeating the audit. Each change must identify the truth or obligation, present and proposed owner, evidence, exact documentary shape, affected duplicates, authority, and verification.
 
-Use action language that states what will actually happen: accept, create, reconstruct, repair, transfer, consolidate, or remove. These are outcomes, not a menu of reasoning methods. Do not keep vague “improve docs” entries or defer every hard judgment to implementation.
+Derive the terminal documentary model from required truths rather than existing vessels. Prefer removal, consolidation, transfer, and mechanical derivation within Chronicler's authority; repair or create only where an obligation would otherwise lack a lawful owner. Each change must identify the duplicate or obsolete surfaces retired, the canonical owner that remains, and any irreducible new surface. An addition-only change must name the audience and necessary truth that no existing stable owner can carry.
+
+Use action language that states what will actually happen: remove, consolidate, transfer, derive, repair, reconstruct, create, or accept. These are outcomes, not a menu of reasoning methods. Do not keep vague “improve docs” entries or defer every hard judgment to implementation.
 
 Whole-file deletion remains Fahrenheit's jurisdiction unless it is the already-proved tail of a constructive transfer or consolidation. Source comments and duplicate fragments may be removed directly when their truth has a lawful owner.
 
@@ -160,8 +162,8 @@ residual:
 ### Ownership Ledger
 
 ```text
-| truth_or_obligation | audience | present_owner | proposed_owner | authority | action | evidence | coverage |
-|---------------------|----------|---------------|----------------|-----------|--------|----------|----------|
+| truth_or_obligation | audience | present_owner | terminal_owner | ownership_delta | authority | evidence | coverage |
+|---------------------|----------|---------------|----------------|-----------------|-----------|----------|----------|
 ```
 
 ### Concordance Report
@@ -184,8 +186,8 @@ residual:
 
 ### Complete Ownership Ledger
 
-| obligation | present owner | proposed owner | action | evidence | dependencies |
-|------------|---------------|----------------|--------|----------|--------------|
+| obligation | present owner | terminal owner | ownership delta | evidence | dependencies |
+|------------|---------------|----------------|-----------------|----------|--------------|
 ```
 
 ## Hard Failures

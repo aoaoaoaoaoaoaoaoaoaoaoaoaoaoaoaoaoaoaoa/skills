@@ -144,6 +144,8 @@ One finding represents one coherent semantic contraction, not one source site. I
 
 Promote a finding when the evidence establishes a material accidental burden, the proposed shape is lawful and sufficiently concrete, and the move stays within the semantic envelope. Do not require local actionability; foundational contractions may be broad within the authorized surface.
 
+Recover the terminal machine from the surviving obligations rather than by attaching remedies to the incumbent structure. State what disappears or becomes derived before describing what remains or must be introduced. Every survivor and addition must carry an obligation not already discharged elsewhere. A purely additive change is valid only when the frozen envelope contains a genuine unmet obligation; name it explicitly.
+
 Record rejected hypotheses only when the rejection is material, subtle, or likely to prevent repeated rediscovery. Do not write an obituary for every fleeting suspicion.
 
 Do not force safety or correctness discoveries into contraction vocabulary. Integrate them when accidental structure caused them and the proposed contraction resolves them. Otherwise place them in the high-severity or incidental-defect section as appropriate.
@@ -280,9 +282,10 @@ State `none` or summarize and link the companion register.
 **Sites:**
 **Evidence:**
 **Judgment:**
-**Proposed Shape:**
+**Semantic Contraction:** What declarations, states, paths, representations, dependencies, and synchronization obligations disappear or become derived.
+**Terminal Shape:** The smallest lawful structure remaining after the contraction.
+**Irreducible Additions:** New machinery required by the terminal shape, or `none`; name the law each addition uniquely carries.
 **Implementation Specification:**
-**Semantic Contraction:**
 **Envelope Preservation:**
 **Relations / Dependencies:**
 **Verification:**

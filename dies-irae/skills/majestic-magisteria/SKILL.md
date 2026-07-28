@@ -41,7 +41,7 @@ Canonicalization may yield one nominal type, a generic family, an algebra of com
 
 A new nominal form earns its place by owning a real law or eliminating repeated semantic handling. Do not answer every weak primitive with a wrapper, or build a parallel internal ontology whose compatibility adapters outweigh the rivals it removes. When a frozen public surface makes the de novo model expensive, distinguish temporary boundary baggage from the terminal topology and expose any major-version cut that would retire it.
 
-Judge the result by semantic description length: fewer independent definitions of the same truth, fewer synchronization obligations, fewer unlawful states and conversion paths, and a clearer direction from authority to projection. Local line count and familiarity carry no independent weight.
+Judge the result by semantic description length: fewer independent definitions of the same truth, fewer synchronization obligations, fewer unlawful states and conversion paths, and a clearer direction from authority to projection. Semantic law and topology outrank local line count. Among lawful topologies carrying the same obligations, fewer declarations, conversion paths, adapters, synchronization sites, and lines win.
 
 ## Protocol
 
@@ -97,7 +97,9 @@ Use folds to rectify names, reconcile apparent synonyms and homonyms, choose can
 
 ### 5. Design The Canonical Topology
 
-Give every in-scope representation an explicit place in the proposed model: canonical owner, lawful alternate form, boundary projection, phase distinction, view, derivation, or removal. These are possible semantic roles, not a closed classification scheme.
+Derive the terminal topology from the governing laws rather than by adding a canonical layer atop the incumbent model. First identify representations, owners, conversions, validation sites, and projections that can disappear or become derived. Then state the canonical remainder and any alternate form whose distinct law compels its survival. Introduce a representation only when no surviving form can lawfully carry its obligation.
+
+Give every in-scope representation an explicit place in the proposed model: removal, derivation, canonical owner, lawful alternate form, boundary projection, phase distinction, or view. These are possible semantic roles, not a closed classification scheme.
 
 For every proposed contraction or distinction, state the governing law. Specify target owners and shapes precisely enough to expose whether the proposal actually centralizes truth. Define construction, validation, transition, and projection paths; name obsolete conversions and shadow representations that disappear. Preserve a boundary only when its semantic or operational necessity is evidenced.
 
@@ -165,8 +167,8 @@ residual:
 ### Representation Ledger
 
 ```text
-| concept | current_representations | current_owners | governing_laws | conversions | judgment | proposed_topology | evidence | coverage |
-|---------|-------------------------|----------------|----------------|-------------|----------|-------------------|----------|----------|
+| concept | current_representations | current_owners | governing_laws | conversions | judgment | proposed_topology | topology_delta | evidence | coverage |
+|---------|-------------------------|----------------|----------------|-------------|----------|-------------------|----------------|----------|----------|
 ```
 
 ### Clique Reduction
@@ -211,8 +213,8 @@ supersedes:
 
 ### Complete Representation Ledger
 
-| concept | current forms | proposed owner and family | judgment | evidence | dependencies |
-|---------|---------------|---------------------------|----------|----------|--------------|
+| concept | current forms | proposed owner and family | topology delta | judgment | evidence | dependencies |
+|---------|---------------|---------------------------|----------------|----------|----------|--------------|
 ```
 
 ## Hard Failures

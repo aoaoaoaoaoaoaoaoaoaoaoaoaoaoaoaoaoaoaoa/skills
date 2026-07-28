@@ -144,7 +144,11 @@ Specialist cleanliness is not enough if the assembled release graph fails. Conve
 
 Issue `RELEASE` or `HOLD` against the exact candidate identity. Every hold must name the failed or unproved claim, evidence, consequence, blocking threshold, and closure proof. Every surviving risk must name its boundary and why it does not invalidate the claim.
 
+Professionalization is not accumulation. Derive the smallest release graph that can substantiate the frozen claim. Prefer removing dormant paths, unnecessary dependencies, duplicate gates, redundant configuration, and release machinery with no unique evidentiary or product role. Add a gate, job, scanner, package layer, or lifecycle mechanism only when an unmet release obligation cannot be discharged by strengthening or consolidating an existing owner.
+
 Produce a dependency-ordered closure program precise enough to execute without repeating the inquest. Establish missing evidence and receiving surfaces before destructive cleanup; correct authorities before their projections; repair build and packaging roots before downstream artifact symptoms; and rerun lifecycle trials on newly built artifacts after every candidate-changing fix.
+
+Within each closure disposition, state its `release_delta`: machinery retired or subsumed, the terminal owner, and irreducible additions. A purely additive closure item must name the release obligation that requires it.
 
 Name specialist handoffs by semantic objective, scope, required evidence, and return condition. Do not emit “improve tests,” “update docs,” “optimize,” or “clean up code.” The release remains on hold until a handoff's release-relevant return condition is proved.
 

@@ -13,6 +13,8 @@ Convene the applicable judges against one locked case, let each exercise its own
 
 DIES IRAE is an orchestrator and compiler. It does not perform an object-level audit, prescribe how a specialist reasons, or rectify what the tribunal finds. Its authority is read-only over the target repository. Workers may write only their private ledgers and reports outside it.
 
+Across jurisdictions, continued existence bears the burden of proof. Each judge applies minimum machinery only to artifacts within its own jurisdiction and the frozen envelope; absence, consolidation, and derivation are presumptively preferable to parallel repair or new machinery.
+
 Exhaustiveness is relative to the declared case. Every material surface within the chosen jurisdictions must be judged or recorded as uncovered; the tribunal does not invent features, audiences, platforms, or obligations outside the project's charter.
 
 The product charter and public contract are the human axiological boundary of the case. Judges may expose contradictions, identify a controlled major-version desire path, or show that the boundary lacks authority; neither a judge nor the compiler may revise it. Only explicit user authority changes the case.
@@ -63,6 +65,8 @@ Let each judge obey its own scope, ledger, context, evidence, stopping, and repo
 After every worker has terminated, compile the heterogeneous native ledgers and reports intelligently. Source identity and scope are the shared case facts; do not impose a common child-ledger schema or a reconciliation algorithm.
 
 The desired artifact is one prioritized defect register, not a concatenation of reports. Preserve evidence and auditing provenance, combine or distinguish findings according to their actual semantics, expose unresolved contradictions, and retain clean judgments so absence of findings is not mistaken for absence of inspection. If the combined material exceeds context, fold it without discarding the source reports on disk.
+
+Compile toward terminal causes and terminal shapes. When one lawful deletion, fusion, or derivation resolves findings from several judges, preserve that shared contraction instead of emitting an additive remedy for each symptom. Describe what the disposition retires or subsumes before any irreducible addition. Do not count deletions or treat size as severity; minimum machinery governs the proposed resolution after consequence and contract are fixed.
 
 Preflight compilation inputs with `wc -l -c`. No fold may ingest more than 3000 lines or 131072 bytes of report or reduction material; introduce bounded branch and bridge folds until the root judgment fits. Higher folds consume reductions, not raw ledgers or reports.
 

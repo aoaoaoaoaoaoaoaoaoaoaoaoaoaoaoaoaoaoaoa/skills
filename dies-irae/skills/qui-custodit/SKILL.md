@@ -128,9 +128,11 @@ Use folds to detect evidentiary subsumption, vertical holes, horizontally duplic
 
 ### 6. Design The Minimum Sufficient Basis
 
-Specify the target evidence topology and a dependency-ordered change program precise enough to execute without repeating the audit. Each change must name the obligations and failure strata it closes, the canonical witness and independent oracle, present evidence retained or retired, authority, implementation shape, cost implications, dependencies, and verification.
+Construct the proposed basis from the obligation atlas rather than by augmenting the existing suite. Admit each witness only for a distinct obligation or failure mode, then map incumbent evidence onto that basis as retained, subsumed, fused, or retired. Introduce new evidence only for a genuinely uncovered obligation or stratum. A necessary net addition requires no compensating deletion.
 
-Choose actions freely from the evidence. Tests may be accepted, generalized, reconstructed, split, fused, moved, retired, or newly created; stronger static enforcement or a production-seam handoff may supersede dynamic evidence. These are outcomes, not a closed method menu.
+Specify the target evidence topology and a dependency-ordered change program precise enough to execute without repeating the audit. Each change must name the obligations and failure strata it closes, the canonical witness and independent oracle, present evidence retained or retired, basis delta, authority, implementation shape, cost implications, dependencies, and verification.
+
+Choose actions freely from the evidence. Tests may be retired, subsumed, fused, generalized, moved, repaired, or created; stronger static enforcement or a production-seam handoff may supersede dynamic evidence. These are outcomes, not a closed method menu.
 
 Preserve named examples that clarify a law or pin a valuable counterexample. Remove tests with no unique contribution. Do not consolidate into opaque mega-tests, bury distinct failures in giant parameter tables, or replace diagnostic local evidence with one heroic end-to-end scenario.
 
@@ -195,8 +197,8 @@ residual:
 ### Obligation And Evidence Ledger
 
 ```text
-| obligation | authority | failure_strata | present_witnesses | unique_contribution | judgment | proposed_basis | cost | evidence | coverage |
-|------------|-----------|----------------|-------------------|---------------------|----------|----------------|------|----------|----------|
+| obligation | authority | failure_strata | present_witnesses | unique_contribution | judgment | proposed_basis | basis_delta | cost | evidence | coverage |
+|------------|-----------|----------------|-------------------|---------------------|----------|----------------|-------------|------|----------|----------|
 ```
 
 ### Clique Reduction
@@ -242,8 +244,8 @@ supersedes:
 
 ### Complete Obligation And Evidence Ledger
 
-| obligation | failure strata | present witnesses | proposed basis | judgment | evidence | dependencies |
-|------------|----------------|-------------------|----------------|----------|----------|--------------|
+| obligation | failure strata | present witnesses | proposed basis | basis delta | judgment | evidence | dependencies |
+|------------|----------------|-------------------|----------------|-------------|----------|----------|--------------|
 ```
 
 ## Hard Failures

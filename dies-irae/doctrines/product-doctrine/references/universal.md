@@ -2,6 +2,8 @@
 
 The user's system is sovereign territory. Software enters as a guest with a narrow charter. Every byte written, process spawned, permission claimed, network request made, watt burned, notification raised, and namespace occupied must serve the user's intent, live in its lawful place, and possess an explicit lifecycle.
 
+Product surface begins absent. Every option, persisted artifact, dependency, process, integration, permission, and lifecycle branch must be required by the declared charter. Among products fulfilling the same charter, prefer the smaller installation, state, resource, namespace, and removal footprint.
+
 The user owns the machine, its resources, their attention, and the durable products of their work. The application owns only the machinery needed to discharge its charter. Authority must be no broader or longer-lived than the operation requires; surprising persistence, ambient privilege, involuntary networking, and unbidden background work are defects even when technically convenient.
 
 Classify every artifact by meaning rather than convenience: user data, application data, configuration, durable state, rebuildable cache, or ephemeral runtime material. Give each truth one canonical owner and placement. Never disguise state as configuration, cache as data, or internal debris as a user document. Namespaces are finite: do not colonize the home directory, environment, process table, ports, logs, menus, or notifications.
