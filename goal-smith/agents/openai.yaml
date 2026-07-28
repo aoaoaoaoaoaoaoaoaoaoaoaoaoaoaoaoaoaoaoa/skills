@@ -1,4 +1,0 @@
-interface:
-  display_name: "Goal Smith"
-  short_description: "Forge durable /goal acceptance contracts"
-  default_prompt: "Use $goal-smith to turn this rough objective into a terse .goals/ acceptance contract and install it as a Codex /goal."

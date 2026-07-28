@@ -7,8 +7,6 @@ Repository-owned Codex skills, including the DIES IRAE audit family.
 - `ad-fontes` — retain each external source once with a neutral synopsis and compact corpus index.
 - `assemble-pro-review-package` — forge one dense external-review prompt from relevant repository context.
 - `bare-metal-alara` — profile and crush wallclock runtime against a locked workload.
-- `goal-smith` — distill a rough long-running objective into a terse Codex goal contract.
-- `pro-plan` — lock a rough implementation ask, then summon a high-leverage Pro plan.
 - `vox-nihili` — govern all English prose by the exact null-voice semantic fixed point.
 - `x11-gui-testing` — test real X11 GUI surfaces without touching the live desktop.
 
