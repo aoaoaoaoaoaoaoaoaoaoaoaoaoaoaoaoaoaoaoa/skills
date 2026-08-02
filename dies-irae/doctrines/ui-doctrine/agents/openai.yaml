@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Doctrine"
+  short_description: "Make every visible element earn its place"
+  default_prompt: "Use $ui-doctrine to judge this interface with fresh-user theory of mind and delete anything that does not help the user act or understand."

@@ -21,4 +21,6 @@ Repository-owned Codex skills, including the DIES IRAE audit family.
 - `chronicler` — reconcile durable documentation, doc comments, and scarce rationale.
 - `release-inquest` — render an evidence-backed release or hold verdict over the actual product.
 
-`style-doctrine` governs code, `vox-nihili` governs English prose by default, and `product-doctrine` governs product conduct; doctrines inform judgments but are not parallel audits.
+`style-doctrine` governs code, `vox-nihili` governs English prose by default,
+`product-doctrine` governs product conduct, and `ui-doctrine` governs visible
+interfaces; doctrines inform judgments but are not parallel audits.
