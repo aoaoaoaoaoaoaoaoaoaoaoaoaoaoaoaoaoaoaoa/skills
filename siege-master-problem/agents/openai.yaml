@@ -1,0 +1,4 @@
+interface:
+  display_name: "Siege Master Problem"
+  short_description: "Formalize attacks without losing the target"
+  default_prompt: "Use $siege-master-problem to ingest this shared research conversation, attack its claims independently, retain only formalization that cuts a named master obstruction, unify or cull the rest, and aim the next attack at victory."
