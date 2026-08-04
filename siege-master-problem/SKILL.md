@@ -9,6 +9,27 @@ Keep the master problem, not the supporting theory, as the unit of progress. Con
 attack into checked mathematics and a sharper attack until the master problem closes or its live
 obstruction changes.
 
+## Divide The Labor
+
+Treat Pro as a read-only pen-and-paper mathematician. It can inspect a public GitHub repository
+and reason deeply about the displayed definitions and theorems, but it has no local checkout,
+Lean toolchain, compiler feedback, project scripts, or trustworthy way to test whether proposed
+code elaborates. Never ask it to run Lean, search a local worktree, execute the verification gate,
+or report that code “compiles.”
+
+Ground Pro in immutable public GitHub links and inline the few equations or declaration
+statements on which the attack turns. Ask for mathematics: exact theorem statements, complete
+proofs, derivations, counterexamples, case audits, and a translation-conscious proof skeleton.
+It may suggest Lean shapes, but every such suggestion is unverified pseudocode until the local
+formalizer reconstructs it.
+
+The local formalizer owns repository search, ontology reconciliation, counterexample execution,
+Lean engineering, lint and axiom gates, culling, publication, and the final judgment of what was
+actually proved. This asymmetry is deliberate. Do not squander Pro's thinking budget on guessed
+tactic syntax, and do not lower the mathematical standard merely because it cannot query the
+kernel. A pen-and-paper claim must expose enough algebra and every hypothesis for hostile local
+reconstruction.
+
 ## Lock The Enemy
 
 Read the repository instructions, master statement, frontier, formalization ledger, salvage
@@ -121,7 +142,9 @@ movement.
 ## Aim The Next Attack
 
 Write the next external-model prompt under `/tmp`; never commit it. Ground it in an exact public
-commit or another externally accessible review surface. The prompt must contain:
+commit or another externally accessible review surface that Pro can read without a local
+toolchain. Inline the attack's critical equations instead of assuming repository navigation can
+reconstruct all context. The prompt must contain:
 
 1. The master problem and the victory condition first.
 2. The smallest checked frontier needed for the attack.
@@ -134,7 +157,9 @@ commit or another externally accessible review surface. The prompt must contain:
 
 Demand depth, but do not script a long lemma itinerary. The external model may replace the proposed
 attack if it identifies a shorter path to victory; it must explain that path from the master
-statement. Prohibit surveys, cosmetic reformulations, and unconsumed supporting structures.
+statement. Prohibit surveys, cosmetic reformulations, unconsumed supporting structures, claims of
+having run Lean, and long speculative tactic scripts. Demand pen-and-paper mathematics detailed
+enough for the local formalizer to attack and translate.
 
 End the local cycle by reporting the checked artifacts, code unified or culled, master-level
 delta, rejected claims, and the path of the transient next prompt.
