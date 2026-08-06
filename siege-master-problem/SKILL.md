@@ -1,6 +1,6 @@
 ---
 name: siege-master-problem
-description: "Run the recurring external-research siege loop for a mathematical master problem: ingest a shared ChatGPT or Pro conversation, attack its claims independently against the live repository, formalize only mathematics that cuts a master obstruction, unify or cull what leaves that path, measure the exact wound, and generate the next kill-oriented prompt. Use when a user supplies a research-chat link for formalization, asks for the next Pro attack, resumes an agentic mathematics campaign, or warns against losing the target in supporting lemmas."
+description: "Run the recurring external-research siege loop for a mathematical master problem: isolate it in a dedicated worktree, ingest a shared ChatGPT or Pro conversation, attack its claims independently, formalize only mathematics that cuts a master obstruction, unify or cull what leaves that path, commit and push the checked ratchet, measure the exact wound, and generate the next kill-oriented prompt. Use when a user supplies a research-chat link for formalization, asks for the next Pro attack, resumes an agentic mathematics campaign, or warns against losing the target in supporting lemmas."
 ---
 
 # Siege Master Problem
@@ -29,6 +29,33 @@ actually proved. This asymmetry is deliberate. Do not squander Pro's thinking bu
 tactic syntax, and do not lower the mathematical standard merely because it cannot query the
 kernel. A pen-and-paper claim must expose enough algebra and every hypothesis for hostile local
 reconstruction.
+
+## Isolate And Publish Each Ratchet
+
+Bind each master problem to one long-lived dedicated branch and a worktree below the repository's
+`.worktrees/` directory. Create or reuse that worktree before changing files; keep the primary
+checkout available for coordination and other masters. Never move one master's siege into
+another master's worktree merely because its branch is convenient.
+
+Treat one returned Pro conversation as one publication ratchet:
+
+1. Start from a pushed commit and record its branch and hash in the enemy lock.
+2. Ingest, reconstruct, formalize, cull, and reconcile only in the master's worktree.
+3. Run the repository's canonical verification gate.
+4. Stage only durable survivors. Exclude `/tmp` prompts, transcripts, reports, scratch proofs,
+   generated test files, and unrelated changes.
+5. Commit the coherent turn on the dedicated branch and push it to the remote Pro can inspect.
+6. Verify that the remote branch resolves to the new commit; update the public issue with that
+   immutable boundary when the repository uses one.
+7. Only then write the next prompt, grounding it in the pushed commit rather than the former
+   baseline or an uncommitted local theorem.
+
+Every Pro turn which changes durable mathematical truth receives its own pushed commit. A turn
+which rejects an attack may still change durable truth through its audit, culling, or frontier
+update and should be committed. Do not manufacture an empty commit when nothing changes; report
+that the wound did not move and reuse the prior public commit. If commit or push fails, the cycle
+is incomplete: preserve the worktree, state the exact failure, and do not present the next prompt
+as ready for Pro.
 
 ## Lock The Enemy
 
@@ -141,10 +168,11 @@ movement.
 
 ## Aim The Next Attack
 
-Write the next external-model prompt under `/tmp`; never commit it. Ground it in an exact public
-commit or another externally accessible review surface that Pro can read without a local
-toolchain. Inline the attack's critical equations instead of assuming repository navigation can
-reconstruct all context. The prompt must contain:
+After the ratchet commit is pushed and remotely visible, write the next external-model prompt
+under `/tmp`; never commit it. Ground it in that exact public commit or another externally
+accessible review surface that Pro can read without a local toolchain. Inline the attack's
+critical equations instead of assuming repository navigation can reconstruct all context. The
+prompt must contain:
 
 1. The master problem and the victory condition first.
 2. The smallest checked frontier needed for the attack.
