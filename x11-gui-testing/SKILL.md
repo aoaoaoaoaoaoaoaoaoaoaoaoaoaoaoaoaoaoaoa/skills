@@ -26,7 +26,7 @@ The launcher creates a fresh Xvfb server and private XDG roots, removes live ses
 
 Options:
 
-- `--wgpu`: exercise winit/wgpu against lavapipe on this host; if unavailable, run `scripts/install-lavapipe` once
+- `--wgpu`: exercise winit/wgpu through lavapipe on this host; if absent, install it once with `"$skill/scripts/install-lavapipe"`
 - `--software-gl`: force Mesa software OpenGL
 - `--dbus`: create a private session bus when the application requires one
 - `--screen WIDTHxHEIGHTxDEPTH`: override the default `1440x920x24` display

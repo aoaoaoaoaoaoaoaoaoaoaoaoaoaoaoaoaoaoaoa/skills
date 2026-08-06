@@ -1,26 +1,31 @@
 # skills
 
-Repository-owned Codex skills, including the DIES IRAE audit family.
+Repository-owned Codex skills.
 
 ## Standalone
 
-- `ad-fontes` — retain each external source once with a neutral synopsis and compact corpus index.
-- `assemble-pro-review-package` — forge one dense external-review prompt from relevant repository context.
-- `bare-metal-alara` — profile and crush wallclock runtime against a locked workload.
-- `vox-nihili` — govern all English prose by the exact null-voice semantic fixed point.
-- `x11-gui-testing` — test real X11 GUI surfaces without touching the live desktop.
+- `ad-fontes`: retain external sources once with neutral synopses and a compact index.
+- `assemble-pro-review-package`: build GitHub-native expert handoffs from exact source coordinates and decisive non-code evidence.
+- `bare-metal-alara`: reduce authoritative wallclock runtime to its economic frontier under a frozen semantic envelope.
+- `shopping`: minimize landed cost for an exact bill of materials.
+- `vox-nihili`: reduce English prose to its semantic fixed point.
+- `x11-gui-testing`: test X11 GUIs without touching the live desktop.
 
 ## DIES IRAE
 
-`dies-irae` convenes any applicable subset of these independent read-only judges and compiles their native reports into one prioritized defect register:
+`dies-irae` convenes applicable read-only judges and compiles their reports into one prioritized defect register:
 
-- `exterminate-slop` — contract implementation architecture under a frozen outer contract.
-- `majestic-magisteria` — reconcile semantic representations and conversion topology.
-- `qui-custodit` — rectify verification architecture into a minimum sufficient evidence basis.
-- `fahrenheit-451` — adjudicate a documentation corpus from the presumption of deletion.
-- `chronicler` — reconcile durable documentation, doc comments, and scarce rationale.
-- `release-inquest` — render an evidence-backed release or hold verdict over the actual product.
+- `exterminate-slop`: contract an implementation without changing its outer contract.
+- `majestic-magisteria`: reconcile semantic representations, ownership, and conversion topology.
+- `qui-custodit`: construct a minimum sufficient basis of executable evidence.
+- `fahrenheit-451`: purge documentation that no longer earns existence.
+- `chronicler`: reconcile durable documentation and source commentary with reality.
+- `release-inquest`: adjudicate release fitness against the actual candidate.
 
-`style-doctrine` governs code, `vox-nihili` governs English prose by default,
-`product-doctrine` governs product conduct, and `ui-doctrine` governs visible
-interfaces; doctrines inform judgments but are not parallel audits.
+## Doctrines
+
+- `style-doctrine`: load the applicable code doctrine and Vox Nihili for English prose.
+- `product-doctrine`: govern software conduct on the user's system.
+- `ui-doctrine`: make every visible element earn its place.
+
+Doctrines guide work and DIES judgments; they are not judges.

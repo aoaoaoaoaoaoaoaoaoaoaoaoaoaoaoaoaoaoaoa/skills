@@ -152,7 +152,7 @@ run_child() {
             export VK_DRIVER_FILES="$system_icd"
             export VK_ICD_FILENAMES="$system_icd"
         else
-            printf "%s\n" "lavapipe is missing; run x11-gui-testing/scripts/install-lavapipe" >&2
+            printf "%s\n" "lavapipe is missing; run ${CODEX_HOME:-$HOME/.codex}/skills/x11-gui-testing/scripts/install-lavapipe" >&2
             exit 69
         fi
     fi
