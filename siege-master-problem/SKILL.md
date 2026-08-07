@@ -1,6 +1,6 @@
 ---
 name: siege-master-problem
-description: "Run the recurring external-research siege loop for a mathematical master problem: isolate it in a dedicated worktree, ingest a shared ChatGPT or Pro conversation, attack its claims independently, formalize only mathematics that cuts a master obstruction, unify or cull what leaves that path, commit and push the checked ratchet, measure the exact wound, and generate the next kill-oriented prompt. Use when a user supplies a research-chat link for formalization, asks for the next Pro attack, resumes an agentic mathematics campaign, or warns against losing the target in supporting lemmas."
+description: "Run the recurring external-research siege loop for a mathematical master problem: isolate it in a dedicated worktree, ingest a shared ChatGPT or Pro conversation, attack its claims independently, formalize only mathematics that cuts a master obstruction, unify or cull what leaves that path, commit and push the checked ratchet, measure the exact wound, generate the next kill-oriented prompt, and report the joint result in chat. Use when a user supplies a research-chat link for formalization, asks for the next Pro attack, resumes an agentic mathematics campaign, or warns against losing the target in supporting lemmas."
 ---
 
 # Siege Master Problem
@@ -189,5 +189,21 @@ statement. Prohibit surveys, cosmetic reformulations, unconsumed supporting stru
 having run Lean, and long speculative tactic scripts. Demand pen-and-paper mathematics detailed
 enough for the local formalizer to attack and translate.
 
-End the local cycle by reporting the checked artifacts, code unified or culled, master-level
-delta, rejected claims, and the path of the transient next prompt.
+## Report The Joint Ratchet
+
+End every formalization turn with an in-chat précis of what Pro and the local formalizer jointly
+accomplished. A durable audit, commit message, issue update, or prompt path does not satisfy this
+obligation. The précis must stand alone for a user who opens none of those artifacts.
+
+State, in compact prose:
+
+1. what substantive idea, proof, or counterexample Pro supplied;
+2. what formalization independently verified, strengthened, replaced, or rejected;
+3. what the two together changed at the master-problem level;
+4. the exact surviving obstruction and next attack;
+5. the pushed branch and commit, plus the transient prompt path when one was generated.
+
+Include the `MASTER VERDICT / REMOVED / REMAINS / DISTANCE` wound without disguising an open
+problem as progress. Mention culled or rejected claims when they delimit the result. Keep the
+précis shorter than the underlying audit: it reports the mathematical ratchet, not a file-by-file
+change log.

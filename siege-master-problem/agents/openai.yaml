@@ -1,4 +1,4 @@
 interface:
   display_name: "Siege Master Problem"
-  short_description: "Formalize attacks without losing the target"
-  default_prompt: "Use $siege-master-problem to work in the master's dedicated .worktrees branch, ingest this shared research conversation, attack its claims independently, retain only formalization that cuts a named master obstruction, unify or cull the rest, verify, commit and push the ratchet, then aim the next pen-and-paper Pro attack through that exact public GitHub commit."
+  short_description: "Formalize attacks and report the joint ratchet"
+  default_prompt: "Use $siege-master-problem to work in the master problem's dedicated .worktrees branch, ingest this shared research conversation, attack its claims independently, retain only formalization that cuts a named master obstruction, unify or cull the rest, verify, commit and push the ratchet, aim the next pen-and-paper Pro attack through that exact public GitHub commit, and end with an in-chat précis of what Pro and formalization jointly accomplished."
