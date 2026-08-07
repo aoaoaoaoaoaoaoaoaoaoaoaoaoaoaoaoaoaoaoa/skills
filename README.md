@@ -17,7 +17,7 @@ Repository-owned Codex skills.
 
 - `exterminate-slop`: contract an implementation without changing its outer contract.
 - `majestic-magisteria`: reconcile semantic representations, ownership, and conversion topology.
-- `qui-custodit`: construct a minimum sufficient basis of executable evidence.
+- `qui-custodit`: re-zero verification into a minimum risk-adequate evidence basis.
 - `fahrenheit-451`: purge documentation that no longer earns existence.
 - `chronicler`: reconcile durable documentation and source commentary with reality.
 - `release-inquest`: adjudicate release fitness against the actual candidate.

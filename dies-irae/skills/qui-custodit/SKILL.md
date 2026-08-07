@@ -1,64 +1,54 @@
 ---
 name: qui-custodit
-description: Rectify a project's verification architecture into the smallest sufficient, stratified basis of executable evidence. Use when Codex should recover semantic obligations, map how they can fail across static, local, generative, integration, boundary, and end-to-end strata, add missing witnesses, strengthen weak oracles, and delete or consolidate redundant, ghost, Potemkin, flaky, slow, or obsolete tests. Defaults to a complete report; executes test changes only when explicitly requested.
+description: Re-zero a project's verification architecture into the smallest risk-adequate basis of executable evidence. Use when Codex should derive what must be proved independently of the incumbent suite, design the target evidence topology, then salvage, strengthen, consolidate, or retire existing tests against it. Defaults to a complete read-only report; changes tests only when explicitly authorized.
 ---
 
 # Qui Custodit
 
 ## Mandate
 
-Construct the smallest sufficient basis `B` of executable evidence for the project's frozen semantic envelope `E`, such that `B ⊨ E`.
+Reconstruct the verification architecture as if it were being designed today for the project's frozen semantic envelope. Derive the required evidence before studying the incumbent suite in depth. Existing tests are quarry: they may contain excellent witnesses, buried contracts, and valuable regressions, but their present shape has no presumption of necessity.
 
-The objective is neither more tests nor fewer tests. It is a verification architecture in which every material obligation has credible evidence, every witness has a unique purpose, and the combined basis wastes as little semantic machinery, runtime, nondeterminism, and maintenance as possible.
+Seek the smallest risk-adequate basis of executable evidence. It should reject credible materially wrong implementations, remain green under lawful rewrites, localize failures well enough to act on them, and cost no more to run and maintain than its evidentiary contribution warrants.
 
-Treat the existing suite as historical evidence, not as the specification. Recover the obligations de novo from present product contracts, behavior, code, types, protocols, persistence, configuration, documentation, and history. None is automatically sovereign. Do not canonize an implementation accident merely because a test already asserts it.
+This is not a quest for more tests, fewer tests, or individually immaculate tests. Quality is relational. A witness earns existence when removing it would admit a material fault, destroy useful epistemic independence, or materially impair diagnosis. Several locally good tests may form a globally poor suite; apparent duplication may be necessary when independent mechanisms can fail separately.
 
-Default to `evidence_report`. Edit tests or test machinery only when the user explicitly requests execution, and only after the complete report exists.
+No finite ordinary suite proves the whole semantic envelope. Do not write `B ⊨ E` unless `B` contains an actual proof system that justifies the claim. Treat sufficiency as a risk-bearing engineering judgment, state its residual uncertainty, and make that judgment falsifiable.
+
+Default to `evidence_report`. Change tests or test machinery only under explicit execution authority and only after the report is complete.
 
 ## Scope And Authority
 
-For a project-wide request, cover the complete obligation/evidence topology. For a named feature, subsystem, contract, or test subtree, follow its obligations and witnesses across the entire project. A test directory is a mutation boundary, not a reasoning boundary.
+For project-wide scope, cover the complete obligation topology. For a named feature, subsystem, contract, or test subtree, follow its obligations and witnesses wherever they lead. A test directory is a mutation boundary, not a reasoning boundary.
 
-Freeze supported behavior and public contracts unless separately authorized. When code, prose, tests, and apparent intent disagree, expose the authority decision instead of writing a regression test that silently chooses a winner.
+Freeze supported behavior and public contracts unless separately authorized. Recover authority from present contracts, behavior, code, types, protocols, persistence, configuration, documentation, and history; none is automatically sovereign. When these disagree, expose the authority decision instead of letting an old assertion choose silently.
 
-Executable evidence includes static enforcement, compile-time proofs, focused examples, generative properties and models, component and boundary trials, end-to-end product exercises, fixtures, goldens, and verification tooling insofar as they actually witness an obligation. This is a repertoire, not a checklist. Documentation may establish the obligation; prose alone does not discharge it.
+Executable evidence includes any mechanism that can independently reject a material violation: static enforcement, proofs, focused examples, generated laws, models, component or boundary trials, product exercises, fixtures, goldens, and verification tooling. These are possible instruments, not required layers. Documentation may establish an obligation; prose alone does not discharge it.
 
-A configured lint, test command, or policy is an intended witness, not accomplished evidence, unless the canonical verification path actually enforces it. An observed passing run witnesses one source identity and environment; it does not make future enforcement self-proving.
+A configured command is intended enforcement, not accomplished evidence, unless the canonical path actually runs it. One green execution witnesses one source identity and environment, not permanent enforcement.
 
-Under `execute_after_report`, authorization covers test code, test-only modules, fixtures, harnesses, snapshots, and verification configuration. It does not authorize production behavior or architecture changes. If a lawful witness requires a production seam or refactor, specify that dependency and stop there unless the user separately authorizes it.
+Under `execute_after_report`, authorization covers test code, test-only modules, fixtures, harnesses, snapshots, and verification configuration. It does not authorize production behavior or architecture changes. If the right witness requires a production seam or refactor, specify the dependency and stop unless separately authorized.
 
-Read repository instructions and load product doctrine when it establishes obligations in the frozen envelope. Load the applicable style doctrine before judging or changing verification code and machinery.
-
-## Proof Topology
-
-Reason in two dimensions:
-
-- horizontally, which semantic obligations are witnessed
-- vertically, at which realization strata each obligation can fail
-
-Static guarantees, unit examples, properties or models, integration contracts, boundary sentinels, and end-to-end trials are different instruments in this topology, not mandatory levels or target ratios. Choose the thinnest combination whose distinct fault models close the obligation. One witness may subsume many weaker cases; one obligation may require several strata because assembly can violate a law that its local implementation satisfies.
-
-Do not fill cells for symmetry. An empty cell is correct when another witness truly subsumes it or that stratum introduces no distinct risk. It is a defect when the cell was simply never considered.
-
-### Generative Evidence
-
-Actively search finite example clusters for the algebra, invariant, metamorphic relation, or transition law that generates them. Where an independent oracle exists, let a property or model own the surrounding input space and retain distinguished examples only when they carry semantic landmarks, boundary cases, or valuable regression identities.
-
-Property testing is not randomized example inflation. The property must state a real law; its generator must range over the honest domain; and its oracle must not reproduce the implementation under test. A discovered counterexample should usually strengthen the general law and may remain as a named seed, not accrete as a disconnected barnacle.
-
-### End-To-End Evidence
-
-End-to-end tests are sparse sovereign witnesses that the assembled product exists as promised. They exercise real entrypoints, wiring, persistence, lifecycle, packaging, recovery, or external conduct to the extent required by the proposition. Calling internal functions through an expensive harness is not end to end.
-
-Treat the total absence of assembled evidence from a product with material assembly behavior as a live gap, not a neutral default. Do not, however, force every obligation through the whole stack. End-to-end breadth is expensive and diagnostically coarse; use it where lower strata cannot witness composition.
+Read repository instructions. Load product doctrine when it establishes obligations in the frozen envelope, and the applicable style doctrine before judging or changing verification code.
 
 ## Evidentiary Standard
 
-A witness earns its place by the obligations and fault modes that would become materially less protected if it vanished. Green status, age, line coverage, bug folklore, and familiarity confer no independent value.
+Judge the basis through two counterfactuals:
 
-Judge evidence by semantic force, oracle independence, fault-model reach, diagnostic locality, determinism, execution cost, and maintenance burden. Coverage, mutation analysis, fuzzing telemetry, runtime measurements, and history are sensors, not verdicts. Use them when they can change the topology; do not perform them ceremonially.
+1. If an implementation violated the obligation in a credible material way, which evidence would reject it, and why?
+2. If the implementation were lawfully replaced while preserving the obligation, would that evidence remain green?
 
-Tests whose oracle merely copies defaults, constants, mappings, schemas, snapshots, mock choreography, or implementation logic are Potemkin evidence. Delete or replace them unless the duplicated shape is itself an external compatibility contract. A regression survives when the underlying risk or law remains live, not merely because a bug once existed.
+The first detects weakness; the second detects implementation capture. The target basis balances fault discrimination, oracle independence, diagnostic locality, determinism, execution cost, and maintenance burden.
+
+Reason across both semantic breadth and realization depth. An obligation may fail in its local rule, composition, boundary projection, lifecycle, or assembled product. Choose only the strata with distinct fault models. Do not fill a testing pyramid, grid, or ratio by ritual; an empty stratum is correct when no distinct risk lives there.
+
+Intermediate artifacts are not automatically implementation detail. When a stage has an independently specified semantic law, distinct failure modes, or materially better diagnostic locality, give it its own witness. Final-output parity does not subsume that witness merely because later machinery could compensate for an earlier error.
+
+Search clusters of examples for the law that generates them. A property is valuable when it states a real invariant, metamorphic relation, or model correspondence over an honest domain and uses an oracle that does not reproduce the implementation. Randomized examples without such a law are not property testing. A discovered counterexample may remain as a named landmark, but should not become a barnacle when the general law owns it.
+
+Use end-to-end evidence sparingly for propositions created by assembly: real entrypoints, wiring, persistence, lifecycle, packaging, recovery, or external conduct. Calling internal functions through an expensive harness is not end to end. Conversely, a product with material assembly behavior and no assembled witness has an evidentiary hole.
+
+Coverage, mutation analysis, fuzzing, history, runtime, and flake telemetry are sensors. They can challenge a basis or reveal a blind region; none is a verdict. A witness whose oracle merely recopies implementation logic, defaults, constants, mappings, schema, or mock choreography is Potemkin evidence. A snapshot or golden earns its place when it records an independently specified semantic artifact or compatibility surface, not incidental structure.
 
 ## Protocol
 
@@ -71,96 +61,89 @@ When writes are available, create resumable state before deep reading:
 /tmp/qui-custodit-<repo>-<scope>-<run-id>-report.md
 ```
 
-Create a companion `-high-severity.md` register only if a qualifying defect appears.
+Create a companion `-high-severity.md` only if a qualifying product defect appears. The worklog preserves source identity, scope, decisions, evidence, and frontier; the report owns the argument. If all writes are forbidden, carry the same state into the final response and mark the run nonresumable.
 
-Record mode, source identity, scope, frozen envelope, applicable doctrine, context budget, evidence manifest, obligation atlas, proof topology, reductions, fold hierarchy, proposed basis, change program, verification, and frontier. The worklog preserves orientation; the report owns the final argument. If all writes are forbidden, carry the same state into the final response and mark the run nonresumable.
+### 1. Freeze The Question
 
-### 1. Lock The Evidence Manifest And Budget
+Record the source identity, mode, scope, semantic envelope, authorities, explicit exclusions, applicable doctrine, canonical verification commands, and available experimental budget. Resolve material authority conflicts or mark them as blockers.
 
-Discover test sources, compile-time assertions, fixtures, snapshots, goldens, test-only generators and helpers, harnesses, runner configuration, and commands broadly. Record static enforcement that may discharge obligations. Keep production code, documentation, history, dependencies, and external systems in an authority fringe unless they are themselves authorized evidence artifacts.
+Locate the incumbent evidence broadly, but do not read it test by test and do not let its taxonomy seed the design. At this stage it is enough to know its extent, rough cost, and where it lives.
 
-For project-wide scope, every evidence artifact must be accounted for. For named scope, include every witness that claims or materially overlaps the target obligations, wherever it lives. Record generated, vendored, legal, and machine-consumed artifacts by role before excluding them.
+### 2. Design From The Blank Page
 
-Exhaustiveness attaches to obligations and actual evidence, not to every tracked file. A binary, asset, document, operational file, or generated artifact enters the evidence manifest only when a verification path consumes it, it serves as an oracle or fixture, or it independently witnesses a material claim. Everything else remains outside the census unless needed as authority fringe.
+With the incumbent suite held at arm's length, derive the material obligations and credible ways each could be violated. State propositions at the level a lawful replacement must preserve, not at the level of current functions or branches.
 
-Run a cheap `wc -l -c` preflight over file-backed evidence. Use these default circuit breakers for all raw material entering one deep-reading clique:
+Sketch the provisional target basis: the fewest mutually supporting witnesses that would discriminate those violations with independent oracles and useful failure locality. Let the system reveal its natural evidence topology. Do not march through a universal category catalogue.
+
+This provisional basis is a hypothesis, not a decree. Later evidence may expose a forgotten obligation, a cheaper witness, or a necessary independent cross-check.
+
+### 3. Decompose Semantically
+
+Group related obligations, governed implementation, boundaries, and candidate evidence into overlapping semantic cliques. Clique boundaries follow shared laws and fault models, not test-file adjacency. Build a hierarchy of folds when the scope is too large for one global synthesis.
+
+Run a cheap `wc -l -c` preflight over material before deep reading. These default ceilings govern the raw contents admitted to one clique or fold:
 
 ```text
 context_line_ceiling: 3000
 context_byte_ceiling: 131072
 ```
 
-Either ceiling trips the budget. Count evidence artifacts and all authority material when their contents enter working context. Broad indexes, test listings, and narrow semantic probes may range widely; voluminous output is a deep read. Split oversized sources into coherent symbol or range slices.
+Either ceiling trips the budget. Broad indexes, symbol listings, and narrow probes may range widely; voluminous output is a deep read. Split oversized sources into coherent semantic or symbol slices. Higher folds consume reductions, not the raw corpus.
 
-Record the canonical verification commands and, when allowed and proportionate, baseline health and runtime. A read-only environment or unavailable runner does not block a report-only audit.
+### 4. Mine The Incumbent Suite
 
-### 2. Build The Obligation Atlas
+Now inventory existing evidence and map it onto the provisional basis. Work by semantic cohort, shared oracle, fixture family, or generated pattern. Deep-read the witnesses that may carry unique information, expose an anomaly, represent a cohort, or determine a disposition. Do not serially exegete every test merely because it exists.
 
-Recover the frozen semantic envelope before using the existing suite to define it. Identify the material laws, capabilities, boundaries, failure semantics, compatibility promises, and nonfunctional commitments that require evidence. Let the system reveal its own ontology; do not march through a universal test-category catalogue.
+Every in-scope evidence artifact must ultimately receive a disposition, but a justified cohort disposition is sufficient. Artifact-complete accounting does not require artifact-complete deep reading. Generated and mechanically uniform families should remain families unless a member materially differs.
 
-For each obligation, identify the strata at which it can fail and its present witnesses, if any. For each existing witness, identify the obligation and fault model it uniquely protects. Mark authority conflicts rather than resolving them by test-writing fiat.
+For each cohort, recover any semantic truth it alone contains before proposing retirement. History and named regressions are evidence about fault models, not hereditary titles to test cases.
 
-The atlas is semantic, not a line-coverage inventory. Trivial implementation statements do not become obligations merely because they are executable.
+Reduce each clique before opening another. Preserve obligations, credible violations, incumbent contribution, candidate basis, authority conflicts, evidence anchors, dependencies, confidence, and frontier. A test listing or green run is not a reduction.
 
-### 3. Seed An Adaptive Semantic Clique Cover
+If a credible catastrophic product defect appears, record it immediately in the high-severity register and continue. Discovery does not authorize product repair or abandonment of the audit.
 
-Group obligations, present evidence, governed implementation, and relevant boundaries into overlapping cliques that resolve coherent verification questions under budget. Let semantic relationships and shared fault models determine the cover, not test-file adjacency or a fixed layer procession.
+### 5. Challenge The Basis
 
-Every in-scope evidence artifact and material obligation must belong to at least one planned clique. Split, merge, overlap, or replace cliques as the proof topology becomes clearer. Do not manufacture cliques to reset the context budget.
+Use targeted observation or experiment only where it can change the proposed architecture. Possible challenges include making a representative wrong change, replaying a historical defect, mutation analysis, generated inputs, boundary perturbation, coverage inspection, repeated runs, or cost measurement. Choose freely; do not perform a ceremony.
 
-### 4. Read And Reduce
+Distinguish source evidence from experimental evidence, and record commands, environment, result, and interpretation. Honor repository resource controls and avoid destabilizing unrelated workloads. A read-only environment or unavailable runner limits confidence but does not block a report.
 
-For each clique, determine what is actually promised, how it can fail, what each witness proves, what its oracle depends on, and whether another witness subsumes it. Inspect governed code and boundaries only far enough to establish those judgments.
+### 6. Synthesize The Target
 
-Seek both absence and excess: missing laws, untested fault strata, weak or circular oracles, gaps hidden by mocks, duplicated examples, cross-layer repetition, ghosts, barnacles, flakes, heavyweight scaffolds, and opportunities for stronger generative or assembled evidence. These are possible discoveries, not a mandatory smell pass.
+Fold clique reductions into one evidence thesis. Rebuild the target basis in light of what the incumbent suite taught you, then map each incumbent cohort as retained, strengthened, fused, subsumed, replaced, or retired.
 
-Before opening another clique, reduce the current one into the smallest durable account another intelligent model can integrate without rereading its raw material. Preserve obligations, failure strata, present witnesses, evidentiary judgments, candidate basis, authority conflicts, evidence anchors, dependencies, and frontier. Merely listing or running tests does not constitute coverage.
+Prefer one stronger law or differential witness over a thicket of examples when it honestly owns their space. Retain examples that mark a boundary, communicate a contract, localize a failure, or preserve a counterexample not subsumed by the stronger witness. Preserve independent corroboration where different machinery can violate the same obligation.
 
-If a credible catastrophic product defect appears, record it immediately in the high-severity register and continue the audit. Discovery does not authorize product rectification or abandonment of evidence coverage.
+Do not retire an intermediate-stage witness as subsumed by terminal parity unless the terminal witness rejects that stage's material faults without relying on compensating downstream behavior, or the stage law is intentionally dissolved under proper authority.
 
-### 5. Fold The Evidence Hierarchically
+Do not consolidate into opaque mega-tests, giant tables that bury distinct failures, or one heroic end-to-end scenario. Do not target a retention fraction, line count, coverage score, mutation score, or layer ratio. Additions and deletions follow from obligations, credible fault models, and evidentiary subsumption.
 
-Fold related clique reductions into bounded branch syntheses, then use bridge reductions to reconcile obligations or witnesses that cross branches. Continue until one project- or region-level evidence thesis remains.
-
-Higher folds consume reductions rather than raw sources. The same context ceilings govern fold inputs; introduce another level instead of flooding a global pass. A fold must materially compress its inputs while preserving authority conflicts, evidence anchors, and open gaps.
-
-Use folds to detect evidentiary subsumption, vertical holes, horizontally duplicated witnesses, and fixtures or harnesses whose cost is amortized across genuine obligations. Do not call two tests duplicates merely because they exercise the same headline behavior at different fault strata.
-
-### 6. Design The Minimum Sufficient Basis
-
-Construct the proposed basis from the obligation atlas rather than by augmenting the existing suite. Admit each witness only for a distinct obligation or failure mode, then map incumbent evidence onto that basis as retained, subsumed, fused, or retired. Introduce new evidence only for a genuinely uncovered obligation or stratum. A necessary net addition requires no compensating deletion.
-
-Specify the target evidence topology and a dependency-ordered change program precise enough to execute without repeating the audit. Each change must name the obligations and failure strata it closes, the canonical witness and independent oracle, present evidence retained or retired, basis delta, authority, implementation shape, cost implications, dependencies, and verification.
-
-Choose actions freely from the evidence. Tests may be retired, subsumed, fused, generalized, moved, repaired, or created; stronger static enforcement or a production-seam handoff may supersede dynamic evidence. These are outcomes, not a closed method menu.
-
-Preserve named examples that clarify a law or pin a valuable counterexample. Remove tests with no unique contribution. Do not consolidate into opaque mega-tests, bury distinct failures in giant parameter tables, or replace diagnostic local evidence with one heroic end-to-end scenario.
-
-Do not estimate or target a retention fraction. Additions and deletions follow only from the complete obligation ledger and evidentiary subsumption.
+Specify a dependency-ordered change program precise enough to execute without repeating the audit. Each change should identify the obligation and fault model, target witness and oracle, incumbent migration, expected basis delta, dependencies, cost consequences, and validation.
 
 ### 7. Close The Frontier
 
-Continue until:
+Stop when further reading is unlikely to change the target basis or change program, and all of the following hold:
 
-- every in-scope evidence artifact is covered
-- every material obligation has a credible proposed witness or an explicit authority blocker
-- relevant failure strata have been considered rather than assumed away
-- every surviving witness has a unique contribution to the basis
-- generative opportunities and assembled-product gaps have been adjudicated
-- authority conflicts, flakes, and unverifiable claims have a disposition
-- no open frontier could materially change the proposed basis or change program
+- every material obligation has a credible witness or explicit authority blocker;
+- credible failure strata have been considered rather than assumed away;
+- every proposed witness has a distinct contribution or justified independent role;
+- every incumbent artifact or coherent cohort has a supported disposition;
+- weak, circular, flaky, obsolete, and needlessly costly evidence has a disposition;
+- residual uncertainty and unperformed validation are explicit.
 
-Clean areas and intentionally empty cells are valid results. Do not manufacture tests to decorate the report.
+Clean regions and intentionally empty strata are valid. Do not manufacture work to decorate the report.
 
 ### 8. Report, Then Optionally Execute
 
-Write the complete evidence report from the folds. Stop there unless execution was explicit.
+Lead with the target evidence architecture and the highest-value changes, not an archive tour of the incumbent suite. The report must contain the executive judgment, proposed basis, prioritized defect and change register, incumbent migration or deletion program, authority blockers, residual uncertainty, and evidence anchors. Organize it around the actual findings; do not print empty rubric sections. Append detailed ledgers only when they improve auditability.
 
-When authorized, recheck source identity and establish the baseline verification state before mutation. Execute in evidence-dependency order: create receiving or stronger witnesses before deleting weaker ones; keep counterexamples until the general law demonstrably captures them; and repair harnesses before judging tests that depend on them.
+Stop after the report unless execution was explicit.
 
-Modify only authorized evidence surfaces. Run focused checks as the basis changes, then the complete verification contract. Use coverage, mutation, fuzzing, and runtime comparison only where they answer a live uncertainty. Finish with a residual atlas and fold proving that the final basis still closes the frozen envelope.
+When authorized, recheck source identity and baseline state. Establish receiving or stronger witnesses before deleting weaker ones, and retain counterexamples until the general law demonstrably subsumes them. Modify only authorized evidence surfaces. Run focused checks as the basis changes, then the complete verification contract. Finish with a residual fold showing how the resulting basis covers the frozen envelope.
 
 ## Embedded Forms
+
+Use these as durable state, not prose templates.
 
 ### Run State
 
@@ -170,99 +153,87 @@ repository:
 source_identity:
 scope:
 frozen_envelope:
+authorities:
+exclusions:
 applicable_doctrine:
+canonical_commands:
+experimental_budget:
 worklog_path:
 report_path:
 high_severity_path: none
 context_line_ceiling: 3000
 context_byte_ceiling: 131072
 
-evidence_manifest:
-authority_fringe:
-obligation_atlas:
-proof_topology:
-clique_cover:
-clique_reductions:
+semantic_cliques:
 fold_hierarchy:
-present_basis:
-proposed_basis:
+target_basis:
+incumbent_cohorts:
 change_program:
 authority_conflicts:
+residual_uncertainty:
 frontier:
 execution:
 verification:
-residual:
 ```
 
-### Obligation And Evidence Ledger
+### Obligation Ledger
 
 ```text
-| obligation | authority | failure_strata | present_witnesses | unique_contribution | judgment | proposed_basis | basis_delta | cost | evidence | coverage |
-|------------|-----------|----------------|-------------------|---------------------|----------|----------------|-------------|------|----------|----------|
+| obligation | authority | credible violation | target witness and oracle | incumbent evidence | disposition | confidence | anchors |
+|------------|-----------|--------------------|---------------------------|--------------------|-------------|------------|---------|
+```
+
+### Cohort Disposition
+
+```text
+cohort:
+claimed_role:
+representative_or_decisive_witnesses:
+unique_information:
+oracle_and_fault_reach:
+target_owner:
+disposition:
+migration_risk:
+anchors:
 ```
 
 ### Clique Reduction
 
 ```text
 clique_id:
-purpose:
-evidence_set:
-authority_fringe:
-evidence_lines:
-evidence_bytes:
-coverage_delta:
-
-obligations_and_failure_strata:
-present_witnesses:
-evidentiary_judgment:
-candidate_basis:
+question:
+raw_lines:
+raw_bytes:
+obligations_and_violations:
+provisional_target_witnesses:
+incumbent_contribution:
+cohort_dispositions:
 authority_conflicts:
-cross_clique_dependencies:
+dependencies:
+confidence:
 frontier:
 supersedes:
 ```
 
-### Evidence Report
-
-```markdown
-# Qui Custodit Evidence Report: <scope>
-
-## Executive Judgment
-## Frozen Semantic Envelope
-## Coverage And Reduction
-## Present Evidence Topology
-## Proposed Minimum Basis
-## Missing And Weak Evidence
-## Redundant And Misplaced Evidence
-## Generative Evidence
-## Integration And End-To-End Evidence
-## Dependency-Ordered Change Program
-## Authority Conflicts And Blockers
-## High-Severity Register
-## Verification Program
-## Residual Unknowns
-
-### Complete Obligation And Evidence Ledger
-
-| obligation | failure strata | present witnesses | proposed basis | basis delta | judgment | evidence | dependencies |
-|------------|----------------|-------------------|----------------|-------------|----------|----------|--------------|
-```
-
 ## Hard Failures
 
-- do not infer the semantic envelope from the current tests alone
-- do not sample a project-wide evidence topology
+- do not derive the target architecture from the incumbent suite
+- do not read every test serially before designing the provisional basis
+- do not confuse artifact-complete disposition with artifact-complete deep reading
+- do not infer the semantic envelope from current assertions alone
+- do not judge a suite as a bag of isolated test cases
 - do not optimize for test count, line coverage, mutation score, or layer ratios
-- do not fill every proof-topology cell by ritual
-- do not remain trapped at the unit-example stratum
-- do not call randomized examples property testing without a real law and independent oracle
-- do not call an expensive internal-call harness end to end
+- do not preserve implementation capture as contract protection
+- do not erase an independently specified intermediate seam by treating terminal parity as universal subsumption
 - do not duplicate implementation logic in the oracle
+- do not call randomized examples property testing without a law and independent oracle
+- do not call an expensive internal-call harness end to end
 - do not preserve ghosts, barnacles, flakes, or Potemkin evidence because they are green
-- do not delete a witness until its unique obligation and fault model are accounted for
-- do not replace local diagnostic evidence with opaque mega-tests
-- do not let alarming defects derail coverage or authorize product changes
-- do not mutate production behavior or architecture under test-only authorization
-- do not exceed context or fold budgets through runner output or authority evidence
-- do not turn the worklog into a shadow report
+- do not retire a witness before recovering its unique obligation, fault model, or historical information
+- do not erase useful epistemic independence in the name of deduplication
+- do not claim exhaustive semantic proof from an ordinary finite suite
+- do not let alarming product defects derail coverage or authorize repair
+- do not mutate production behavior under test-only authority
+- do not exceed context budgets through raw sources, runner output, or global folds
+- do not turn the worklog or final report into compulsory form-filling
 - do not edit before the complete report or without explicit execution authority
