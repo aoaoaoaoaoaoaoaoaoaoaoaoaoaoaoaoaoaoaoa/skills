@@ -1,6 +1,6 @@
 ---
 name: siege-master-problem
-description: "Run the recurring external-research siege loop for a mathematical master problem: isolate it in a dedicated worktree, ingest a shared ChatGPT or Pro conversation, attack its claims independently, formalize only mathematics that cuts a master obstruction, unify or cull what leaves that path, commit and push the checked ratchet, measure the exact wound, generate the next kill-oriented prompt, and report the joint result in chat. Use when a user supplies a research-chat link for formalization, asks for the next Pro attack, resumes an agentic mathematics campaign, or warns against losing the target in supporting lemmas."
+description: "Run the recurring external-research siege loop for a mathematical master problem: isolate it in a dedicated worktree, map the full strategy tree, ingest one report or adjudicate a parallel salvo holistically, formalize only mathematics that cuts a master obstruction, unify or cull what leaves that path, commit and push each checked ratchet, generate one kill prompt or an orthogonal MIRV portfolio across all promising approaches, and report both the newest wound and the net master frontier. Use when a user supplies research-chat links for formalization, asks for the next Pro attack or several parallel attacks, resumes an agentic mathematics campaign, or warns against losing the target in supporting lemmas."
 ---
 
 # Siege Master Problem
@@ -38,7 +38,11 @@ Bind each master problem to one long-lived dedicated branch and a worktree below
 checkout available for coordination and other masters. Never move one master's siege into
 another master's worktree merely because its branch is convenient.
 
-Treat one returned Pro conversation as one publication ratchet:
+Treat one sequentially returned Pro conversation as one publication ratchet. A deliberately
+parallel set is one analytical salvo: adjudicate every sibling report as a unit before synthesizing
+any of them, then preserve the per-conversation publication cadence described below.
+
+For each publication ratchet:
 
 1. Start from a pushed commit and record its branch and hash in the enemy lock.
 2. Ingest, reconstruct, formalize, cull, and reconcile only in the master's worktree.
@@ -86,6 +90,27 @@ Reject random incrementalism. Promote a result only if it does at least one of t
 A supporting lemma without an immediate consuming theorem fails the enemy lock. Do not enlarge
 infrastructure merely because the report supplied a plausible lemma.
 
+## Map The Tech Tree
+
+Before synthesizing a returned attack and again before aiming any successor prompt, reconstruct the
+master problem's complete current tech tree. Begin at the master statement and map:
+
+1. Exact reductions and corollary relations: which node would close or decide which ancestor.
+2. Checked territory, including normal forms and compiler or converse boundaries already complete.
+3. Killed lanes and the counterexamples or impossibility theorems which killed them.
+4. Every live incomparable fork, its smallest obstruction, and its expected master implication.
+5. Claims still merely reported, computational, conditional, or open.
+
+Read this tree net of the whole durable record, not as a chronology of recent conversations.
+Collapse aliases, delete superseded formulations, and rectify names. Use the newest report as the
+immediate focus, but do not let it erase older live forks or make its local obstruction appear to
+be the whole master. A promising route which would fall automatically from a stronger sibling is
+not an independent frontier target.
+
+The tree may remain an internal or transient working object unless the repository already owns a
+durable frontier representation. Persist only changes in mathematical truth, not a ceremonial
+diagram.
+
 ## Ingest The Attack
 
 Keep external-model conversations and prompts transient. For a ChatGPT share link, recover the
@@ -114,6 +139,28 @@ Audit definitions, quantifiers, implication directions, imported hypotheses, con
 degenerate cases, boundary cases, and hidden existence or uniqueness assumptions. Add whatever
 domain-specific checks the claim requires. Test small exact instances when they can falsify a
 claim. Model authority is no evidence.
+
+## Adjudicate A Parallel Salvo
+
+When several Pro conversations were launched in parallel from the same or nearby boundary, do not
+formalize the first answer while its siblings remain unread. First:
+
+1. Recover every transcript and report in the salvo.
+2. Reconstruct and classify each report independently against the pre-salvo enemy lock.
+3. Review them together against the full tech tree: identify convergence, contradiction, hidden
+   shared premises, coordinate duplicates, complementary lemmas, and coverage gaps.
+4. Derive the strongest joint synthesis yourself. One report may repair, refute, subsume, or give
+   the missing consumer for another; arbitrary return order has no mathematical authority.
+
+This holistic review is a barrier before synthesis, not permission to blur provenance. After the
+unit review, formalize in mathematical dependency order. Give each conversation which changes
+durable truth its own coherent pushed commit; when a sibling becomes a restatement, rejection, or
+corollary of an already committed result, record that disposition without manufacturing an empty
+commit. Do not emit the next prompt or prompt portfolio until the entire salvo has been adjudicated
+and the net frontier rebuilt.
+
+A credible direct master closure still overrides the workflow. Pursue and verify it immediately,
+then audit the remaining reports only as needed to state the final net result honestly.
 
 ## Formalize The Survivors
 
@@ -168,22 +215,35 @@ movement.
 
 ## Aim The Next Attack
 
-After the ratchet commit is pushed and remotely visible, write the next external-model prompt
-under `/tmp`; never commit it. Ground it in that exact public commit or another externally
-accessible review surface that Pro can read without a local toolchain. Inline the attack's
-critical equations instead of assuming repository navigation can reconstruct all context.
+After the ratchet commit is pushed and remotely visible, write the next external-model prompt or
+prompt portfolio under `/tmp`; never commit it. Ground every prompt in that exact public commit or
+another externally accessible review surface that Pro can read without a local toolchain. Inline
+the attack's critical equations instead of assuming repository navigation can reconstruct all context.
 Immutable coordinates establish provenance; they are not an incantation. Give the branch, commit,
 and relevant links once. Do not invent prompt IDs, demand a source-lock acknowledgement, force the
 model to echo or repeat metadata, or use ritual phrases as a proxy for clear grounding. Ask it to
 identify an access gap only when one occurs.
 
-The prompt should cover:
+Map the complete tech tree before choosing the next attack. Generate one prompt when one route
+strictly dominates. When several promising incomparable approaches survive, generate a MIRV
+portfolio covering all of them. Do not suppress a credible fork merely to preserve a singular
+cadence. Include opposing theorem/counterexample lanes and routes which bypass the current local
+obstruction when they are genuinely distinct.
+
+One prompt per mathematical route is enough. Do not manufacture diversity through paraphrases,
+minor parameter variants, or several prompts sharing the same unproved bottleneck. Parallel
+prompts must be independently intelligible, grounded at the same immutable boundary, and free of
+dependencies on answers that do not yet exist. Sequence attacks whose inputs genuinely depend on
+one another. Treat the returned portfolio as a parallel salvo under the preceding section.
+
+A single prompt should cover the following. In a MIRV portfolio, the portfolio should cover them
+collectively while each prompt remains concentrated on its own kill shot:
 
 1. The master problem and the victory condition first.
 2. The smallest checked frontier needed for the attack.
 3. Killed lanes with an explicit instruction not to revisit them.
 4. One primary kill shot aimed at the live obstruction.
-5. One opposing constructive or falsification lane when it could decide the strategy.
+5. An opposing constructive or falsification lane when it could decide the strategy.
 6. Required audits for known failure modes.
 7. An output demand: resolution, decisive obstruction, exact counterexample, or one theorem whose
    stated implication changes the master frontier.
@@ -197,21 +257,27 @@ statement. Prohibit surveys, cosmetic reformulations, unconsumed supporting stru
 having run local verification, and long speculative implementation scripts. Demand pen-and-paper
 mathematics detailed enough for the local formalizer to attack and translate.
 
-## Report The Joint Ratchet
+## Report The Joint Ratchet And Tech Tree
 
-End every formalization turn with an in-chat précis of what Pro and the local formalizer jointly
-accomplished. A durable audit, commit message, issue update, or prompt path does not satisfy this
-obligation. The précis must stand alone for a user who opens none of those artifacts.
+End every formalization turn, including a parallel salvo, with an in-chat précis of what Pro and the
+local formalizer jointly accomplished plus a condensed net view of the entire master tech tree. A
+durable audit, commit message, issue update, or prompt path does not satisfy this obligation. The
+account must stand alone for a user who opens none of those artifacts.
 
-State, in compact prose:
+Center the newest turn or salvo, but reconnect it to the master from the top. State, in compact
+prose:
 
-1. what substantive idea, proof, or counterexample Pro supplied;
-2. what formalization independently verified, strengthened, replaced, or rejected;
-3. what the two together changed at the master-problem level;
-4. the exact surviving obstruction and next attack;
-5. the pushed branch and commit, plus the transient prompt path when one was generated.
+1. What substantive idea, proof, or counterexample each relevant Pro report supplied.
+2. What formalization independently verified, strengthened, unified, replaced, or rejected.
+3. What the new work changed at the master-problem level.
+4. The net tech tree: the main reduction route, checked or killed nodes, and every substantively
+   live incomparable fork after removing superseded matter.
+5. The exact smallest surviving obstruction and the next attack or MIRV portfolio.
+6. The pushed branch and commit, plus every transient prompt path generated.
 
 Convey the verdict, removed obstruction, surviving obstruction, and remaining implication without
 disguising an open problem as progress. Mention culled or rejected claims when they delimit the
-result. Keep the précis shorter than the underlying audit: it reports the mathematical ratchet,
-not a file-by-file change log.
+result. For a parallel salvo, explain its consensus, contradictions, and joint consequence rather
+than narrating chats in arrival order. Present the tech tree as present mathematical truth, not an
+ever-growing diary. Keep the account shorter than the underlying audit: it reports the ratchet and
+strategic topology, not a file-by-file change log.
