@@ -154,8 +154,43 @@ def _messages(conversation: dict[str, Materialized]) -> Iterable[tuple[int, str,
             yield index, role, text
 
 
-def _render(source: str, last: str | None) -> str:
+def _has_final_response(conversation: dict[str, Materialized]) -> bool:
+    current_id = conversation.get("current_node")
+    mapping = conversation.get("mapping")
+    if not isinstance(current_id, str) or not isinstance(mapping, dict):
+        return False
+    node = mapping.get(current_id)
+    if not isinstance(node, dict):
+        return False
+    message = node.get("message")
+    if not isinstance(message, dict):
+        return False
+    author = message.get("author")
+    content = message.get("content")
+    metadata = message.get("metadata")
+    if not isinstance(author, dict) or not isinstance(content, dict):
+        return False
+    parts = content.get("parts")
+    has_text = isinstance(parts, list) and any(
+        isinstance(part, str) and part.strip() for part in parts
+    )
+    return (
+        author.get("role") == "assistant"
+        and message.get("status") == "finished_successfully"
+        and message.get("end_turn") is True
+        and message.get("recipient") == "all"
+        and has_text
+        and not (
+            isinstance(metadata, dict)
+            and metadata.get("is_thinking_preamble_message") is True
+        )
+    )
+
+
+def _render(source: str, last: str | None, require_final: bool) -> str:
     conversation = _conversation(_read_source(source))
+    if require_final and not _has_final_response(conversation):
+        raise ExtractionError("shared conversation has not reached a final response")
     messages = list(_messages(conversation))
     if last is not None:
         try:
@@ -182,13 +217,18 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--last", choices=sorted(_ROLES), help="emit only the last message by role"
     )
+    parser.add_argument(
+        "--require-final",
+        action="store_true",
+        help="fail unless the shared conversation currently ends in a final response",
+    )
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     arguments = _parser().parse_args(argv)
     try:
-        print(_render(arguments.source, arguments.last), end="")
+        print(_render(arguments.source, arguments.last, arguments.require_final), end="")
     except (
         ExtractionError,
         OSError,

@@ -118,9 +118,13 @@ human transcript and final assistant report with:
 
 ```sh
 skill=$(readlink -f "${CODEX_HOME:-$HOME/.codex}/skills/siege-master-problem")
-"$skill/scripts/extract_shared_chat.py" "$url" > "/tmp/$slug-transcript.md"
-"$skill/scripts/extract_shared_chat.py" "$url" --last assistant > "/tmp/$slug-report.md"
+"$skill/scripts/extract_shared_chat.py" "$url" --require-final > "/tmp/$slug-transcript.md"
+"$skill/scripts/extract_shared_chat.py" "$url" --require-final --last assistant > "/tmp/$slug-report.md"
 ```
+
+If extraction reports that the share has not reached a final response, the external turn is still
+live or was shared mid-turn. Wait for completion and retry; do not adjudicate a progress update as
+the report.
 
 Never commit the raw transcript or report. Preserve only independently reconstructed results,
 counterexamples, and bounded audit evidence. If the report relies on papers, invoke the local
