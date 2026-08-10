@@ -224,9 +224,18 @@ prompt portfolio under `/tmp`; never commit it. Ground every prompt in that exac
 another externally accessible review surface that Pro can read without a local toolchain. Inline
 the attack's critical equations instead of assuming repository navigation can reconstruct all context.
 Immutable coordinates establish provenance; they are not an incantation. Give the branch, commit,
-and relevant links once. Do not invent prompt IDs, demand a source-lock acknowledgement, force the
-model to echo or repeat metadata, or use ritual phrases as a proxy for clear grounding. Ask it to
-identify an access gap only when one occurs.
+and relevant links once. Do not demand a source-lock acknowledgement, force the model to echo or
+repeat metadata, or use ritual phrases as a proxy for clear grounding. Ask it to identify an access
+gap only when one occurs.
+
+Give every prompt a visible first-line title and matching filename stem of the form
+`prompt-<master-slug>-<wave-id>-<two-digit-prompt-id>`. Use the stable master abbreviation already
+owned by the project, the pushed baseline's short hash as the default wave ID, and a one-indexed,
+zero-padded prompt number within the wave. If multiple waves leave the same commit, append a wave
+ordinal to the hash. For example, the first `M₃(4)` prompt from baseline `e656e0d9` is titled
+`prompt-m34-e656e0d9-01` and stored as `prompt-m34-e656e0d9-01.md`. Put any descriptive attack name
+below this identifier. The identifier is a navigation label for copied conversations, not a ritual
+for the external model to repeat.
 
 Map the complete tech tree before choosing the next attack. Generate one prompt when one route
 strictly dominates. When several promising incomparable approaches survive, generate a MIRV
