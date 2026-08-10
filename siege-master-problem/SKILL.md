@@ -228,14 +228,18 @@ and relevant links once. Do not demand a source-lock acknowledgement, force the 
 repeat metadata, or use ritual phrases as a proxy for clear grounding. Ask it to identify an access
 gap only when one occurs.
 
-Give every prompt a visible first-line title and matching filename stem of the form
-`prompt-<master-slug>-<wave-id>-<two-digit-prompt-id>`. Use the stable master abbreviation already
-owned by the project, the pushed baseline's short hash as the default wave ID, and a one-indexed,
-zero-padded prompt number within the wave. If multiple waves leave the same commit, append a wave
-ordinal to the hash. For example, the first `M₃(4)` prompt from baseline `e656e0d9` is titled
-`prompt-m34-e656e0d9-01` and stored as `prompt-m34-e656e0d9-01.md`. Put any descriptive attack name
-below this identifier. The identifier is a navigation label for copied conversations, not a ritual
-for the external model to repeat.
+The prompt text itself must begin with a literal identifier line of the form
+`prompt-<master-slug>-<wave-id>-<two-digit-prompt-id>`. This first-line payload is mandatory: it
+makes the coordinate immediately visible in the web conversation. Put the descriptive attack
+heading below it. A matching `/tmp` filename is useful but optional; a correctly named file does
+not satisfy this rule if the prompt body lacks the identifier.
+
+Use the stable master abbreviation already owned by the project, the pushed baseline's short hash
+as the default wave ID, and a one-indexed, zero-padded prompt number within the wave. If multiple
+waves leave the same commit, append a wave ordinal to the hash. For example, the first `M₃(4)`
+prompt from baseline `e656e0d9` begins with `prompt-m34-e656e0d9-01`; its descriptive heading starts
+on a later line. The identifier is a navigation label for copied conversations, not a ritual for
+the external model to repeat.
 
 Map the complete tech tree before choosing the next attack. Generate one prompt when one route
 strictly dominates. When several promising incomparable approaches survive, generate a MIRV
