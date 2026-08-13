@@ -18,6 +18,13 @@ Do not place an order or incur an obligation without explicit authorization.
 
 ## Lock The Procurement Contract
 
+Before asking for reusable buyer facts, read `~/documents/INDEX.md` when it
+exists. Use only entries explicitly marked current or default. Follow its
+explicit links when a required fact is absent or its provenance matters; do not
+search the documents tree blindly. Ask when no current, unambiguous fact can be
+resolved. The index supplies facts, not authorization to order, and unrelated
+contents must not enter the procurement report.
+
 Recover or obtain:
 
 - destination country and postal code
