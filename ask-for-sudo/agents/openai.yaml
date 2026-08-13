@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ask for sudo"
+  short_description: "Graphical, reasoned sudo authentication"
+  default_prompt: "Use $ask-for-sudo to run this privileged command with a clear graphical authentication reason."

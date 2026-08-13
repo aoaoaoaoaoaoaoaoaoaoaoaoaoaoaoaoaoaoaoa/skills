@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+: "${CODEX_SUDO_COMMAND:?missing command description}"
+: "${CODEX_SUDO_REASON:?missing privilege reason}"
+
+wrapped_reason=$(printf '%s\n' "$CODEX_SUDO_REASON" | /usr/bin/fold --spaces --width=88)
+wrapped_command=$(printf '%s\n' "$CODEX_SUDO_COMMAND" | /usr/bin/fold --spaces --width=88)
+printf -v body 'Reason\n%s\n\nCommand\n%s' "$wrapped_reason" "$wrapped_command"
+
+exec /usr/bin/zenity \
+    --entry \
+    --modal \
+    --width=720 \
+    --height=280 \
+    --title='Codex privilege request' \
+    --text="$body" \
+    --entry-text='' \
+    --hide-text \
+    --ok-label='Authorize'
