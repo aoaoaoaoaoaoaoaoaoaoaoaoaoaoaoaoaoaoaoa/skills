@@ -1,0 +1,4 @@
+interface:
+  display_name: "Testing Year Zero"
+  short_description: "Rebuild a test suite from first principles"
+  default_prompt: "Use $testing-year-zero to derive a sparse target evidence basis from a blank page, then reconcile the incumbent test suite against it."

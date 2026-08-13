@@ -29,7 +29,7 @@ Freeze supported behavior, public contracts, platforms, languages, audiences, an
 
 Load the repository instructions and the `product-doctrine` skill, including every applicable platform projection. Load the relevant `style-doctrine` guides when source or manifest quality bears on release fitness.
 
-Release Inquest owns the integrated ship judgment, not every specialist campaign. Consume source-matched reports from Qui Custodit, Chronicler, Fahrenheit 451, Bare Metal ALARA, Exterminate Slop, and Majestic Magisteria when available. If a deep campaign is required, specify an exact handoff and continue the inquest; do not silently launch a rewrite, documentation reconstruction, performance campaign, or test-suite redesign.
+Release Inquest owns the integrated ship judgment, not every specialist campaign. Consume source-matched reports from Testing Year Zero, Chronicler, Fahrenheit 451, Bare Metal ALARA, Exterminate Slop, and Majestic Magisteria when available. If a deep campaign is required, specify an exact handoff and continue the inquest; do not silently launch a rewrite, documentation reconstruction, performance campaign, or test-suite redesign.
 
 ## Release Law
 

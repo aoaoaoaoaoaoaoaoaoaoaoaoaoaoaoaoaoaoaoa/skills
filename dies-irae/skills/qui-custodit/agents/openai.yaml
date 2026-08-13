@@ -1,4 +1,0 @@
-interface:
-  display_name: "Qui Custodit"
-  short_description: "Re-zero the verification evidence basis"
-  default_prompt: "Use $qui-custodit to derive this project's target evidence basis independently of its incumbent tests, then reconcile the suite against it."

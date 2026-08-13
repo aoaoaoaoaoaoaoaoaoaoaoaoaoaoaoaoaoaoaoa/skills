@@ -25,7 +25,7 @@ The judges live under [skills/](skills/):
 
 - `exterminate-slop`: implementation contraction and architectural residue
 - `majestic-magisteria`: semantic representations, ownership, and conversion topology
-- `qui-custodit`: verification architecture and risk-adequate evidence
+- `testing-year-zero`: blank-page test-suite reconstruction and evidence austerity
 - `fahrenheit-451`: zero-based documentation purge
 - `chronicler`: documentary concordance and source commentary
 - `release-inquest`: integrated product and release fitness

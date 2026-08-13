@@ -9,6 +9,9 @@ Judge every interface with fresh eyes: the user does not know or care about the 
 
 Begin from absence and require every element to earn its place. If removing a label, symbol, control, state, or flourish leaves the user no less capable or informed, remove it. Prefer the smallest coherent surface, familiar vocabulary, progressive disclosure, and direct manipulation; do not expose implementation structure to compensate for an interface that lacks a user-shaped model. When uncertain, observe the screen as a first-time user and err toward omission.
 
+UI unit tests follow `$unit-test-doctrine`. A visible change does not
+automatically warrant an internal-state unit test.
+
 ## Interaction Hazards
 
 1. **Moving target.** Never reorder or replace a control under hover, focus, press, drag, or edit; reconcile after interaction ends.

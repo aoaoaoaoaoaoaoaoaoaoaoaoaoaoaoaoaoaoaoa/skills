@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unit Test Doctrine"
+  short_description: "Reject low-value, change-shaped unit tests"
+  default_prompt: "Use $unit-test-doctrine to judge whether this unit test earns a permanent place."

@@ -9,4 +9,7 @@ Read [references/universal.md](references/universal.md) whenever product behavio
 
 Treat the doctrine as normative unless an explicit product contract or more local instruction overrides it. Apply its laws to architecture, implementation, review, and verification; do not reduce them to a ceremonial release checklist.
 
+Product unit tests follow `$unit-test-doctrine`; product obligations do not
+mandate one unit test per obligation or change.
+
 This doctrine governs the software's outward conduct. Pair it with the style doctrine when the inward construction of the code is also in scope.

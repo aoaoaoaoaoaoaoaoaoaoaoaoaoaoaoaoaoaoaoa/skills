@@ -23,3 +23,5 @@ Fail hard unless recovery is real. Validate and refine at boundaries; do not pre
 Exploit libraries and dependencies aggressively when they supply stronger machinery than local ownership would. NIH has no virtue, but imported semantics remain part of the machine; choose on whole-system merit. Backward compatibility, shims, and parallel old/new paths exist only under a live contract.
 
 Tooling posture is strict. Formatting, linting, type checking, dependency pruning, and semantic verification are part of the build contract. Any law exact machinery can enforce must cease to be prose. Exploit compilers, analyzers, and transformation tools at full strength. Write code for exact transformation first and human reading only incidentally.
+
+Unit tests follow `$unit-test-doctrine`. A change does not automatically earn a permanent unit test.

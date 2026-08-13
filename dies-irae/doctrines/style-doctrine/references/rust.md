@@ -12,6 +12,8 @@ Use `unsafe` as an explicit theorem boundary. State and discharge the safety inv
 
 `Result` models an expected domain or environmental alternative crossing an API boundary; it is not ritual anxiety. `Option` denotes one exact absence state. Panic or `expect` on violated invariants, with domain context. Keep errors structured until the presentation boundary; do not launder them into strings, defaults, or ambient logging.
 
-Build dense local vocabularies with direct imports. Intentional prelude and enum-variant glob imports are proper tools for cheap notation. Rust casing conventions do not outrank exact domain or mathematical names; scope lint exceptions precisely where notation demands them.
+Build dense local vocabularies with direct imports. Intentional prelude and enum-variant glob imports are proper tools for cheap notation. Suppress naming lints concerned only with lexical appearance; retain those that encode binding intent, API semantics, or module topology.
 
-Formatting and lint policy are build law. Enforce `cargo fmt` and manifest-owned rustc and Clippy lints. Deny warnings and pedantic lints by default; make exceptions precise, local, and recorded where lint taste conflicts with stronger design.
+Formatting and lint policy are build law. Enforce `cargo fmt` and manifest-owned rustc and Clippy lints. Deny warnings and pedantic lints by default. Function line and parameter counts are not complexity measures. Internal tooling does not owe boilerplate API documentation. Canonical house exceptions are global; make every other exception precise, local, and recorded where lint taste conflicts with stronger design.
+
+Rust unit tests obey `$unit-test-doctrine`. A patch does not owe a new `#[test]`.

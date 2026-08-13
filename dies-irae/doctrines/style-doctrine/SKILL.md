@@ -1,6 +1,6 @@
 ---
 name: style-doctrine
-description: "Use whenever Codex writes, reviews, or refactors code or English natural-language prose, or when the user asks for house style, coding or prose doctrine, or style-guide compliance. Load the relevant code guide; for English prose always load Vox Nihili. Treat both as normative unless explicit user or local project instructions override them."
+description: "Use whenever Codex writes, reviews, or refactors code or English natural-language prose, or when the user asks for house style, coding or prose doctrine, or style-guide compliance. Load the relevant code guide, pair unit-test work with Unit Test Doctrine, and always load Vox Nihili for English prose. Treat them as normative unless explicit user or local project instructions override them."
 ---
 
 # Style Doctrine
@@ -14,6 +14,9 @@ For code, read [references/universal.md](references/universal.md) first. Then re
 - Java: [references/java.md](references/java.md)
 
 If no code-language-specific guide exists, apply the universal guide directly.
+
+Whenever unit tests may be added, changed, reviewed, or deleted, also load
+`$unit-test-doctrine`.
 
 These guides deliberately reject some common engineering advice. Do not translate them back into conventional novice-friendly defaults. Prefer static truth, compact representation, strong invariants, runtime efficiency, token economy, and powerful abstraction.
 
