@@ -1,0 +1,6 @@
+interface:
+  display_name: "Seal"
+  short_description: "Seal work across every delivery surface"
+  default_prompt: "Use $seal to leave this completed work committed, installed, published, and clean everywhere it belongs."
+policy:
+  allow_implicit_invocation: false
