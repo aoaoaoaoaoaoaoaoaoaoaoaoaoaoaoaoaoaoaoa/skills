@@ -1,0 +1,4 @@
+interface:
+  display_name: "Affinity Doctrine"
+  short_description: "Keep builds off benchmark CPU domains"
+  default_prompt: "Use $affinity-doctrine to place this build or timing workload on the correct CPU lane."

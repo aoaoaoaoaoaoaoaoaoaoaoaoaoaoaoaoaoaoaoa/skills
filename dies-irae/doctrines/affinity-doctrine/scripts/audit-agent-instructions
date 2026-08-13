@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+readonly home=${1:-/home/main}
+readonly global="$home/AGENTS.md"
+[[ -f $global ]] || {
+  printf 'affinity audit: global instructions are absent: %s\n' "$global" >&2
+  exit 1
+}
+[[ $(rg -c '\$affinity-doctrine' "$global") == 1 ]] || {
+  printf 'affinity audit: global instructions need exactly one doctrine dispatch\n' >&2
+  exit 1
+}
+
+readonly terms='affinit|taskset|cpu.?list|isolcpus|benchmark cores|compiler resource ceiling|compiler lanes|SMT sibling|AllowedCPUs|CPUAffinity'
+mapfile -t owners < <(
+  rg -l --hidden -i \
+    -g 'AGENTS.md' \
+    -g '!trash/**' \
+    -g '!**/.git/**' \
+    -g '!**/.cache/**' \
+    -g '!**/.cargo/**' \
+    -g '!go/pkg/mod/**' \
+    -g '!**/.local/**' \
+    "$terms" "$home" || true
+)
+for owner in "${owners[@]}"; do
+  [[ $owner == "$global" ]] || {
+    printf 'affinity audit: local instruction duplicates affinity law: %s\n' "$owner" >&2
+    exit 1
+  }
+done
+
+printf 'Affinity instruction ownership is singular\n'
