@@ -28,6 +28,8 @@ User-facing directories such as Documents, Downloads, Pictures, and Videos are c
 
 Create only the directories actually needed, with private permissions where their contents are private. Use atomic replacement and suitable synchronization for durable writes. Bound and version caches, remove obsolete generations, and clean runtime artifacts on normal exit while remaining robust to the session manager deleting them first.
 
+Represent each temporary subtree as an owning runtime cell, not a generated `PathBuf` plus a hoped-for removal call. Put related scratch beneath one attributable private root, let the owner remove the whole cell on destruction, and let the session manager own the outer runtime boundary. Preserve a cell beyond the operation only by explicitly transferring it into its durable state or diagnostic destination.
+
 Installation, updates, and removal must respect the ownership boundary between package manager, system administrator, application, and user. A per-user program must not mutate system-wide locations; a system service must use the platform's system configuration, state, cache, log, and runtime facilities rather than pretending to be a desktop user. Uninstall removes installed machinery. User-owned data survives unless an explicit purge operation names and confines its destruction.
 
 Verify the lifecycle under non-default XDG paths, absent optional directories, restrictive permissions, concurrent instances, interrupted writes, upgrades, and removal. A program is not XDG-compliant merely because its happy-path cache happens to land under `~/.cache`.
