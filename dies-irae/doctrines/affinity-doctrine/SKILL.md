@@ -31,10 +31,10 @@ While the priority lanes are free, this preference is not an exclusion. Do not
 pin compilation to a narrow CPU set, impose a small job cap, or leave priority
 CPUs idle merely because a future experiment may need them.
 
-While a live claim exists, bulk work must exclude every priority-lane CPU and
-run only on the remainder. Source the machine manifest and bind the complete
-process tree, including helpers. A missing or malformed manifest is a stop
-condition only when the claim requires exclusion.
+Bulk work launched while a live claim exists must exclude every priority-lane
+CPU and run only on the remainder. Source the machine manifest and bind the
+complete process tree, including helpers. A missing or malformed manifest is a
+stop condition only when the claim requires exclusion.
 
 An increased nice value and low cgroup CPU weight are work-conserving: bulk
 work may fill otherwise idle CPUs but yields them under contention. Do not add
