@@ -14,8 +14,6 @@ whole carts rather than choosing each line independently.
 Report the best observed plan as of a stated time. Internet-wide optimality is
 not provable; never call a bounded search the global minimum.
 
-Do not place an order or incur an obligation without explicit authorization.
-
 ## Lock The Procurement Contract
 
 Before asking for reusable buyer facts, read `~/documents/INDEX.md` when it
@@ -218,9 +216,8 @@ purchase. Use a dedicated email alias for any newly created commercial account
 unless the service has a legitimate identity-bound reason to require the
 canonical address.
 
-Never submit an order, start a trial, join a membership, enroll in recurring
-delivery, buy a gift card, apply for financing, or make a nonrefundable
-reservation without explicit authorization.
+Never submit an order, create a financial or recurring obligation, or consume a
+single-use entitlement without explicit authorization for that action.
 
 ## Deliver The Plan
 
@@ -244,15 +241,3 @@ Follow the table with:
 If the search is incomplete, say which channels or facts remain unresolved.
 If no admissible plan meets the deadline, say so and present the nearest
 feasible alternatives without relabeling them compliant.
-
-## Hard Failures
-
-- do not optimize bill lines independently when carts couple their costs
-- do not silently substitute, downspecify, or confuse pack and unit quantities
-- do not omit shipping, tax, duties, mandatory fees, or required memberships
-- do not count an untested coupon or contingent reward as certain value
-- do not trust a search snippet when the listing or cart is available
-- do not compare second-hand goods with new goods without naming the condition
-- do not call a ship-by date an arrival date
-- do not claim global optimality
-- do not purchase or create a recurring obligation without authorization

@@ -307,19 +307,3 @@ Include only material defenses and rejections.
 ## Final Response
 
 Report the worklog and report paths, semantic envelope, complete manifest coverage, clique and fold counts, root contraction thesis, highest-leverage findings, high-severity status, out-of-envelope lesions, and cheap baseline. If implementation occurred, also report verification, residual closure, final manifest changes, and observed contraction.
-
-## Hard Failures
-
-- do not sample the audit manifest or substitute "representative" files
-- do not exceed a source or fold budget to avoid decomposition
-- do not open another deep-source clique before reducing the current one
-- do not treat the initial clique cover as final
-- do not equate manifest coverage with frontier closure
-- do not run one unbounded global fold
-- do not force reasoning through fixed smell, remedy, or finding taxonomies
-- do not account ceremonially for every discarded thought
-- do not let a high-severity discovery trigger immediate rectification or derail coverage
-- do not edit source during the report phase
-- do not let tests, linters, or formatters substitute for semantic inspection
-- do not turn out-of-envelope observations into an unsolicited rewrite
-- do not demand length or duplicate the final report into the worklog

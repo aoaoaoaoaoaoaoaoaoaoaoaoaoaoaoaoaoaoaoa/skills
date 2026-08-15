@@ -55,6 +55,9 @@ For each publication ratchet:
 7. Only then write the next prompt, grounding it in the pushed commit rather than the former
    baseline or an uncommitted local theorem.
 
+Before any push or prompt sent to an external model, exclude credentials, private conversation
+material, restricted sources, and anything not authorized for that audience.
+
 Every Pro turn which changes durable mathematical truth receives its own pushed commit. A turn
 which rejects an attack may still change durable truth through its audit, culling, or frontier
 update and should be committed. Do not manufacture an empty commit when nothing changes; report
@@ -126,9 +129,9 @@ If extraction reports that the share has not reached a final response, the exter
 live or was shared mid-turn. Wait for completion and retry; do not adjudicate a progress update as
 the report.
 
-Never commit the raw transcript or report. Preserve only independently reconstructed results,
-counterexamples, and bounded audit evidence. If the report relies on papers, invoke the local
-reference-corpus workflow before retrieving them.
+Raw transcripts and reports are transient inputs. Preserve only independently reconstructed
+results, counterexamples, and bounded audit evidence. If the report relies on papers, invoke the
+local reference-corpus workflow before retrieving them.
 
 Treat every external claim as a conjecture. Reconstruct it from current definitions and inspect
 all cited repository artifacts. Classify each material claim as:

@@ -1,6 +1,6 @@
 ---
 name: dies-irae
-description: Convene any explicit or inferred subset of the DIES IRAE audit family as independent parallel read-only judges, then compile their native ledgers and reports into one evidence-backed, globally prioritized defect register typed by auditing source and normalized to a domain-agnostic severity scale. Use for a multi-audit project inquest, comprehensive codebase judgment, or coordinated read-only review across implementation, semantic topology, tests, documentation, product conduct, and release fitness. Never rectifies findings itself.
+description: Convene any explicit or inferred subset of the DIES IRAE audit family as independent parallel read-only judges, then compile their native ledgers and reports into one evidence-backed, globally prioritized defect register typed by auditing source and normalized to a domain-agnostic severity scale. Use for a multi-audit project inquest, comprehensive codebase judgment, or coordinated read-only review across implementation, semantic topology, tests, documentation, product conduct, and release fitness. Produces judgment rather than rectification.
 ---
 
 # DIES IRAE
@@ -116,18 +116,3 @@ audits_omitted:
 `source` names one or more originating judges. The ordering itself expresses priority. Evidence must remain traceable to the specialist report and repository anchors. Dispositions may identify dependencies or a subsequent specialist campaign; they do not authorize execution.
 
 Return the judgment path and a concise account of the verdict. Preserve every native ledger and report beside it.
-
-## Hard Failures
-
-- do not mutate the target repository or launch an execution mode
-- do not perform a specialist audit in the parent
-- do not summon every judge merely because it exists
-- do not leak one worker's conclusions into another worker's case
-- do not accept a ledger from a different or drifted source identity
-- do not concatenate reports in place of judgment
-- do not prescribe an input reconciliation algorithm or universal object-level checklist
-- do not rank domains; rank defects by consequence and whole-case judgment
-- do not conflate severity, confidence, fix cost, and execution order
-- do not omit incomplete or deliberately unexamined jurisdiction
-- do not turn uncertainty or taste into an established defect
-- do not begin rectification after judgment

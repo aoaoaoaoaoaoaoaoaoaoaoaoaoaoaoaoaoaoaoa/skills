@@ -9,6 +9,9 @@ Create a design or implementation review package for an out-of-band expert revie
 Lock the task or subproblem supplied by the user; resolve any ambiguity that would
 materially change the review.
 
+Material prepared for an external reviewer must not contain credentials, unrelated
+private data, or content outside that reviewer's authorized disclosure boundary.
+
 Treat GitHub as the implementation transport and the document as the semantic handoff.
 Do not duplicate first-party code that the reviewer can inspect directly. Identify the
 exact source identity and inspection surface instead.

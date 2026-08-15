@@ -137,5 +137,3 @@ Closure must record:
 - residual frontier and the economic reason each live avenue stopped, deferred, or remained blocked
 
 In the final response, report the ledger path and summarize the closure rather than reproducing the ledger.
-
-Campaign integrity is nonnegotiable: log claim changes, never compare incompatible measurement contexts, never win by hiding work or narrowing semantics, never mutate outside the authorized surface, and never discard unfavorable evidence.

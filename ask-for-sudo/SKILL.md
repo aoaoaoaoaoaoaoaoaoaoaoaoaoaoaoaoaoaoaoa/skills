@@ -26,6 +26,7 @@ Use one invocation for one coherent privileged operation. If shell syntax is
 irreducible, pass an exact reviewed program to `/bin/bash -c`; do not conceal a
 broad or unrelated operation behind a vague reason.
 
-Never request the password in chat, pass it with `sudo -S`, invoke the bundled
-askpass helper directly, store it, or print it. Cancellation is refusal: stop or
-choose an unprivileged path.
+The password remains inside the graphical authentication path. Never request,
+receive, store, print, or pipe it through chat or command input; cancellation
+ends the privileged attempt. Elevate only the exact operation displayed to the
+user.

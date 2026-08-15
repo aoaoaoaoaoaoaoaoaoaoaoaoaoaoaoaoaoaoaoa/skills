@@ -325,31 +325,3 @@ confidence:
 anchors:
 frontier:
 ```
-
-## Hard Failures
-
-- do not derive the target basis from the incumbent suite
-- do not turn the risk inventory into a requirement that every risk have a test
-- do not preserve a test because it is green, old, named, or could catch a bug
-- do not add a test merely because behavior changed or a bug was fixed
-- do not judge the suite as a bag of isolated test cases
-- do not optimize for test count, line coverage, mutation score, or layer ratios
-- do not duplicate implementation logic in an oracle
-- do not call randomized examples property testing without a law and independent
-  oracle
-- do not call an expensive internal-call harness end to end
-- do not preserve ghosts, flakes, change receipts, or Potemkin evidence
-- do not retire a witness before recovering its unique semantic information
-- do not erase useful epistemic independence in the name of deduplication
-- do not claim exhaustive semantic proof from an ordinary finite suite
-- do not let an alarming product defect authorize unrelated product repair
-- do not mutate production behavior under test-only authority
-- do not refuse a bounded testability refactor merely because it touches
-  production code
-- do not use testability as cover for business-logic changes, performance
-  regressions, or unbounded cleanup
-- do not distort production architecture for mocks or test-only access
-- do not exceed context budgets through raw sources, runner output, or global
-  folds
-- do not turn the worklog or report into compulsory form-filling
-- do not edit before the complete report or without explicit execution authority

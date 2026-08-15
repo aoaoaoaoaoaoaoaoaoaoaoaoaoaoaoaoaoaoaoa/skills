@@ -87,15 +87,3 @@ Use one compact entry per work, grouping retained versions where that improves o
 ```
 
 Let the corpus determine whether topical sections improve navigation. Do not impose a taxonomy or replace neutral pointers with roles in the current investigation.
-
-## Hard Failures
-
-- do not retrieve a source before checking the local corpus
-- do not overwrite, silently replace, or conflate source versions
-- do not leave an artifact without a sidecar or an index entry
-- do not present a metadata-only or partial synopsis as a full-text account
-- do not write the neutral synopsis from the viewpoint of the current task
-- do not turn the index into a campaign plan or bibliography of local roles
-- do not retain source bytes when their distribution is not lawful
-- do not treat a synopsis as authority for an exact claim that requires the source
-- do not add databases, generated catalogues, or parallel metadata stores where plaintext suffices

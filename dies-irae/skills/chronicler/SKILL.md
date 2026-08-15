@@ -189,18 +189,3 @@ residual:
 | obligation | present owner | terminal owner | ownership delta | evidence | dependencies |
 |------------|---------------|----------------|-----------------|----------|--------------|
 ```
-
-## Hard Failures
-
-- do not sample a project-wide documentary model
-- do not equate documentation with prose files alone
-- do not generate docstrings or comments by ritual
-- do not preserve implementation narration that code already states
-- do not duplicate volatile facts across audience surfaces
-- do not declare code authoritative merely because it is executable
-- do not resolve genuine authority conflicts by guessing
-- do not exceed context or fold budgets through evidentiary loopholes
-- do not turn the worklog into a shadow report
-- do not delete a doomed source before its scarce truth has a receiving owner
-- do not alter behavior or public contracts under documentation authorization
-- do not edit before the complete report or without explicit execution authority

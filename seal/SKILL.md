@@ -32,8 +32,10 @@ release metadata, CI, or synchronization. Follow the surface's own contract
 rather than a universal ritual. Applicability determines how a surface is
 sealed, not whether an exposed surface may be skipped.
 
-Include every repository and non-repository surface touched by the work. Keep
-unrelated dirt out of the checkpoint. Never discard it.
+Include every repository and non-repository surface touched by the work. Sealing
+never discards unrelated or unaccepted work, rewrites shared history, or
+publishes secrets or private material. Destructive cleanup and history
+replacement require explicit authority beyond ordinary sealing.
 
 Finish only when the accepted work has no pending delta on any exposed surface:
 canonical checks pass, intended source is durably recorded, consumers resolve

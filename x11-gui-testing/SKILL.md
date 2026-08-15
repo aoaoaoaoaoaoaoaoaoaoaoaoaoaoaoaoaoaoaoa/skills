@@ -9,9 +9,7 @@ Treat the live desktop as production.
 
 ## Boundary
 
-Prefer a genuinely headless backend when it exercises the behavior under test. Otherwise use the bundled Xvfb launcher. Never launch a graphical process on inherited `DISPLAY`, `WAYLAND_DISPLAY`, i3/Sway IPC, or session D-Bus merely because they exist. Browsers, file pickers, helpers, and child processes belong inside the same isolation.
-
-Use the live desktop only when the user explicitly requests an on-screen test in that turn. Xephyr is not an off-screen substitute: its server appears in a host window.
+Prefer a genuinely headless backend when it exercises the behavior under test. Otherwise use the bundled Xvfb launcher. Never attach a graphical process or input automation to live `DISPLAY`, `WAYLAND_DISPLAY`, i3/Sway IPC, or session D-Bus unless the user explicitly requests an on-screen run in that turn. Browsers, file pickers, helpers, and child processes belong inside the same isolation. Xephyr is not an off-screen substitute: its server appears in a host window.
 
 ## Launch
 
@@ -50,5 +48,3 @@ Under bare Xvfb, do not rely on `windowactivate`; use explicit `xdotool --window
 ## Failure
 
 Diagnose application startup, window selection, rendering backend, capture surface, and input geometry inside the private display. Inspect the application log and `xwininfo -root -tree`; force known geometry, DPI, and scale before changing automation. Add a private window manager only when window-manager behavior is itself under test.
-
-Never respond to an adapter, focus, capture, or automation failure by falling back to the live display.

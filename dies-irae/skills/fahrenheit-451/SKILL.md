@@ -188,20 +188,3 @@ supersedes:
 | path | disposition | judgment | evidence | dependencies |
 |------|-------------|----------|----------|--------------|
 ```
-
-## Hard Failures
-
-- do not sample, skim, or silently omit the corpus
-- do not keep dead prose as an archive or move it to a graveyard
-- do not equate newer implementation with authoritative intent
-- do not preserve a file merely because some fragment within it matters
-- do not launder stale, code-derivable prose into a Chronicler handoff
-- do not delete scarce truth before its lawful owner exists
-- do not rewrite, merge, or create living documentation in this campaign
-- do not exempt evidentiary code, fixtures, history, dependencies, or command output from the context budget
-- do not keep probing after the evidence can no longer change the disposition or its dependencies
-- do not perform Chronicler's exhaustive correctness or external-link audit under the guise of proving survival
-- do not exceed a clique or fold budget to avoid decomposition
-- do not use one unbounded global context fold
-- do not turn the worklog into a shadow report
-- do not edit before the complete purge report or without explicit authorization

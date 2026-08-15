@@ -216,19 +216,3 @@ supersedes:
 | concept | current forms | proposed owner and family | topology delta | judgment | evidence | dependencies |
 |---------|---------------|---------------------------|----------------|----------|----------|--------------|
 ```
-
-## Hard Failures
-
-- do not silently narrow a project-wide data-model request
-- do not stop at declaration shapes or naming similarity
-- do not preserve rival models because each is locally plausible
-- do not collapse representations with genuinely different laws
-- do not force every concept into tiny atoms, a god type, or any preconceived shape
-- do not leave validation, normalization, or authority smeared across owners
-- do not preserve identity conversion traffic as architectural decoupling
-- do not let boundary projections leak inward or become rival domain models
-- do not hide a public-contract break inside canonicalization
-- do not turn the campaign into generic cleanup
-- do not exceed context or fold budgets through indexing or evidence loopholes
-- do not turn the worklog into a shadow report
-- do not edit before the complete report or without explicit execution authority

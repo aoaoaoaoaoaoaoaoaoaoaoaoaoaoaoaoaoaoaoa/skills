@@ -116,9 +116,9 @@ Search freely for professional disqualifiers: failed or missing canonical gates,
 
 Dependency fitness includes necessity, ownership, selected features, version posture, advisories, provenance, license compatibility, lock and update policy, and operational consequence. “Latest” is not automatically correct and “it builds” is not sufficient. Consult current authoritative registries, upstream releases, and advisory sources when currency matters and network access is allowed; otherwise mark the claim unproved.
 
-Run builds, checks, artifact inspection, and lifecycle trials in clean isolated environments when allowed. Keep temporary profiles, homes, caches, credentials, display servers, ports, and installation prefixes outside the user's live system. Use the `x11-gui-testing` skill for graphical Linux applications. Never turn an inquest into an uncontrolled live deployment or destructive uninstall test.
+Run builds, checks, artifact inspection, and lifecycle trials in clean isolated environments when allowed. Keep temporary profiles, homes, caches, credentials, display servers, ports, and installation prefixes outside the user's live system. Use the `x11-gui-testing` skill for graphical Linux applications.
 
-The ambient user's profile and accumulated application data are private territory, not a convenient fixture or telemetry corpus. Do not enumerate, read, hash, or summarize them merely because the sandbox permits access. Establish product conduct from clean trials, code, artifacts, and explicitly supplied evidence. Consult live user state only with separate explicit authorization and a narrow evidentiary need.
+The ambient user profile and live system are private production state, not test fixtures. Destructive or privacy-invasive trials require separate, narrow authorization and otherwise run in disposable isolation. Establish product conduct from clean trials, code, artifacts, and explicitly supplied evidence.
 
 Before opening another clique, reduce the current one into the smallest account another intelligent model can fold without rereading raw material. Preserve claims, release surfaces, artifact and lifecycle evidence, author-coordinate findings, first-contact findings, blockers, counterevidence, handoffs, and frontier. Merely running a scanner or command does not constitute coverage.
 
@@ -261,24 +261,3 @@ supersedes:
 | claim | target and stage | evidence | judgment | blocker or residual | disposition | dependencies |
 |-------|------------------|----------|----------|---------------------|-------------|--------------|
 ```
-
-## Hard Failures
-
-- do not issue `RELEASE` without a locked source identity, artifact set, and release envelope
-- do not certify source intent without inspecting the actual artifact and applicable lifecycle
-- do not treat configured gates, stale CI, scanners, coverage, or a green unit suite as sufficient evidence
-- do not convert missing material evidence into a conditional pass
-- do not broaden platforms, languages, accessibility modes, audiences, integrations, or features under release authority
-- do not mistake sophistication for poor first contact or demand lowest-common-denominator design
-- do not let the author's environment, state, geography, locale, timezone, identity, or habits become an invisible prerequisite
-- do not call dependencies current or safe without current authoritative evidence when the claim matters
-- do not treat every TODO, old dependency, unconventional choice, or residual file as a blocker without tracing its release consequence
-- do not ignore dirty inputs, generated state, package contents, migration paths, or removal residue
-- do not mutate the live user system to prove respect for it
-- do not mine the ambient user's profile or accumulated application state as unauthorized release evidence
-- do not let a high-severity defect or specialist rabbit hole truncate the inquest
-- do not replace the complete claim ledger with a shortlist of blockers
-- do not emit vague handoffs or fixes without closure evidence
-- do not exceed context or fold budgets through logs, artifacts, dependency output, or source dumps
-- do not turn the worklog into a shadow report
-- do not edit before the complete report or without explicit execution authority
