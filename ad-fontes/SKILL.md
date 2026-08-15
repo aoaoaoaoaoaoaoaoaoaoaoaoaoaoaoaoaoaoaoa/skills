@@ -1,19 +1,33 @@
 ---
 name: ad-fontes
-description: Maintain a repository-local corpus of external papers and reference materials without repeated retrieval or repeated full-source ingestion. Use whenever Codex is about to search for, download, retain, reopen, summarize, or inventory a paper, report, preprint, standard, or similar source. Preserves exact artifacts, neutral same-stem synopses, and a compact references index.
+description: Maintain a gitignored repository-local corpus of external papers and reference materials without repeated retrieval or repeated full-source ingestion. Use whenever Codex is about to search for, download, retain, reopen, summarize, or inventory a paper, report, preprint, standard, or similar source. Preserves exact artifacts, neutral same-stem synopses, and a compact local references index without committing external evidence to the project.
 ---
 
 # Ad Fontes
 
 ## Mandate
 
-Maintain `references/` as the repository's durable evidentiary corpus.
+Maintain `references/` as the repository's durable local evidentiary corpus. The
+corpus inhabits the worktree for proximity and discovery, but it is not project
+source and must never enter Git's index.
 
 A reference enters the corpus once as an immutable source artifact, a neutral synopsis, and an index entry. The artifact preserves evidence; the synopsis preserves understanding; the index preserves discovery.
 
 Read the corpus before the network. Read the synopsis before the source. Open the source when the synopsis cannot supply the precision, evidence, or detail the present task requires.
 
 The synopsis states what the source contains, not why one transient campaign happens to care about it. Project-specific reliance may be recorded separately, but it must not determine or substitute for the neutral account.
+
+## Version-Control Boundary
+
+Ensure the repository-root `.gitignore` contains the anchored rule
+`/references/` before creating or retrieving any corpus material. Verify the
+rule with `git check-ignore`; never defeat it with `git add -f`.
+
+If `references/` is already tracked, remove it from Git's index while preserving
+the working-tree corpus, then commit the ignore rule and index deletion as a
+coherent migration. Do not commit artifacts, sidecars, digests, or the local
+corpus index. Durable project conclusions belong in project documentation or
+the relevant external state system, not in a vendored evidence dump.
 
 ## Corpus Contract
 
@@ -29,7 +43,7 @@ Every retained source artifact has an adjacent same-stem Markdown sidecar. A sou
 
 Distinguish the intellectual work from the retained artifact. DOI, arXiv identity, title, and authors identify the work; version, retrieval source, and SHA-256 identify exact bytes. Never overwrite one artifact with another version. Preserve materially distinct versions and state their relation.
 
-`references/README.md` is the corpus index. Every retained or metadata-only reference appears there. The index links to sidecars rather than directly to large artifacts.
+`references/README.md` is the local corpus catalogue. Every retained or metadata-only reference appears there. The catalogue links to sidecars rather than directly to large artifacts; “index” in this document never means Git's index.
 
 Source artifacts are immutable. Synopses and the index may improve when inspection reveals a more exact account, correction, version relation, or hazard.
 
@@ -43,7 +57,9 @@ Write the sidecar from the source rather than from the current task. Its neutral
 
 State the basis of the synopsis honestly: full-text inspection, bounded partial inspection, abstract or metadata only, OCR-limited inspection, or another material constraint. A synopsis is an orientation surface, not a substitute proof premise or citation authority.
 
-Close assimilation only when the artifact or metadata-only status, sidecar, digest, and index entry agree.
+Close assimilation only when the artifact or metadata-only status, sidecar,
+digest, and catalogue entry agree and the whole corpus is confirmed ignored and
+absent from Git's index.
 
 ## Sidecar Form
 
