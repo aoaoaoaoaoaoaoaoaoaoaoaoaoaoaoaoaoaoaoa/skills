@@ -45,6 +45,20 @@ separate explicit product contract.
 Brief interactive and administrative commands are not bulk work and need no
 placement ceremony.
 
+### Maintained Launchers
+
+Invoke maintained commands directly and let their wrappers enter the bulk-work
+scope. In particular, invoke `cargo` through the normal PATH wrapper. It derives
+the repository-specific target directory before delegating to the CPU-lane
+launcher. Never place `systemd-run` outside `cargo`: the user manager may resolve
+`cargo` as `/usr/bin/cargo`, bypassing target selection and writing into the
+global fallback target.
+
+`cpu-lanes` is an internal launcher installed at
+`~/.local/libexec/cpu-lanes`, not a PATH command. Maintained wrappers call that
+stable path. When no maintained wrapper exists, invoke the stable path directly;
+do not infer absence from `command -v cpu-lanes`.
+
 ## Claims
 
 Run work whose protocol requires the priority lanes through `cpu-claim run` and
