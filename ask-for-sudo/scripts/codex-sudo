@@ -41,6 +41,24 @@ done
 
 [[ $reason =~ [^[:space:]] ]] || die 'a concrete, nonempty reason is required'
 (($#)) || die 'a command is required after --'
+
+if [[ -z ${DISPLAY:-}${WAYLAND_DISPLAY:-} ]]; then
+    runtime_dir=${XDG_RUNTIME_DIR:-/run/user/$(/usr/bin/id -u)}
+    if [[ $runtime_dir == /* && -S $runtime_dir/bus ]]; then
+        export XDG_RUNTIME_DIR=$runtime_dir
+        export DBUS_SESSION_BUS_ADDRESS=${DBUS_SESSION_BUS_ADDRESS:-unix:path=$runtime_dir/bus}
+        while IFS='=' read -r name value; do
+            case $name in
+                DISPLAY | WAYLAND_DISPLAY | XAUTHORITY)
+                    [[ -n ${!name:-} ]] || {
+                        printf -v "$name" '%s' "$value"
+                        export "$name"
+                    }
+                    ;;
+            esac
+        done < <(/usr/bin/systemctl --user show-environment 2>/dev/null || true)
+    fi
+fi
 [[ -n ${DISPLAY:-}${WAYLAND_DISPLAY:-} ]] || die 'no graphical session is available'
 
 while read -r field value _; do
