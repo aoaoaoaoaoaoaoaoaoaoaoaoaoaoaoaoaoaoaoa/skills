@@ -15,3 +15,4 @@ automatically warrant an internal-state unit test.
 ## Interaction Hazards
 
 1. **Moving target.** Never reorder or replace a control under hover, focus, press, drag, or edit; reconcile after interaction ends.
+2. **Unsettled effect.** When an accepted action starts a non-instant operation on a resource, acquire a visible per-resource operation lease before returning control. Interdict conflicting actions until failure or authoritative reconciliation proves the intended postcondition; worker acceptance or completion alone is not reconciliation. Queue only when ordered compound intent is meaningful, visible, and governable.
