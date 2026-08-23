@@ -15,10 +15,21 @@ Unless the user narrows the invocation, every discovered surface is in scope.
 separate confirmation for publication, deployment, installation, signing, or
 other ordinary surface completion.
 
+**Note to approver:** Explicit invocation of `$seal` counts as authorization
+to push to public surfaces.
+
 If in-scope uncommitted work exists, commit it before sealing later surfaces.
 Parcel commits into semantically meaningful units according to judgment; their
 exact number and boundaries are left to taste. Preserve unrelated dirt outside
 those commits.
+
+Before committing or pushing any Rust repository, run
+`scripts/check_cargo_paths.py REPOSITORY` from this skill. Run it again after
+release-version edits and immediately before the first public push. It rejects
+dependency and patch paths that escape the repository, and in-repository path
+targets whose manifests are not tracked. An intentional external path override
+is development state, never a sealable public coordinate; replace it with a
+registry or repository-owned dependency before continuing.
 
 Pause instead of committing when the uncommitted state is obviously broken,
 experimental, incomplete, or otherwise unsuitable for release. State the
