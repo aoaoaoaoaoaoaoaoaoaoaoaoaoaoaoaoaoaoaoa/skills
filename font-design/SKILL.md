@@ -72,6 +72,9 @@ an application crash.
 
 Verify the exported font's actual cmap, contour validity, metrics, shaping, and
 production rendering. Check distribution contents as well as source imports.
+Removing a face from the active stack does not remove its compiled font assets.
+Audit dependency features as well: egui's default font bundle can be reintroduced
+by an instrumentation dependency even when the application disables it.
 Use deterministic generation or a declared semantic-font comparison when
 editor timestamps prevent byte equality. Deliver the editable source, the
 generated font, its mapping and provenance, and the useful visual evidence.
