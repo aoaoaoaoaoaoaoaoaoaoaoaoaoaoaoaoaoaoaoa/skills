@@ -1,90 +1,68 @@
 ---
 name: affinity-doctrine
-description: Apply the machine-wide CPU placement law when launching sustained low-priority work, claiming experimental CPUs, or editing build launchers, systemd CPU controls, affinity configuration, benchmarks, profilers, or other CPU-intensive tooling.
+description: Apply the machine-wide physical-core placement law when launching sustained work, submitting experiments, or editing CPU/resource controls and launchers.
 ---
 
 # Affinity Doctrine
 
-This is the sole normative source for CPU placement on the owner's workstation.
-`~/.config/affinity-lanes` is the executable machine projection. Repositories
-may require this doctrine but must not duplicate its CPU sets.
+This is the sole CPU-placement authority. `~/.config/affinity-lanes` is its
+executable machine projection; repositories must not copy its CPU masks.
 
-## Two Zones
+## Permanent Territory
 
-The **priority lanes** are the physical-core territory reserved on demand for
-experiments. The **remainder** is every other logical CPU. The machine manifest
-defines both sets; experiment protocols may select subsets of the priority
-lanes but do not redefine them.
+The **priority lanes** are six physical cores permanently reserved for
+experiments, including both SMT siblings. The **remainder** contains all other
+logical CPUs. Ordinary user/desktop/bulk work stays on the remainder even when
+the experiment queue is empty or its controller is unavailable.
 
-A **claim** is the live `cpu-priority-claim.scope` cgroup. Its existence is
-bound to its process tree: the claim ends when the last process exits, including
-after launcher crashes or `SIGKILL`. No manual lease exists.
+Slurm is the sole allocation authority. Systemd owns the outer benchmark
+slice and delegates its job subtree to Slurm. No PID file, manual lease,
+second queue, or `cpu-priority-claim.scope` represents ownership. `cpu-claim`
+is retired. Inspect native Slurm jobs and their live cgroups; the persistent
+Slurm scope alone does not imply a running job.
+
+## Experiments
+
+Submit ready commands through `cpu-queue` or native Slurm. Request one physical
+core per actual concurrent worker (`--ntasks`, one CPU per task); reserve both
+siblings against other jobs. The default worker uses one sibling. A paired
+block receives one finite gang allocation and keeps its scientific barriers.
+
+No job may reserve unused neighboring cores, request LLC isolation, demand
+whole-pool exclusivity, or silence the desktop. A six-worker job can allocate
+six cores; a one-worker job allocates one. Dedicated cores do not isolate
+DRAM, IO, package power or kernel activity; record concurrent work and apply
+the experiment's validity checks without commandeering others' resources.
+
+Reorder pending jobs only. Dispatch priority is not Linux nice/CPUWeight.
+Do not suspend, migrate, throttle or restart a valid burn for queue convenience.
+No implicit statistical replay: interrupted/uncertain attempts remain failed
+or unknown. An explicit new submission creates a new attempt identity.
+
+Memory, no-swap, PID and finite outer-time limits cover the complete job
+subtree. Queue wait is not solver time. Startup, finalization/checking and
+teardown retain the allocation and belong in its outer time budget.
 
 ## Bulk Work
 
-Compilation, linking, code generation, compression, ordinary test suites, and
-other sustained throughput work run at reduced scheduler priority. Prefer
-higher-numbered CPUs for such work where a maintained launcher supplies that
-preference.
+Builds, linking, code generation, compression and ordinary test suites run on
+the remainder at reduced scheduling priority. Low nice priority and cgroup
+CPU weight are work-conserving; do not add a CPU quota or arbitrary small
+parallelism cap merely to lower utilization.
 
-While the priority lanes are free, this preference is not an exclusion. Do not
-pin compilation to a narrow CPU set, impose a small job cap, or leave priority
-CPUs idle merely because a future experiment may need them.
+Invoke maintained launchers directly. In particular use the normal PATH
+`cargo` wrapper: it derives repository-specific target custody before entering
+the bulk scope. Do not place `systemd-run` outside Cargo or bypass its wrapper.
 
-Bulk work launched while a live claim exists must exclude every priority-lane
-CPU and run only on the remainder. Source the machine manifest and bind the
-complete process tree, including helpers. A missing or malformed manifest is a
-stop condition only when the claim requires exclusion.
+`~/.local/libexec/cpu-lanes` is the stable internal launcher when no maintained
+wrapper exists. It binds the complete process tree to the remainder. A missing
+or malformed machine manifest is a stop condition. Brief administration needs
+no extra placement ceremony; the systemd parent already bounds user work.
 
-An increased nice value and low cgroup CPU weight are work-conserving: bulk
-work may fill otherwise idle CPUs but yields them under contention. Do not add
-a permanent CPU quota merely to avoid a 100% utilization reading; a quota
-necessarily idles runnable capacity. Thermal or power ceilings require a
-separate explicit product contract.
+## Maintenance
 
-Brief interactive and administrative commands are not bulk work and need no
-placement ceremony.
-
-### Maintained Launchers
-
-Invoke maintained commands directly and let their wrappers enter the bulk-work
-scope. In particular, invoke `cargo` through the normal PATH wrapper. It derives
-the repository-specific target directory before delegating to the CPU-lane
-launcher. Never place `systemd-run` outside `cargo`: the user manager may resolve
-`cargo` as `/usr/bin/cargo`, bypassing target selection and writing into the
-global fallback target.
-
-`cpu-lanes` is an internal launcher installed at
-`~/.local/libexec/cpu-lanes`, not a PATH command. Maintained wrappers call that
-stable path. When no maintained wrapper exists, invoke the stable path directly;
-do not infer absence from `command -v cpu-lanes`.
-
-## Claims
-
-Run work whose protocol requires the priority lanes through `cpu-claim run` and
-state its purpose. The command waits without polling, starts the fixed scope,
-and applies the manifest's priority CPU set through inherited scheduler
-affinity and the scope's cgroup controls where delegated. Its complete live
-cgroup is the claim; there is no separate release operation. Claiming
-coordinates ownership only. The experiment protocol remains responsible for
-topology, quiescence, controls, and interpretation.
-
-`cpu.wait` is an advisory sleep, not a reservation. Use one wait rather than
-polling, but prefer `cpu-claim run` when work should begin after acquisition so
-the wait and claim remain atomic.
-
-The MCP, command-line probe, and maintained launchers must consult the same
-systemd scope. Do not mirror claim state into environment variables, PID files,
-timestamps, daemons, manual locks, or a second registry. A short-lived kernel
-mutex may serialize scope creation but never represents the claim.
-
-On systemd hosts, delegate the `cpuset` controller to the user manager so
-`AllowedCPUs` becomes cgroup-wide containment; verify the live scope's
-`EffectiveCPUs` against the manifest. Inherited scheduler affinity remains the
-portable enforcement and defense in depth.
-
-## Maintain The Law
-
-When topology changes, update this doctrine and the machine manifest together,
-then audit maintained launchers for stale masks or unconditional throttles.
-Run `scripts/audit-agent-instructions` after changing agent instructions.
+Keep topology, the machine projection, Slurm configuration, systemd boundaries
+and maintained launchers coherent. Verify actual effective cgroup masks and
+SMT sibling separation, not only requested settings. Changes require a drained
+handover; never leave two allocators active. Run `scripts/audit-agent-instructions`
+after modifying agent instructions.
