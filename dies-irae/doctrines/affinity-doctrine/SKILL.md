@@ -41,9 +41,9 @@ retired. Inspect native Slurm jobs and their live cgroups; the persistent
   the priority lanes, `RealMemory` equals the pool slice, and `MemSpecLimit`
   reserves the daemons' share of it.
 - **Admission** (`job_submit.lua`): UID 1000 only; one to pool-size workers, each
-  one physical core with one executing sibling; no exclusivity, spare cores,
-  core specialization, requeue or running reprioritization; finite time up to
-  24 h.
+  one physical core with one executing sibling; job memory by `--mem`, at most
+  pool cores × `PRIORITY_CORE_MEMORY_MIB`; no exclusivity, spare cores, core
+  specialization, requeue or running reprioritization; finite time up to 24 h.
 - **Containment** (required SPANK plugin): per-job PID cap; single-CPU cpuset and
   one-CPU quota per worker task; `oom_score_adj` -900 for every task.
 - **systemd**: `benchmark.slice` hosts `slurmd` with `AllowedCPUs` = the priority
