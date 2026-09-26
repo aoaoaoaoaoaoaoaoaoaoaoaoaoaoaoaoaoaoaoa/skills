@@ -1,36 +1,75 @@
 ---
 name: affinity-doctrine
-description: Apply the machine-wide physical-core placement law when launching sustained work, submitting experiments, or editing CPU/resource controls and launchers.
+description: Apply the machine-wide CPU placement and shared Slurm pool law when launching sustained work, submitting experiments, provisioning the machine, or editing CPU/resource controls and launchers.
 ---
 
 # Affinity Doctrine
 
 This is the sole CPU-placement authority. `~/.config/affinity-lanes` is its
-executable machine projection; repositories must not copy its CPU masks.
+executable machine projection; no other file may encode its CPU sets or the
+pool size.
 
-## Permanent Territory
+## Territory
 
-The **priority lanes** are six physical cores permanently reserved for
-experiments, including both SMT siblings. The **remainder** contains all other
-logical CPUs. Ordinary user/desktop/bulk work stays on the remainder even when
-the experiment queue is empty or its controller is unavailable.
+The projection partitions every CPU into three sets of whole physical cores;
+SMT siblings never straddle sets.
 
-Slurm is the sole allocation authority. Systemd owns the outer benchmark
-slice and delegates its job subtree to Slurm. No PID file, manual lease,
-second queue, or `cpu-priority-claim.scope` represents ownership. `cpu-claim`
-is retired. Inspect native Slurm jobs and their live cgroups; the persistent
-Slurm scope alone does not imply a running job.
+- **Priority lanes** (`PRIORITY_CPUSET`): the Slurm benchmark pool.
+- **Desktop reserve** (`DESKTOP_CPUSET`): interactive headroom; bulk work never
+  runs here.
+- **Bulk lanes** (`BULK_CPUSET`): the only CPUs bulk work may use.
+
+Desktop, user-session, VM and container processes may use the desktop reserve
+and the bulk lanes, never the priority lanes, even when the queue is empty.
+
+Slurm is the sole allocation authority for the priority lanes. No PID file,
+manual lease, second queue, or claim scope represents ownership; `cpu-claim` is
+retired. Inspect native Slurm jobs and their live cgroups; the persistent
+`slurmstepd.scope` alone does not imply a running job.
+
+## Machine Requirements
+
+- **Projection** `~/.config/affinity-lanes`: shell-sourceable `KEY=VALUE` lines
+  `PRIORITY_CPUSET`, `DESKTOP_CPUSET`, `BULK_CPUSET`,
+  `PRIORITY_CORE_MEMORY_MIB` (per pool core: an 8 GiB worker plus a 256 MiB
+  custodian share), `BULK_NICE`, `BULK_CPU_WEIGHT`, `CPU_SCHEDULER=slurm`.
+- **Slurm**: `munge`, `slurmctld` and `slurmd` enabled for one local node and
+  one `benchmark` partition; `select/cons_tres` with `CR_Core_Memory`;
+  `task/cgroup,task/affinity` on `cgroup/v2` constraining cores, RAM (100%) and
+  swap (0) under `CgroupSlice=benchmark.slice`; `JobRequeue=0`. The node's
+  `CpuSpecList` names the Slurm abstract CPUs (hwloc logical PU indexes) outside
+  the priority lanes, `RealMemory` equals the pool slice, and `MemSpecLimit`
+  reserves the daemons' share of it.
+- **Admission** (`job_submit.lua`): UID 1000 only; one to pool-size workers, each
+  one physical core with one executing sibling; no exclusivity, spare cores,
+  core specialization, requeue or running reprioritization; finite time up to
+  24 h.
+- **Containment** (required SPANK plugin): per-job PID cap; single-CPU cpuset and
+  one-CPU quota per worker task; `oom_score_adj` -900 for every task.
+- **systemd**: `benchmark.slice` hosts `slurmd` with `AllowedCPUs` = the priority
+  lanes, `MemoryMin` = `MemoryMax` = `RealMemory`, `MemorySwapMax=0`; the `user`,
+  `machine` and `capsule` slices are confined to the desktop reserve plus bulk
+  lanes, bulk-only services such as `xmrig` to the bulk lanes, and `system.slice`
+  stays off the priority lanes.
+- **Wrappers**: `~/.local/libexec/cpu-lanes` binds a process tree to
+  `BULK_CPUSET` at `BULK_NICE` and `BULK_CPU_WEIGHT` in a user scope; the PATH
+  `cargo` wrapper enters it; `cpu-queue` submits and contains experiments.
+
+`/home/main/programming/projects/mcps/cpu_claim` installs all of this: its
+`assets/affinity-lanes` is the projection's source, and `scripts/install-slurm.sh`
+followed by `scripts/reserve-slurm.sh` render and apply every other mask and
+budget from it.
 
 ## Experiments
 
 Submit ready commands through `cpu-queue` or native Slurm. Request one physical
-core per actual concurrent worker (`--ntasks`, one CPU per task); reserve both
-siblings against other jobs. The default worker uses one sibling. A paired
-block receives one finite gang allocation and keeps its scientific barriers.
+core per actual concurrent worker (`--ntasks`, one CPU per task), at most the
+whole pool; both siblings are reserved against other jobs. The default worker
+uses one sibling. A paired block receives one finite gang allocation and keeps
+its scientific barriers.
 
 No job may reserve unused neighboring cores, request LLC isolation, demand
-whole-pool exclusivity, or silence the desktop. A six-worker job can allocate
-six cores; a one-worker job allocates one. Dedicated cores do not isolate
+whole-pool exclusivity, or silence the desktop. Dedicated cores do not isolate
 DRAM, IO, package power or kernel activity; record concurrent work and apply
 the experiment's validity checks without commandeering others' resources.
 
@@ -46,23 +85,25 @@ teardown retain the allocation and belong in its outer time budget.
 ## Bulk Work
 
 Builds, linking, code generation, compression and ordinary test suites run on
-the remainder at reduced scheduling priority. Low nice priority and cgroup
-CPU weight are work-conserving; do not add a CPU quota or arbitrary small
-parallelism cap merely to lower utilization.
+the bulk lanes at reduced scheduling priority, never on the desktop reserve.
+Low nice priority and cgroup CPU weight are work-conserving; do not add a CPU
+quota or arbitrary small parallelism cap merely to lower utilization.
 
 Invoke maintained launchers directly. In particular use the normal PATH
-`cargo` wrapper: it derives repository-specific target custody before entering
-the bulk scope. Do not place `systemd-run` outside Cargo or bypass its wrapper.
+`cargo` wrapper, never an absolute toolchain path: it derives
+repository-specific target custody before entering the bulk scope. Do not place
+`systemd-run` outside Cargo or bypass its wrapper.
 
 `~/.local/libexec/cpu-lanes` is the stable internal launcher when no maintained
-wrapper exists. It binds the complete process tree to the remainder. A missing
-or malformed machine manifest is a stop condition. Brief administration needs
-no extra placement ceremony; the systemd parent already bounds user work.
+wrapper exists. A missing or malformed machine manifest is a stop condition.
+Brief administration needs no extra placement ceremony; the systemd parent
+already bounds user work.
 
 ## Maintenance
 
-Keep topology, the machine projection, Slurm configuration, systemd boundaries
-and maintained launchers coherent. Verify actual effective cgroup masks and
-SMT sibling separation, not only requested settings. Changes require a drained
-handover; never leave two allocators active. Run `scripts/audit-agent-instructions`
-after modifying agent instructions.
+Keep topology, the projection, Slurm configuration, systemd boundaries and
+maintained launchers coherent. A pool change edits the projection's source and
+reruns the installer as a drained handover: close admission, let running jobs
+finish, and never leave two allocators active. Verify actual effective cgroup
+masks and SMT sibling separation, not only requested settings. Run
+`scripts/audit-agent-instructions` after modifying agent instructions.
