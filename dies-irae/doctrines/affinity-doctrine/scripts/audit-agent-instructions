@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-readonly home=${1:-/home/main}
-readonly global="$home/AGENTS.md"
+readonly home=${1:-$HOME}
+readonly codex_home=${CODEX_HOME:-$home/.codex}
+global="$codex_home/AGENTS.override.md"
+[[ -s $global ]] || global="$codex_home/AGENTS.md"
+readonly global
 [[ -f $global ]] || {
   printf 'affinity audit: global instructions are absent: %s\n' "$global" >&2
   exit 1
@@ -15,7 +18,7 @@ readonly global="$home/AGENTS.md"
 readonly terms='affinit|taskset|cpu.?list|isolcpus|benchmark cores|compiler resource ceiling|compiler lanes|SMT sibling|AllowedCPUs|CPUAffinity'
 mapfile -t owners < <(
   rg -l --hidden -i \
-    -g 'AGENTS.md' \
+    -g 'AGENTS.md' -g 'AGENTS.override.md' \
     -g '!trash/**' \
     -g '!**/.git/**' \
     -g '!**/.cache/**' \
@@ -25,10 +28,14 @@ mapfile -t owners < <(
     "$terms" "$home" || true
 )
 for owner in "${owners[@]}"; do
-  [[ $owner == "$global" ]] || {
+  [[ $owner == "$global" ]] && continue
+  # Dispatching to the doctrine is permitted; restating its policy is not.
+  # Match the literal skill name, not a shell variable.
+  # shellcheck disable=SC2016
+  if sed 's/\$affinity-doctrine//g' "$owner" | rg -i "$terms" >/dev/null; then
     printf 'affinity audit: local instruction duplicates affinity law: %s\n' "$owner" >&2
     exit 1
-  }
+  fi
 done
 
 printf 'Affinity instruction ownership is singular\n'
