@@ -89,15 +89,28 @@ the bulk lanes at reduced scheduling priority, never on the desktop reserve.
 Low nice priority and cgroup CPU weight are work-conserving; do not add a CPU
 quota or arbitrary small parallelism cap merely to lower utilization.
 
-Invoke maintained launchers directly. In particular use the normal PATH
-`cargo` wrapper, never an absolute toolchain path: it derives
-repository-specific target custody before entering the bulk scope. Do not place
-`systemd-run` outside Cargo or bypass its wrapper.
+Invoke maintained launchers directly. `command -v cargo` must resolve to
+`~/bin/cargo`, never `~/.cargo/bin/cargo` or a rustup toolchain path. The wrapper
+derives repository-specific disk-backed target custody before entering the
+bulk scope; rustc, build scripts, nextest and test binaries inherit it. Do not
+override its target selection for ordinary work, or add an outer `taskset`,
+`nice` or `systemd-run`.
 
 `~/.local/libexec/cpu-lanes` is the stable internal launcher when no maintained
 wrapper exists. A missing or malformed machine manifest is a stop condition.
 Brief administration needs no extra placement ceremony; the systemd parent
 already bounds user work.
+
+### Memory
+
+Each wrapped command has a 32 GiB cgroup memory ceiling. A cgroup OOM kill can
+trigger scope teardown and SIGTERM the remaining processes; check the scope's
+`memory.events` and journal before attributing unexplained termination.
+
+Reduce test concurrency when aggregate memory exceeds the ceiling, not merely
+to lower CPU utilization. Only when a single workload genuinely needs more,
+set `BULK_MEMORY_MAX_BYTES` for that command (for example, `BULK_MEMORY_MAX_BYTES=$((48<<30)) cargo nextest run`).
+Never bypass the wrapper or raise the global limit to conceal fixture leaks.
 
 ## Maintenance
 
