@@ -11,57 +11,62 @@ pool size.
 
 ## Territory
 
-The projection partitions every CPU into three sets of whole physical cores;
-SMT siblings never straddle sets.
+The projection partitions every CPU into two sets of whole physical cores:
+`HOST_FLOOR_CPUSET`, which Slurm cannot allocate, and `SLURM_ELIGIBLE_CPUSET`.
+SMT siblings never straddle sets. Ordinary work, including desktop and bulk,
+may use all CPUs except the SMT-complete union of fenced job allocations.
+There is no separate hard bulk/desktop partition.
 
-- **Priority lanes** (`PRIORITY_CPUSET`): the Slurm benchmark pool.
-- **Desktop reserve** (`DESKTOP_CPUSET`): interactive headroom; bulk work never
-  runs here.
-- **Bulk lanes** (`BULK_CPUSET`): the only CPUs bulk work may use.
+Slurm alone allocates benchmark cores. A required root post-fork hook waits
+for `cpu-fence` to exclude an allocation from ordinary systemd slices before
+Slurm releases its native exec barrier. The allocation stays fenced between
+steps; Epilog releases it only after payload teardown. The root handover
+ledger is not an allocator. Recovery consults native jobs and live cgroups;
+the persistent `slurmstepd.scope` alone does not imply a running job.
 
-Desktop, user-session, VM and container processes may use the desktop reserve
-and the bulk lanes, never the priority lanes, even when the queue is empty.
-
-Slurm is the sole allocation authority for the priority lanes. No PID file,
-manual lease, second queue, or claim scope represents ownership; `cpu-claim` is
-retired. Inspect native Slurm jobs and their live cgroups; the persistent
-`slurmstepd.scope` alone does not imply a running job.
+`cpu-queue limit N --for 8h` temporarily caps benchmark capacity using native
+core reservations. Existing jobs drain by default. The operator may explicitly
+choose `--immediate` to cancel entire overlapping jobs without replay.
+`cpu-queue limit clear` restores normal capacity early. Do not impose a manual
+limit or cancel another project's jobs merely to expedite your own work.
 
 ## Machine Requirements
 
 - **Projection** `~/.config/affinity-lanes`: shell-sourceable `KEY=VALUE` lines
-  `PRIORITY_CPUSET`, `DESKTOP_CPUSET`, `BULK_CPUSET`,
-  `PRIORITY_CORE_MEMORY_MIB` (per pool core: an 8 GiB worker plus a 256 MiB
-  custodian share), `BULK_NICE`, `BULK_CPU_WEIGHT`, `CPU_SCHEDULER=slurm`.
+  `HOST_FLOOR_CPUSET`, `SLURM_ELIGIBLE_CPUSET`, `BENCHMARK_MEMORY_MIB`,
+  `BULK_NICE`, `CPU_SCHEDULER=slurm`. CPU capacity and memory admission are
+  independent; more eligible cores do not imply more available RAM.
 - **Slurm**: `munge`, `slurmctld` and `slurmd` enabled for one local node and
   one `benchmark` partition; `select/cons_tres` with `CR_Core_Memory`;
   `task/cgroup,task/affinity` on `cgroup/v2` constraining cores, RAM (100%) and
   swap (0) under `CgroupSlice=benchmark.slice`; `JobRequeue=0`. The node's
   `CpuSpecList` names the Slurm abstract CPUs (hwloc logical PU indexes) outside
-  the priority lanes, `RealMemory` equals the pool slice, and `MemSpecLimit`
+  the eligible pool, `RealMemory` equals the pool slice, and `MemSpecLimit`
   reserves the daemons' share of it.
 - **Admission** (`job_submit.lua`): UID 1000 only; one to pool-size workers, each
   one physical core with one executing sibling; job memory by `--mem`, at most
-  pool cores × `PRIORITY_CORE_MEMORY_MIB`; no exclusivity, spare cores, core
+  `BENCHMARK_MEMORY_MIB`; no exclusivity, spare cores, core
   specialization, requeue or running reprioritization; finite time up to 24 h.
   Job arrays are admitted, each task bounded like a job.
 - **Containment** (required SPANK plugin): per-job PID cap; single-CPU cpuset and
   one-CPU quota per worker task; `oom_score_adj` -900 for every task.
-- **systemd**: `benchmark.slice` hosts `slurmd` with `AllowedCPUs` = the priority
-  lanes, `MemoryMin` = `MemoryMax` = `RealMemory`, `MemorySwapMax=0`; the `user`,
-  `machine` and `capsule` slices are confined to the desktop reserve plus bulk
-  lanes, bulk-only services such as `xmrig` to the bulk lanes, and `system.slice`
-  stays off the priority lanes.
-- **Wrappers**: `~/.local/libexec/cpu-lanes` binds a process tree to
-  `BULK_CPUSET` at `BULK_NICE` and `BULK_CPU_WEIGHT` in a user scope; PATH
+- **systemd**: `benchmark.slice` hosts Slurm job cgroups on the eligible pool,
+  with `MemoryMin` = `MemoryMax` = `RealMemory`, `MemorySwapMax=0`. Slurm's
+  management daemons stay on the host floor. Ordinary top-level slices boot
+  on the floor and receive dynamic masks from `cpu-fence`. New top-level
+  workload slices must participate in this boundary. IRQs and kernel threads
+  are not isolated. A minute timer repairs stale handovers conservatively.
+- **Wrappers**: `~/.local/libexec/cpu-lanes` places a process tree at
+  `BULK_NICE` beneath the user manager's shared `bulk.slice`, with
+  `CPUWeight=idle`. It inherits the dynamic ordinary-work fence; PATH
   Cargo and standalone Rust build-tool wrappers enter it. Rust-analyzer is
   intentionally exempt for interactive MCP/editor analysis. `cpu-queue`
   submits and contains experiments.
 
 `/home/main/programming/projects/mcps/cpu_claim` installs all of this: its
 `assets/affinity-lanes` is the projection's source, and `scripts/install-slurm.sh`
-followed by `scripts/reserve-slurm.sh` render and apply every other mask and
-budget from it.
+followed by acceptance and `scripts/reserve-slurm.sh` render, verify and apply
+every other mask and budget from it. Drain running jobs before a policy cutover.
 
 ## Experiments
 
@@ -80,6 +85,7 @@ the experiment's validity checks without commandeering others' resources.
 
 Reorder pending jobs only. Dispatch priority is not Linux nice/CPUWeight.
 Do not suspend, migrate, throttle or restart a valid burn for queue convenience.
+Only explicit operator authorization permits immediate-cap cancellation.
 No implicit statistical replay: interrupted/uncertain attempts remain failed
 or unknown. An explicit new submission creates a new attempt identity.
 
@@ -89,10 +95,12 @@ teardown retain the allocation and belong in its outer time budget.
 
 ## Bulk Work
 
-Builds, linking, code generation, compression and ordinary test suites run on
-the bulk lanes at reduced scheduling priority, never on the desktop reserve.
-Low nice priority and cgroup CPU weight are work-conserving; do not add a CPU
-quota or arbitrary small parallelism cap merely to lower utilization.
+Builds, linking, code generation, compression and ordinary test suites run in
+the idle-priority bulk slice. They may share the host floor and borrow any
+unallocated benchmark core, but never overlap a fenced allocation. Idle CPU
+scheduling is work-conserving; do not add a CPU quota or arbitrary small
+parallelism cap merely to lower utilization. Idle priority does not isolate
+SMT, cache, memory bandwidth or IO.
 
 Invoke maintained launchers directly. `command -v cargo` must resolve to
 `~/bin/cargo`, never `~/.cargo/bin/cargo` or a rustup toolchain path. The wrapper
