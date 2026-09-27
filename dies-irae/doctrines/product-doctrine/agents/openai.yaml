@@ -2,3 +2,5 @@ interface:
   display_name: "Product Doctrine"
   short_description: "Respect the user system as sovereign territory"
   default_prompt: "Use $product-doctrine to review this product’s filesystem, lifecycle, resource, and platform behavior."
+policy:
+  allow_implicit_invocation: false

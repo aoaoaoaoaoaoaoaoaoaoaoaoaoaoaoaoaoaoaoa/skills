@@ -2,3 +2,5 @@ interface:
   display_name: "Style Doctrine"
   short_description: "Load the house code doctrine"
   default_prompt: "Use $style-doctrine to load the universal code doctrine and the matching language addendum before writing, reviewing, or refactoring code."
+policy:
+  allow_implicit_invocation: false

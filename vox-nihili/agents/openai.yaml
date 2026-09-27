@@ -2,3 +2,5 @@ interface:
   display_name: "Vox Nihili"
   short_description: "Canonical, dry technical prose"
   default_prompt: "Use $vox-nihili to write or revise this technical text in canonical form: each fact and relation stated once, in the fewest well-formed words."
+policy:
+  allow_implicit_invocation: false
