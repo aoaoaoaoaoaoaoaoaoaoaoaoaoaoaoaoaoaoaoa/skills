@@ -1,0 +1,4 @@
+interface:
+  display_name: "Confutatis"
+  short_description: "Prove where the code's promises break"
+  default_prompt: "Use $confutatis to recover this code's contracts and prove where they are broken, over-relied on, or wrong."

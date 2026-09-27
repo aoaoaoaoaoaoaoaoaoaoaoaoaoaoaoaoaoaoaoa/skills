@@ -37,6 +37,8 @@ This file is the naming authority for authors of the DIES IRAE family. Skills do
 | claim | one promise the product declares, in a README, help text, API, or metadata | |
 | invariant | a condition that must always hold, from house doctrine or the product | law, except in the algebraic sense |
 | public contract | the part of the charter that external consumers rely on; changing it requires a major version | outer contract |
+| contract | the promise a unit of code makes, explicit or implied: preconditions, postconditions, invariants, and failure behavior | |
+| seam | where a defect can lie: between an implementation and its contract, a client and a contract, or a contract and the charter | |
 | envelope | what one run must preserve: the charter within its scope plus the scope's obligations to the rest of the system; frozen by definition | semantic envelope, frozen envelope, documentary envelope, release envelope, frozen product |
 | oracle | a source of the right answer | |
 | authority question | a decision only the user can make, including any change to the envelope | blocked, authority blocker, authority conflict, contract break requiring authorization, out-of-envelope lesion |

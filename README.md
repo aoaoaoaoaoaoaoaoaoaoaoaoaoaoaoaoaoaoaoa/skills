@@ -22,6 +22,7 @@ Repository-owned Codex skills.
 
 - `delenda`: contract an implementation to what its present responsibilities require.
 - `imperium`: derive the correct domain model and bring the program's global nouns into it.
+- `confutatis`: prove where the code's promises, explicit or implied, are broken.
 - `tabula-rasa`: rebuild an incumbent test suite from a blank-page admission standard.
 - `damnatio-memoriae`: purge documentation that no longer earns existence.
 - `scriptorium`: reconcile durable documentation and source commentary with reality.
