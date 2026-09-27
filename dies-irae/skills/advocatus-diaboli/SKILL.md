@@ -1,6 +1,6 @@
 ---
 name: advocatus-diaboli
-description: Conduct a hostile, whole-product release-readiness inquest. Use when Codex should decide whether a repository and its actual release artifacts deserve shipment by reconstructing the declared release envelope; verifying canonical gates, dependencies, packaging, installation, lifecycle, user-system conduct, supported targets, author subtraction, and first-contact self-sufficiency; and returning or explicitly executing a dependency-ordered path to an evidence-backed RELEASE or HOLD verdict without inventing features or support.
+description: "Conduct a hostile, whole-product release inquest: decide whether an exact candidate and its actual artifacts deserve shipment by verifying canonical gates, correctness, dependencies, packaging, installation, lifecycle, conduct on the user's system, supported targets, author subtraction, and first contact, and return an evidence-backed RELEASE or HOLD verdict with a dependency-ordered closure program. Never invents features or support. Produces a report; executes the closure program only when explicitly authorized."
 ---
 
 # Advocatus Diaboli
@@ -13,251 +13,159 @@ The fixed point is:
 
 > Ship only a candidate that can be identified, built, verified, packaged, installed, encountered for the first time, operated, failed, recovered, updated where promised, and removed as promised from clean declared environments, without author memory, hidden privilege, accidental parochialism, or residue.
 
-This is the final integration gate between a repository and a product worthy of another person's system. Judge the actual candidate, not the amount of work invested in it, the greenness of one test command, or the plausibility of its source tree. Every shipped surface must look intentional under hostile professional scrutiny.
+This is the final integration gate between a repository and a product worthy of another person's system. Judge the actual candidate, not the work invested in it, the greenness of one test command, or the plausibility of its source tree. Every shipped surface must look intentional under hostile professional scrutiny.
 
-The objective is not a larger feature set, generic polish, or compliance theater. It is an honest release claim backed by sufficient evidence. Freeze the product's declared charter and attempt to falsify it from source identity through artifact and lifecycle.
+The objective is not a larger feature set, generic polish, or compliance theater. It is an honest set of release claims backed by sufficient evidence: freeze the claims and attempt to falsify them from source identity through artifact and lifecycle.
 
-Default to `inquest_report`. Change the repository only under explicit `execute_after_inquest` authority, and only after the complete report exists.
+Default to `report`. Change the repository only under explicit `execute` authority, and only after the complete report exists.
 
-## Candidate And Authority
+## Candidate and claims
 
-A release candidate is a specific source identity, dependency resolution, toolchain and release configuration, artifact set, target envelope, and distribution path. Record dirt, generated inputs, mutable external dependencies, and anything else that can make two nominally identical builds different. A verdict attaches only to that identity.
+A candidate is a specific source identity, dependency resolution, toolchain and release configuration, artifact set, target set, and distribution path. Record uncommitted changes, generated inputs, mutable external dependencies, and anything else that can make two nominally identical builds differ. The verdict attaches to that candidate: it holds for any delivery that ships exactly the judged content with the judged resolution, toolchain, and configuration, and any change to that content voids it.
 
-Recover the release claim from present product contracts, package metadata, command and API surfaces, installation paths, supported targets, durable formats, external services, and distribution machinery. Distinguish advertised, enforced, observed, and merely inferred claims. None is automatically sovereign; expose contradictions and authority decisions rather than choosing the convenient side.
+When a charter is supplied, take the product's claims from it and add the release-specific claims: artifacts, targets, distribution, and lifecycle promises. Otherwise recover the claims from product contracts, package metadata, command and API surfaces, installation paths, supported targets, durable formats, external services, and distribution machinery. Distinguish advertised, enforced, observed, and merely inferred claims; none is automatically authoritative, and a contradiction that can change the released product is an authority question.
 
-Freeze supported behavior, public contracts, platforms, languages, audiences, and operational promises unless the user separately authorizes change. The inquest may demand that every claimed path become real. It may not manufacture new platforms, translations, accessibility modes, integrations, or features because another product could plausibly want them.
+Freeze supported behavior, public contracts, platforms, languages, audiences, and operational promises. The inquest may demand that every claimed path become real. It may not manufacture platforms, translations, accessibility modes, integrations, or features because another product could plausibly want them.
 
-Load the repository instructions and the `product-doctrine` skill, including every applicable platform projection. Load the relevant `style-doctrine` guides when source or manifest quality bears on release fitness.
+Read the repository's `AGENTS.md` files and load `$product-doctrine` with every applicable platform projection; its author-subtraction and first-contact rules are the standard for the trials below. Load `$ui-doctrine` when the product has a visible interface, and `$style-doctrine` when source or manifest quality bears on release fitness.
 
-Advocatus Diaboli owns the integrated ship judgment, not every specialist campaign. Consume source-matched reports from Tabula Rasa, Scriptorium, Damnatio Memoriae, Bare Metal ALARA, Delenda, and Imperium when available. If a deep campaign is required, specify an exact handoff and continue the inquest; do not silently launch a rewrite, documentation reconstruction, performance campaign, or test-suite redesign.
+Advocatus Diaboli owns the integrated ship judgment, not every specialist campaign. Consume current reports for the same candidate from Confutatis, Tabula Rasa, Scriptorium, Damnatio Memoriae, Delenda, Imperium, and Bare Metal ALARA when they exist. When a deep campaign is required, specify an exact handoff and continue the inquest; do not silently launch a rewrite, a documentation reconstruction, a performance campaign, or a test-suite redesign.
 
-## Release Law
+## Evidence and verdict
 
-### No Evidence, No Release
+Configured gates are intended witnesses, not accomplished evidence. Run the canonical verification at the locked candidate when authority and environment permit, and inspect the artifacts it produces. A passing development build does not prove the release configuration, a passing unit suite does not prove assembly, and source review does not prove installation or cleanup.
 
-Configured gates are intended witnesses, not accomplished evidence. Run the canonical verification contract at the locked identity when authority and environment permit. Inspect the artifacts it produces. A passing development build does not prove release configuration, a passing unit suite does not prove assembly, and source review does not prove installation or cleanup.
+Return `RELEASE` only when every material claim has credible evidence and no blocker remains. Return `HOLD` otherwise, and mark each blocker with its reason: `failed` for a claim shown not to hold, `unproven` for a material claim without credible evidence, and `authority_question` for an unresolved decision that can change the released product. A complete read-only inquest may correctly end in `HOLD`; uncertainty is not a pass.
 
-Use `RELEASE` only when every material release claim has credible evidence and no undispositioned blocker remains. Use `HOLD` for a known defect, a material claim left unproved, or an authority conflict that can change the released product. Mark each hold reason as `defect`, `unproven`, or `authority`. A complete read-only inquest may correctly end in `HOLD`; uncertainty is not an optimistic pass.
+A `critical` or `high` finding within the claims is a blocker. Lesser findings are blockers too when together they show that the candidate would not survive hostile professional scrutiny; name the pattern and its evidence. Do not hold the release for aesthetic preference, hypothetical features, or specialist perfection beyond the claims.
 
-Residual risks may survive only when they are bounded, explicit, evidence-backed, and outside the declared release claim. There is no “conditional release” that launders a missing material proof.
+A residual risk survives only when it is bounded, explicit, evidenced, and outside the claims. There is no conditional release that launders a missing material proof.
 
-### Subtract The Author
+The actual artifact is the product. Trace the candidate across the lifecycle its kind implies: a desktop application, service, library, CLI, plugin, model, and container each expose a different release graph. Inspect package contents, metadata, entrypoints, runtime dependencies, defaults, permissions, side effects, persistence, external conduct, failure behavior, and removal instead of inferring them from source. Dependency age, TODO markers, warnings, debug symbols, generated files, and unconventional packaging are sensors, not verdicts: ask what reaches the release, what it violates, and what risk it creates. Absence from a familiar checklist does not excuse a defect the candidate's own structure reveals.
 
-The author is not an implicit input or platform. No undeclared fact of the author's machine, identity, locale, geography, timezone, accounts, data, accumulated state, network, or habits may become product law.
+## Procedure
 
-Hold the declared charter fixed and vary the ambient coordinates the actual product exposes. Behavior may depend on them only where the contract requires it, and then through explicit user intent or lawful host policy rather than an author-shaped fallback. A product with one language need not gain another; a UTC product need not localize time; a single-platform product need not grow a portability matrix. But supported plurality must not secretly collapse to the author's preferred member.
+### 1. Open the inquest
 
-### First Contact Is Self-Sufficient
-
-A new user may be expert, but arrives without repository history, private vocabulary, remembered bootstrap ritual, preexisting application state, privileged credentials, or knowledge of the author's workstation. Within the declared audience and prerequisites, the entrypoint, state, costs, next actions, and failures must be intelligible without author memory.
-
-This does not require tutorials, wizards, simplification, or lowest-common-denominator design. A demanding instrument may remain demanding. It may not require occult initiation.
-
-### The Actual Artifact Is The Product
-
-Trace the candidate across the complete release lifecycle appropriate to its kind. A desktop application, service, library, CLI, plugin, model, and container expose different release graphs; let the product reveal its own. Inspect package contents, metadata, executable entrypoints, runtime dependencies, defaults, permissions, side effects, persistence, external conduct, failure behavior, and removal rather than inferring them from source intent.
-
-Dependency age, TODO markers, warnings, debug symbols, generated files, or unconventional packaging are sensors, not automatic verdicts. Ask what reaches the release, what law it violates, and what user-visible or operational risk it creates. Conversely, absence from a familiar checklist does not excuse a defect the candidate's own topology reveals.
-
-## Protocol
-
-### 0. Open The Inquest
-
-When writes are available, create resumable state before deep reading:
+Create the worklog and report before deep reading:
 
 ```text
 /tmp/advocatus-diaboli-<repo>-<candidate>-<run-id>.md
 /tmp/advocatus-diaboli-<repo>-<candidate>-<run-id>-report.md
 ```
 
-Create a companion `-high-severity.md` register only if a qualifying defect appears.
+In a tribunal, use the directory the tribunal assigns. Record the mode, source identity, candidate, claims, and applicable doctrine. Create a critical register beside the report only when a `critical` finding appears; record it and continue coverage. If writes are forbidden, carry the same state in the final response and state that the run cannot be resumed.
 
-Record mode, source identity, candidate, release envelope, applicable doctrine, context budget, release graph, surface and evidence manifests, claim ledger, ambient-coordinate register, reductions, fold hierarchy, blockers, handoffs, verdict, verification, and frontier. The worklog preserves orientation; the report owns the final argument. If all writes are forbidden, carry the same state into the final response and mark the run nonresumable.
+### 2. Lock the claims
 
-### 1. Lock The Release Claim
+Identify the candidate version and source state; the expected artifacts and their consumers; the build and distribution path; the declared targets and prerequisites; the installation, upgrade, migration, recovery, and removal promises; the public interfaces and durable formats; the external systems; and the canonical verification.
 
-Identify the candidate version and source state; expected artifacts and their consumers; build and distribution path; declared targets and prerequisites; installation, upgrade, migration, recovery, and removal promises; public interfaces and durable formats; external systems; and the canonical verification contract.
+When the project is silent, infer the narrowest honest claims and record the missing authority. Do not promote development conveniences, aspirational prose, dormant code, or historical targets into release promises, and do not narrow an explicit claim because one target is inconvenient to prove. Before inspecting individual findings, establish what consequence would hold this product's release.
 
-Infer the narrowest honest envelope when the project is silent, and mark the missing authority. Do not promote development conveniences, aspirational prose, dormant code, or historical targets into release promises. Do not narrow an explicit claim merely because one target is inconvenient to prove.
+### 3. Map the release graph
 
-Establish what would constitute a material release blocker before inspecting individual findings. The threshold follows the product's consequences and promises, not a universal severity table.
+Map the path from owned source and dependency inputs through generation, verification, build, packaging, publication, acquisition, installation, first contact, ordinary and adverse operation, persistence, update or migration where promised, recovery, and removal. Include effects on the user's system and external services wherever they can alter a claim.
 
-### 2. Build The Release Graph
+### 4. Interrogate
 
-Map the path from owned source and dependency inputs through generation, verification, build, package assembly, publication, acquisition, installation, first contact, ordinary and adverse operation, persistence, update or migration where promised, recovery, and removal. Include user-system effects and external services wherever they can alter the claim.
+Run `$clique-fold` with:
 
-Build two bounded manifests:
+- `subject`: for each claim or release surface, how it can fail between source identity and removal, the independent evidence at the locked candidate, and whether it holds the release
+- `columns`: `authority | target_and_stage | failure_modes | evidence | anchor | judgment | blocker | disposition`
 
-- release surfaces whose contents or configuration can change the shipped product
-- evidence that actually witnesses release claims at the locked identity
+The manifest holds every material claim, every release surface whose contents or configuration can change the shipped product, and every artifact transition, supported target, and lifecycle promise. Evidence that witnesses a claim, including command and trial output, belongs to the fringe. Keep irrelevant tracked files out, and record vendored, generated, machine-consumed, and externally owned surfaces before excluding them. Group claims, surfaces, lifecycle stages, targets, and evidence into cliques that each resolve one ship question, and cut across the cover with author subtraction and first contact wherever ambient coordinates or human interpretation can change behavior. Each reduction preserves the claims and authority, the artifact and lifecycle judgment, author-subtraction and first-contact findings, blockers and counterevidence, and handoffs. Running a scanner or command is not coverage.
 
-Treat source, manifests, lockfiles, build and packaging logic, installers, generated inputs, legal material, user-facing contracts, test and lint configuration, release artifacts, and distribution metadata according to their actual role. Keep irrelevant tracked files outside the census. Record vendored, generated, machine-consumed, and externally owned surfaces before excluding them.
+In each clique, attempt to construct a valid reason to reject the release. Search freely for professional disqualifiers: failed or missing canonical gates, a gate weaker than the style doctrine's enforcement, correctness defects, secrets and private material, unfinished paths the release can reach, developer residue, stale claims, accidental debug conduct, unnecessary or vulnerable dependencies, malformed packages, nonreproducible inputs, a version that misstates the change to the public contract, destructive migrations, unbounded resource use, hidden networking or privilege, platform drift, corruption on failure, residue after removal, and anything else the product makes relevant. This is a vocabulary of threats, not a checklist.
 
-Run a cheap `wc -l -c` preflight over file-backed release surfaces. Use these default circuit breakers for all raw material entering one deep-reading clique:
+Dependency fitness includes necessity, ownership, selected features, version posture, advisories, provenance, license compatibility, lock and update policy, and operational consequence. "Latest" is not automatically correct, and "it builds" is not sufficient. Consult current registries, upstream releases, and advisory sources when currency matters and network access is allowed; otherwise mark the claim unproven.
 
-```text
-context_line_ceiling: 3000
-context_byte_ceiling: 131072
-```
+Run builds, checks, artifact inspection, and lifecycle trials in clean, isolated environments when allowed, keeping temporary profiles, homes, caches, credentials, display servers, ports, and installation prefixes outside the user's live system. Use `$x11-gui-testing` for graphical Linux applications. The live system and the user's profile are private production state, not fixtures: destructive or privacy-invasive trials require separate, narrow authorization and otherwise run in disposable isolation.
 
-Either ceiling trips the budget. Count source, configuration, documentation, history, dependency metadata, artifact listings, logs, and command output when their contents enter context. Broad indexes and narrow probes may range widely; voluminous output is a deep read. Split oversized surfaces into coherent semantic slices.
+### 5. Run the author-subtraction and first-contact trials
 
-### 3. Seed An Adaptive Inquest Cover
+Derive the ambient coordinates from the candidate, not from a stock internationalization catalogue: facts supplied implicitly by the development environment, fixtures, defaults, paths, account state, locale-sensitive parsing or ordering, clocks, geography, network topology, hardware, prior runs, and distribution channel. Vary every material coordinate within the claims, or establish why it cannot affect them. A product with one language need not gain another, and a single-platform product need not grow a portability matrix, but a supported plurality must not quietly collapse to the author's preferred member. Classify each apparent parochialism as an explicit product rule, user choice, host policy, leaked author biography, or an out-of-scope feature request; only leaked biography is intrinsically a defect, though an explicit rule may still contradict an advertised claim.
 
-Group release claims, governed surfaces, artifact transitions, lifecycle stages, targets, and evidence into overlapping cliques that resolve coherent ship questions under budget. Let the candidate's release graph determine the cover. Do not march through a universal release checklist or treat repository directories as product boundaries.
+Exercise the product from a sterile user state through the real distributed entrypoint: discovery, first invocation, the first useful result, ordinary failure and recovery, persistence, restart, and removal, as applicable. For a library or developer surface, use a clean downstream consumer instead of importing it from its own repository.
 
-Every material claim, release surface, artifact transition, supported target, and lifecycle promise must belong to at least one planned clique. Cross-cut the cover with author subtraction and first contact wherever ambient coordinates or human interpretation can change behavior. Split, merge, overlap, or replace cliques as the inquest develops.
+### 6. Adjudicate
 
-### 4. Interrogate And Reduce
+Use the folds to find failures that cross surfaces: gates that omit shipped targets, documentation that describes a different artifact, packages that exclude runtime material, clean builds that depend on untracked state, first runs that depend on author state, platform branches no canonical path exercises, upgrades that strand old data, and removals that violate ownership. Clean specialist reports are not enough if the assembled release graph fails.
 
-For each clique, attempt to construct a valid reason to reject the release. Determine the governing claim and authority, how it can fail, what reaches the artifact or user, which evidence is independent, and whether clean construction and lifecycle trials agree with source intent.
+Issue `RELEASE` or `HOLD` against the exact candidate. Every blocker names the claim, evidence, consequence, reason, and closure proof. Every residual risk names its boundary and why it does not invalidate a claim.
 
-Search freely for professional disqualifiers: failed or missing canonical gates, secrets and private material, unfinished release-reachable paths, developer residue, stale claims, accidental debug conduct, unnecessary or vulnerable dependency exposure, malformed packages, nonreproducible inputs, destructive migrations, unbounded resource use, hidden networking or privilege, platform drift, failure corruption, uninstall residue, and anything else the actual product makes relevant. This is a threat vocabulary, not a multiple-choice audit.
+Professionalization is not accumulation. Derive the smallest release graph that can substantiate the claims. Prefer removing dormant paths, unnecessary dependencies, duplicate gates, redundant configuration, and release machinery with no unique role. Add a gate, job, scanner, package layer, or lifecycle mechanism only when an unmet release obligation cannot be discharged by strengthening or consolidating an existing owner.
 
-Dependency fitness includes necessity, ownership, selected features, version posture, advisories, provenance, license compatibility, lock and update policy, and operational consequence. “Latest” is not automatically correct and “it builds” is not sufficient. Consult current authoritative registries, upstream releases, and advisory sources when currency matters and network access is allowed; otherwise mark the claim unproved.
+Produce a dependency-ordered closure program precise enough to execute without repeating the inquest: establish missing evidence and receiving surfaces before destructive cleanup, correct authorities before their projections, repair build and packaging roots before downstream artifact symptoms, and rerun lifecycle trials on newly built artifacts after every change to the candidate. For each item, state its release delta: the machinery retired or subsumed, the terminal owner, and any irreducible addition with the obligation that requires it. Name handoffs by objective, scope, required evidence, and return condition, never as "improve tests," "update docs," "optimize," or "clean up code." The release stays on hold until a handoff's release-relevant return condition is proved.
 
-Run builds, checks, artifact inspection, and lifecycle trials in clean isolated environments when allowed. Keep temporary profiles, homes, caches, credentials, display servers, ports, and installation prefixes outside the user's live system. Use the `x11-gui-testing` skill for graphical Linux applications.
+### 7. Report
 
-The ambient user profile and live system are private production state, not test fixtures. Destructive or privacy-invasive trials require separate, narrow authorization and otherwise run in disposable isolation. Establish product conduct from clean trials, code, artifacts, and explicitly supplied evidence.
+Write the report from the folds. For a project-wide inquest, render every report section and the complete ledger; a section may record a clean result, an intentional absence, or an unresolved proof, but may not vanish. For a narrower scope, keep every section that can bear on its claims. Stop after the report unless `execute` was authorized.
 
-Before opening another clique, reduce the current one into the smallest account another intelligent model can fold without rereading raw material. Preserve claims, release surfaces, artifact and lifecycle evidence, author-coordinate findings, first-contact findings, blockers, counterevidence, handoffs, and frontier. Merely running a scanner or command does not constitute coverage.
+### 8. Execute
 
-Record catastrophic defects immediately in the high-severity register and continue the inquest. Discovery neither authorizes rectification nor excuses incomplete coverage.
+`execute` covers the repository-owned changes needed to close the accepted closure program while preserving frozen behavior and the public contract. Feature additions, support expansion, contract breaks, destructive data policy, publication, signing, credential use, and deployment require separate explicit authority.
 
-### 5. Conduct Author-Subtraction And First-Contact Trials
+Recheck the source identity before changing anything. Work in dependency order, apply the relevant judge's doctrine where a handoff enters its jurisdiction, and keep the candidate identifiable. Rebuild artifacts from clean inputs and repeat the relevant installation, first-contact, adverse-operation, recovery, and removal trials. A verdict after changes applies only to the rebuilt and reverified candidate, which stays in the working tree for delivery.
 
-Derive ambient coordinates from the candidate rather than a canned internationalization catalogue. Look for facts supplied implicitly by the development environment, fixtures, defaults, paths, account state, locale-sensitive parsing or ordering, clocks, geography, network topology, hardware, prior runs, and distribution channel. Perturb every material coordinate within the declared envelope or establish why it cannot affect the claim.
+## Forms
 
-Exercise the product from a sterile user state through the real distributed entrypoint. Observe discovery, initial invocation, acquisition or creation of the first useful result, ordinary failure and recovery, persistence, restart, and removal as applicable. For a library or developer surface, use a clean downstream consumer rather than importing it from its own repository.
-
-Classify every apparent parochiality as explicit product law, user choice, host policy, leaked author biography, or out-of-envelope feature request. Only leaked biography is intrinsically defective; explicit laws may still conflict with advertised claims.
-
-### 6. Fold And Adjudicate
-
-Fold related clique reductions into bounded branch syntheses, then reconcile branches through bridge reductions until one release thesis remains. Higher folds consume reductions, not raw files or complete logs. The same context ceilings govern fold inputs; add another level rather than flooding the final pass.
-
-Use the folds to find cross-surface failures: gates that omit shipped targets, documentation that describes a different artifact, packages that exclude runtime material, clean builds that depend on untracked state, first runs that depend on author state, platform branches no canonical path exercises, upgrades that strand old data, or removals that violate ownership.
-
-Specialist cleanliness is not enough if the assembled release graph fails. Conversely, do not block release on aesthetic preferences, hypothetical features, or specialist perfection beyond the locked claim and material risk.
-
-### 7. Render The Verdict And Closure Program
-
-Issue `RELEASE` or `HOLD` against the exact candidate identity. Every hold must name the failed or unproved claim, evidence, consequence, blocking threshold, and closure proof. Every surviving risk must name its boundary and why it does not invalidate the claim.
-
-Professionalization is not accumulation. Derive the smallest release graph that can substantiate the frozen claim. Prefer removing dormant paths, unnecessary dependencies, duplicate gates, redundant configuration, and release machinery with no unique evidentiary or product role. Add a gate, job, scanner, package layer, or lifecycle mechanism only when an unmet release obligation cannot be discharged by strengthening or consolidating an existing owner.
-
-Produce a dependency-ordered closure program precise enough to execute without repeating the inquest. Establish missing evidence and receiving surfaces before destructive cleanup; correct authorities before their projections; repair build and packaging roots before downstream artifact symptoms; and rerun lifecycle trials on newly built artifacts after every candidate-changing fix.
-
-Within each closure disposition, state its `release_delta`: machinery retired or subsumed, the terminal owner, and irreducible additions. A purely additive closure item must name the release obligation that requires it.
-
-Name specialist handoffs by semantic objective, scope, required evidence, and return condition. Do not emit “improve tests,” “update docs,” “optimize,” or “clean up code.” The release remains on hold until a handoff's release-relevant return condition is proved.
-
-### 8. Report, Then Optionally Execute
-
-Write the complete inquest report from the folds. Stop there unless execution was explicit.
-
-For a project-wide inquest, render every report section and the complete release claim ledger. A section may record a clean result, an intentional absence, or an unresolved proof, but it may not silently vanish. The blocker register is a decision surface, not a substitute for exhaustive claim coverage. For bounded scope, retain every section that can materially bear on the named release claim.
-
-Under `execute_after_inquest`, authorization covers repository-owned changes necessary to close the accepted release program while preserving the frozen behavior and public contract. Feature additions, support-envelope expansion, contract breaks, destructive data policy, publication, signing, credential use, and deployment require separate explicit authority.
-
-Recheck source identity before mutation. Work in dependency order, use specialist doctrine where a handoff enters its domain, and keep the candidate identifiable. Rebuild artifacts from clean inputs and repeat the relevant installation, first-contact, adverse-operation, recovery, and removal trials. A verdict after edits applies only to the rebuilt and reverified candidate.
-
-## Embedded Forms
-
-### Run State
+### Worklog
 
 ```text
-mode: inquest_report | execute_after_inquest
+mode: report | execute
 repository:
 source_identity:
 candidate_version:
 candidate_artifacts:
-release_envelope:
+claims:
 distribution_path:
 applicable_doctrine:
 worklog_path:
 report_path:
-high_severity_path: none
-context_line_ceiling: 3000
-context_byte_ceiling: 131072
+critical_register: none
 
 release_graph:
-surface_manifest:
-evidence_manifest:
-claim_ledger:
-ambient_coordinate_register:
-clique_cover:
-clique_reductions:
-fold_hierarchy:
+clique_fold:
+coordinate_table:
 blockers:
-specialist_handoffs:
+handoffs:
 verdict:
-frontier:
 execution:
 verification:
 residual:
 ```
 
-### Release Claim Ledger
+### Coordinate table
 
 ```text
-| claim | authority | target_and_stage | failure_modes | evidence | artifact_or_lifecycle_anchor | judgment | blocker | disposition | coverage |
-|-------|-----------|------------------|---------------|----------|------------------------------|----------|---------|-------------|----------|
+| coordinate | present_authority | intended_authority | variation_within_claims | evidence | judgment | disposition |
+|------------|-------------------|--------------------|-------------------------|----------|----------|-------------|
 ```
 
-### Ambient Coordinate Register
-
-```text
-| coordinate | present_authority | intended_authority | variation_within_envelope | evidence | judgment | disposition |
-|------------|-------------------|--------------------|---------------------------|----------|----------|-------------|
-```
-
-### Clique Reduction
-
-```text
-clique_id:
-ship_question:
-release_surfaces:
-evidence_set:
-surface_lines:
-surface_bytes:
-coverage_delta:
-
-claims_and_authority:
-artifact_and_lifecycle_judgment:
-author_subtraction:
-first_contact:
-blockers_and_counterevidence:
-specialist_handoffs:
-cross_clique_dependencies:
-frontier:
-supersedes:
-```
-
-### Inquest Report
+### Report
 
 ```markdown
 # Advocatus Diaboli: <candidate>
 
-## Executive Verdict
-## Locked Candidate And Release Envelope
-## Coverage And Evidence
-## Release Graph And Artifact Chain
-## Verification And Repository Hygiene
-## Dependencies, Provenance, And Packaging
-## Product Lifecycle And User-System Conduct
-## Subtract The Author
-## First Contact
-## Supported Targets And External Boundaries
-## Release Blockers
-## Dependency-Ordered Closure Program
-## Specialist Handoffs
-## High-Severity Register
-## Reverification Program
-## Residual Risks And Unknowns
+## Verdict
+## Candidate and claims
+## Coverage and evidence
+## Release graph and artifact chain
+## Verification and repository hygiene
+## Correctness
+## Dependencies, provenance, and packaging
+## Lifecycle and conduct on the user's system
+## Author subtraction
+## First contact
+## Supported targets and external boundaries
+## Blockers
+## Closure program
+## Handoffs
+## Critical register
+## Reverification program
+## Residual risks and unknowns
 
-### Complete Release Claim Ledger
+### Ledger
 
-| claim | target and stage | evidence | judgment | blocker or residual | disposition | dependencies |
-|-------|------------------|----------|----------|---------------------|-------------|--------------|
+The complete clique-fold ledger, one row per claim or release surface.
 ```
