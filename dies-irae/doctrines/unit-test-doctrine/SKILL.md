@@ -1,6 +1,6 @@
 ---
 name: unit-test-doctrine
-description: Apply the house unit-test doctrine whenever designing, adding, changing, reviewing, or deleting unit tests. Use it during ordinary forward implementation to prevent test-per-change accretion and reserve permanent unit tests for carefully selected, durable interactions.
+description: Apply the house unit-test doctrine whenever designing, adding, changing, reviewing, or deleting unit tests or any other permanent test. Use it during ordinary forward implementation to prevent test-per-change accretion and reserve permanent unit tests for carefully selected, durable interactions.
 ---
 
 # Unit Test Doctrine
@@ -13,8 +13,8 @@ training as a model that must be corrected for.
 The most damaging pattern you may find yourself tempted to engage in is the
 "potemkin test": some feature was removed, or narrowed, or altered, so you feel
 the need to add a test to assert the new behavior. This test will likely be
-*nowhere close to the Pareto front of usefulness*. If the entire test suite was
-wiped clean and regenerated such a test would likely not come close to being
+*nowhere close to the Pareto front of usefulness*. If the entire test suite were
+wiped clean and regenerated, such a test would likely not come close to being
 featured.
 
 Please, I'm begging you, catch yourself before you write tests like this.
@@ -39,5 +39,5 @@ As the user I will be much less frustrated by missing or sparse tests than by
 an ever-accumulating wall of slop tests. If the wall of slop tests accumulates
 too much I will have them wiped, and they will have been useless anyway!
 
-Look for good proptest opportunities. Property testing is great -- but don't
+Look for good property-test opportunities. Property testing is great -- but don't
 shoehorn it.
