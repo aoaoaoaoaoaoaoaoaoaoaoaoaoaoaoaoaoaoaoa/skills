@@ -9,13 +9,129 @@ die() {
 
 usage() {
     printf '%s\n' \
-        'usage: codex-sudo --reason REASON -- COMMAND [ARG ...]' \
+        'usage: codex-sudo [--prompt-display DISPLAY] --reason REASON -- COMMAND [ARG ...]' \
         '       codex-sudo --help'
 }
 
+display_reachable() {
+    local display=$1
+    local xauthority=${2:-$HOME/.Xauthority}
+
+    DISPLAY=$display XAUTHORITY=$xauthority \
+        /usr/bin/timeout 2 /usr/bin/xdpyinfo >/dev/null 2>&1
+}
+
+shared_app_server() {
+    local cgroup
+
+    while IFS= read -r cgroup; do
+        [[ $cgroup == */codex-app-server.service ]] && return 0
+    done </proc/self/cgroup
+    return 1
+}
+
+route_to_ssh_client() {
+    local -a connections=() displays=() pwds=() ttys=() xauthorities=()
+    local -a argv=() pool=()
+    local proc pid item executable display connection tty process_pwd xauthority
+    local current_pwd selected_connection='' index selected
+
+    current_pwd=$(pwd -P)
+    for proc in /proc/[0-9]*/environ; do
+        pid=${proc#/proc/}
+        pid=${pid%/environ}
+        [[ -r $proc && -r /proc/$pid/cmdline ]] || continue
+
+        argv=()
+        mapfile -d '' -t argv </proc/"$pid"/cmdline 2>/dev/null || continue
+        ((${#argv[@]})) || continue
+        executable=${argv[0]##*/}
+        [[ $executable == codex ]] || continue
+
+        display=''
+        connection=''
+        tty=''
+        process_pwd=''
+        xauthority=''
+        while IFS= read -r -d '' item; do
+            case $item in
+                DISPLAY=*) display=${item#*=} ;;
+                PWD=*) process_pwd=${item#*=} ;;
+                SSH_CONNECTION=*) connection=${item#*=} ;;
+                SSH_TTY=*) tty=${item#*=} ;;
+                XAUTHORITY=*) xauthority=${item#*=} ;;
+            esac
+        done <"$proc"
+
+        [[ -n $connection && -n $display ]] || continue
+        xauthority=${xauthority:-$HOME/.Xauthority}
+        display_reachable "$display" "$xauthority" || continue
+
+        connections+=("$connection")
+        displays+=("$display")
+        pwds+=("$process_pwd")
+        ttys+=("${tty:-unknown TTY}")
+        xauthorities+=("$xauthority")
+    done
+
+    ((${#displays[@]})) || return 1
+
+    for index in "${!displays[@]}"; do
+        [[ ${pwds[index]} == "$current_pwd" ]] && pool+=("$index")
+    done
+    ((${#pool[@]})) || pool=("${!displays[@]}")
+
+    for index in "${pool[@]}"; do
+        if [[ -z $selected_connection ]]; then
+            selected_connection=${connections[index]}
+        elif [[ ${connections[index]} != "$selected_connection" ]]; then
+            die "multiple SSH clients could receive the dialog; retry with --prompt-display DISPLAY"
+        fi
+    done
+
+    selected=${pool[0]}
+    export DISPLAY=${displays[selected]}
+    export XAUTHORITY=${xauthorities[selected]}
+    unset WAYLAND_DISPLAY
+    printf 'codex-sudo: prompting through %s on %s\n' \
+        "${ttys[selected]}" "$DISPLAY" >&2
+}
+
+recover_local_graphics() {
+    local runtime_dir name value
+
+    [[ -n ${DISPLAY:-}${WAYLAND_DISPLAY:-} ]] && return
+
+    runtime_dir=${XDG_RUNTIME_DIR:-/run/user/$(/usr/bin/id -u)}
+    if [[ $runtime_dir == /* && -S $runtime_dir/bus ]]; then
+        export XDG_RUNTIME_DIR=$runtime_dir
+        export DBUS_SESSION_BUS_ADDRESS=${DBUS_SESSION_BUS_ADDRESS:-unix:path=$runtime_dir/bus}
+        while IFS='=' read -r name value; do
+            case $name in
+                DISPLAY | WAYLAND_DISPLAY | XAUTHORITY)
+                    [[ -n ${!name:-} ]] || {
+                        printf -v "$name" '%s' "$value"
+                        export "${name?}"
+                    }
+                    ;;
+            esac
+        done < <(/usr/bin/systemctl --user show-environment 2>/dev/null || true)
+    fi
+}
+
 reason=
+prompt_display=
 while (($#)); do
     case $1 in
+        --prompt-display)
+            (($# >= 2)) || die '--prompt-display requires a value'
+            prompt_display=$2
+            shift 2
+            ;;
+        --prompt-display=*)
+            prompt_display=${1#*=}
+            shift
+            ;;
         --reason)
             (($# >= 2)) || die '--reason requires a value'
             reason=$2
@@ -42,22 +158,26 @@ done
 [[ $reason =~ [^[:space:]] ]] || die 'a concrete, nonempty reason is required'
 (($#)) || die 'a command is required after --'
 
-if [[ -z ${DISPLAY:-}${WAYLAND_DISPLAY:-} ]]; then
-    runtime_dir=${XDG_RUNTIME_DIR:-/run/user/$(/usr/bin/id -u)}
-    if [[ $runtime_dir == /* && -S $runtime_dir/bus ]]; then
-        export XDG_RUNTIME_DIR=$runtime_dir
-        export DBUS_SESSION_BUS_ADDRESS=${DBUS_SESSION_BUS_ADDRESS:-unix:path=$runtime_dir/bus}
-        while IFS='=' read -r name value; do
-            case $name in
-                DISPLAY | WAYLAND_DISPLAY | XAUTHORITY)
-                    [[ -n ${!name:-} ]] || {
-                        printf -v "$name" '%s' "$value"
-                        export "$name"
-                    }
-                    ;;
-            esac
-        done < <(/usr/bin/systemctl --user show-environment 2>/dev/null || true)
-    fi
+if [[ -n $prompt_display ]]; then
+    xauthority=${XAUTHORITY:-$HOME/.Xauthority}
+    display_reachable "$prompt_display" "$xauthority" || \
+        die "X display is not reachable: $prompt_display"
+    export DISPLAY=$prompt_display XAUTHORITY=$xauthority
+    unset WAYLAND_DISPLAY
+    printf 'codex-sudo: prompting on requested display %s\n' "$DISPLAY" >&2
+elif [[ -n ${SSH_CONNECTION:-} && -n ${DISPLAY:-} ]]; then
+    xauthority=${XAUTHORITY:-$HOME/.Xauthority}
+    display_reachable "$DISPLAY" "$xauthority" || \
+        die "SSH-forwarded X display is not reachable: $DISPLAY"
+    export XAUTHORITY=$xauthority
+    printf 'codex-sudo: prompting through %s on %s\n' \
+        "${SSH_TTY:-SSH}" "$DISPLAY" >&2
+elif shared_app_server; then
+    route_to_ssh_client || \
+        die 'no reachable SSH-forwarded Codex display; reconnect with X forwarding or use --prompt-display'
+else
+    recover_local_graphics
+    printf 'codex-sudo: prompting on local graphical session\n' >&2
 fi
 [[ -n ${DISPLAY:-}${WAYLAND_DISPLAY:-} ]] || die 'no graphical session is available'
 

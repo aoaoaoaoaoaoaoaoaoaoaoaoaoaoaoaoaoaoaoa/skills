@@ -5,7 +5,7 @@ Repository-owned Codex skills.
 ## Standalone
 
 - `ad-fontes`: retain external sources once with neutral synopses and a compact index.
-- `ask-for-sudo`: mediate privileged commands through a reason-bearing graphical authentication dialog.
+- `ask-for-sudo`: mediate privileged commands through a reason-bearing local or SSH-forwarded graphical authentication dialog.
 - `assemble-pro-review-package`: build GitHub-native expert handoffs from exact source coordinates and decisive non-code evidence.
 - `bare-metal-alara`: reduce authoritative wallclock runtime to its economic frontier under a frozen semantic envelope.
 - `rust-bootstrap`: install or tighten the house Rust lint posture from a template.

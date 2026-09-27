@@ -1,21 +1,355 @@
-#!/usr/bin/env bash
+#!/usr/bin/python3
 
-set -euo pipefail
+from __future__ import annotations
 
-: "${CODEX_SUDO_COMMAND:?missing command description}"
-: "${CODEX_SUDO_REASON:?missing privilege reason}"
+import os
+import socket
+import sys
 
-wrapped_reason=$(printf '%s\n' "$CODEX_SUDO_REASON" | /usr/bin/fold --spaces --width=88)
-wrapped_command=$(printf '%s\n' "$CODEX_SUDO_COMMAND" | /usr/bin/fold --spaces --width=88)
-printf -v body 'Reason\n%s\n\nCommand\n%s' "$wrapped_reason" "$wrapped_command"
+import gi
 
-exec /usr/bin/zenity \
-    --entry \
-    --modal \
-    --width=720 \
-    --height=280 \
-    --title='Codex privilege request' \
-    --text="$body" \
-    --entry-text='' \
-    --hide-text \
-    --ok-label='Authorize'
+gi.require_version("Gdk", "4.0")
+gi.require_version("Gtk", "4.0")
+from gi.repository import Gdk, GLib, Gtk, Pango  # noqa: E402, I001  # ty: ignore[unresolved-import]
+
+
+CSS = b"""
+window.poolrooms, .gate {
+    background: #0c0b09;
+    color: #e2d9c6;
+}
+
+headerbar.poolrooms-titlebar {
+    min-height: 38px;
+    background: #110f0c;
+    border-bottom: 1px solid #4e4230;
+    box-shadow: none;
+}
+
+headerbar.poolrooms-titlebar button {
+    min-width: 32px;
+    min-height: 32px;
+    padding: 0;
+    color: #9e9380;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+headerbar.poolrooms-titlebar button:hover {
+    color: #ebc597;
+    background: #241e16;
+}
+
+.titlebar-mark {
+    color: #9e9380;
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.waterline {
+    min-height: 5px;
+    background-image: linear-gradient(
+        90deg, #24585d, #4f8f92 28%, #d6a24e 72%, #8e6e40
+    );
+}
+
+.content {
+    padding: 30px 34px 32px;
+}
+
+.eyebrow, .section-title, .host-caption {
+    color: #9e9380;
+    font-family: monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+}
+
+.headline {
+    color: #e2d9c6;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.lede {
+    color: #9e9380;
+    font-size: 13px;
+}
+
+.host-plate {
+    min-width: 220px;
+    padding: 11px 16px;
+    background-image: linear-gradient(145deg, #241e16, #17130f);
+    border: 1px solid #8e7d64;
+    border-radius: 2px;
+    box-shadow: inset 0 1px rgba(235, 197, 151, 0.10), 0 3px 8px rgba(0, 0, 0, 0.38);
+}
+
+.host {
+    color: #ebc597;
+    font-family: monospace;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.section {
+    padding: 14px 16px;
+    background: #110f0c;
+    border: 1px solid #4e4230;
+    border-radius: 2px;
+}
+
+.reason {
+    color: #e2d9c6;
+    font-size: 13px;
+}
+
+.command {
+    color: #c8bda8;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+scrolledwindow viewport {
+    background: transparent;
+}
+
+entry.password {
+    min-height: 44px;
+    padding: 0 14px;
+    color: #f0e7d5;
+    caret-color: #ebc597;
+    background: #090807;
+    border: 1px solid #4e4230;
+    border-radius: 2px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.55);
+}
+
+entry.password:focus, entry.password:focus-within {
+    outline: none;
+    border-color: #d6a24e;
+    box-shadow: 0 0 0 1px rgba(214, 162, 78, 0.30);
+}
+
+.content button {
+    min-height: 38px;
+    min-width: 108px;
+    padding: 0 18px;
+    color: #c8bda8;
+    background: #17130f;
+    border: 1px solid #4e4230;
+    border-radius: 2px;
+    box-shadow: none;
+}
+
+.content button:hover {
+    color: #e2d9c6;
+    background: #241e16;
+    border-color: #8e7d64;
+}
+
+.content button.authorize {
+    color: #0c0b09;
+    font-weight: 700;
+    background-image: linear-gradient(#ebc597, #b9874d);
+    border-color: #ebc597;
+}
+
+.content button.authorize:hover {
+    background-image: linear-gradient(#f3d2aa, #c79559);
+}
+
+.content button.authorize:disabled {
+    color: #5e5446;
+    background: #241e16;
+    border-color: #4e4230;
+}
+"""
+
+
+class PrivilegeGate:
+    def __init__(self, reason: str, command: str, hostname: str) -> None:
+        self.reason = reason
+        self.command = command
+        self.hostname = hostname
+        self.password: str | None = None
+        self.loop = GLib.MainLoop()
+
+    def run(self) -> str | None:
+        Gtk.init()
+        self._activate()
+        self.loop.run()
+        return self.password
+
+    def _activate(self) -> None:
+        provider = Gtk.CssProvider()
+        provider.load_from_data(CSS)
+        Gtk.StyleContext.add_provider_for_display(
+            Gdk.Display.get_default(),
+            provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+        )
+
+        window = Gtk.Window(title=f"Administrator authorization on {self.hostname}")
+        window.add_css_class("poolrooms")
+        window.set_default_size(760, 560)
+        window.set_resizable(False)
+        window.set_modal(True)
+        window.connect("close-request", self._close_requested)
+
+        titlebar = Gtk.HeaderBar()
+        titlebar.add_css_class("poolrooms-titlebar")
+        mark = Gtk.Label(label=f"CODEX SUDO  /  {self.hostname}")
+        mark.add_css_class("titlebar-mark")
+        titlebar.set_title_widget(mark)
+        window.set_titlebar(titlebar)
+
+        gate = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        gate.add_css_class("gate")
+        waterline = Gtk.Box()
+        waterline.add_css_class("waterline")
+        gate.append(waterline)
+
+        content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=22)
+        content.add_css_class("content")
+        gate.append(content)
+
+        masthead = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=28)
+        masthead.set_homogeneous(False)
+        heading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        heading.set_hexpand(True)
+        heading.append(self._label("PRIVILEGE GATE", "eyebrow"))
+        heading.append(self._label("Administrator authentication", "headline"))
+        heading.append(
+            self._label("Approve one privileged command on this machine.", "lede")
+        )
+        masthead.append(heading)
+
+        host_plate = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=3)
+        host_plate.add_css_class("host-plate")
+        host_plate.append(self._label("TARGET HOST", "host-caption"))
+        host = self._label(self.hostname, "host")
+        host.set_wrap(True)
+        host.set_wrap_mode(Pango.WrapMode.CHAR)
+        host_plate.append(host)
+        masthead.append(host_plate)
+        content.append(masthead)
+
+        details = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        details.append(self._section("REASON", self.reason, "reason"))
+        details.append(self._section("COMMAND", self.command, "command"))
+        scroller = Gtk.ScrolledWindow()
+        scroller.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        scroller.set_min_content_height(180)
+        scroller.set_max_content_height(250)
+        scroller.set_propagate_natural_height(True)
+        scroller.set_child(details)
+        content.append(scroller)
+
+        password_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
+        password_box.append(self._label("ADMINISTRATOR PASSWORD", "section-title"))
+        password = Gtk.Entry()
+        password.add_css_class("password")
+        password.set_placeholder_text(f"Password for {self.hostname}")
+        password.set_input_purpose(Gtk.InputPurpose.PASSWORD)
+        password.set_invisible_char("●")
+        password.set_visibility(False)
+        password.set_activates_default(True)
+        password_box.append(password)
+        content.append(password_box)
+
+        actions = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        actions.set_halign(Gtk.Align.END)
+        cancel = Gtk.Button(label="Cancel")
+        cancel.connect("clicked", lambda _button: window.close())
+        actions.append(cancel)
+        authorize = Gtk.Button(label="Authorize")
+        authorize.add_css_class("authorize")
+        authorize.set_sensitive(False)
+        authorize.connect("clicked", self._authorize, password, window)
+        actions.append(authorize)
+        content.append(actions)
+
+        password.connect(
+            "changed", lambda entry: authorize.set_sensitive(bool(entry.get_text()))
+        )
+        window.set_default_widget(authorize)
+        escape = Gtk.EventControllerKey()
+        escape.connect("key-pressed", self._key_pressed, window)
+        window.add_controller(escape)
+        window.set_child(gate)
+        window.present()
+        GLib.idle_add(self._focus_once, password)
+
+    @staticmethod
+    def _focus_once(password: Gtk.Entry) -> bool:
+        # GLib repeats an idle callback while it returns true; grab_focus does.
+        password.grab_focus()
+        return GLib.SOURCE_REMOVE
+
+    def _close_requested(self, _window: Gtk.Window) -> bool:
+        self.loop.quit()
+        return False
+
+    @staticmethod
+    def _label(text: str, css_class: str) -> Gtk.Label:
+        label = Gtk.Label(label=text, xalign=0)
+        label.add_css_class(css_class)
+        return label
+
+    @classmethod
+    def _section(cls, title: str, text: str, css_class: str) -> Gtk.Box:
+        section = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=7)
+        section.add_css_class("section")
+        section.append(cls._label(title, "section-title"))
+        value = cls._label(text, css_class)
+        value.set_wrap(True)
+        value.set_wrap_mode(Pango.WrapMode.CHAR)
+        section.append(value)
+        return section
+
+    def _authorize(
+        self, _button: Gtk.Button, password: Gtk.Entry, window: Gtk.Window
+    ) -> None:
+        self.password = password.get_text()
+        window.close()
+
+    @staticmethod
+    def _key_pressed(
+        _controller: Gtk.EventControllerKey,
+        keyval: int,
+        _keycode: int,
+        _state: Gdk.ModifierType,
+        window: Gtk.Window,
+    ) -> bool:
+        if keyval != Gdk.KEY_Escape:
+            return False
+        window.close()
+        return True
+
+
+def required_environment(name: str) -> str:
+    value = os.environ.get(name)
+    if value is None:
+        raise SystemExit(f"codex-sudo: missing {name.lower().replace('_', ' ')}")
+    return value
+
+
+def main() -> int:
+    gate = PrivilegeGate(
+        reason=required_environment("CODEX_SUDO_REASON"),
+        command=required_environment("CODEX_SUDO_COMMAND"),
+        hostname=socket.gethostname(),
+    )
+    password = gate.run()
+    if password is None:
+        return 1
+    print(password, flush=True)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
