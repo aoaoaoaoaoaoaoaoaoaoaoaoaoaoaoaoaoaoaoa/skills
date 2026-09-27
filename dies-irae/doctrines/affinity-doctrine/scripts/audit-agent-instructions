@@ -30,9 +30,9 @@ mapfile -t owners < <(
 for owner in "${owners[@]}"; do
   [[ $owner == "$global" ]] && continue
   # Dispatching to the doctrine is permitted; restating its policy is not.
-  # Match the literal skill name, not a shell variable.
+  # Accept plain skill references as well as the UI's $skill spelling.
   # shellcheck disable=SC2016
-  if sed 's/\$affinity-doctrine//g' "$owner" | rg -i "$terms" >/dev/null; then
+  if sed -E 's/\$?affinity-doctrine//g' "$owner" | rg -i "$terms" >/dev/null; then
     printf 'affinity audit: local instruction duplicates affinity law: %s\n' "$owner" >&2
     exit 1
   fi
