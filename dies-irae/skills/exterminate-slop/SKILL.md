@@ -10,7 +10,6 @@ Read the target repository's `AGENTS.md` files first. Load every language note t
 - Rust: [references/languages/rust.md](references/languages/rust.md)
 - Java: [references/languages/java.md](references/languages/java.md)
 - Python: [references/languages/python.md](references/languages/python.md)
-- TypeScript: [references/languages/typescript.md](references/languages/typescript.md)
 
 Load the applicable `style-doctrine` guides. Load `product-doctrine` as well when the surface governs conduct on the user's system. Apply both within the frozen semantic envelope; doctrine sharpens the judgment but does not authorize a contract change.
 
