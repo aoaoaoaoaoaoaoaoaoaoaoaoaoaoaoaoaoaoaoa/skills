@@ -1,9 +1,9 @@
 ---
-name: fahrenheit-451
+name: damnatio-memoriae
 description: Audit an entire repository-owned documentation corpus from a presumption of deletion. Use when Codex should burn obsolete, redundant, historical, or code-mirroring prose; prove which documents still earn existence; and hand necessary reconstruction or contradiction repair to a documentation-authoring pass. Defaults to a read-only purge report and never rewrites surviving documentation on its own.
 ---
 
-# Fahrenheit 451
+# Damnatio Memoriae
 
 ## Mandate
 
@@ -11,13 +11,13 @@ Reduce a bounded documentation corpus to the smallest set of durable prose surfa
 
 This is a purge, not a documentation-improvement campaign. Presume every document should be deleted. A file survives only by carrying a current contract, enabling a necessary user, operator, or developer act, or owning durable truth that cannot be recovered more lawfully elsewhere. Git history is the archive; historical interest, sunk effort, and fear of deletion confer no present value.
 
-Fahrenheit decides what may burn. It does not delicately repair, rewrite, merge, or create living documentation. When necessary truth is trapped in a damaged, duplicated, misplaced, or contradictory surface, preserve the evidence and hand the constructive work to Chronicler.
+Damnatio Memoriae decides what may burn. It does not delicately repair, rewrite, merge, or create living documentation. When necessary truth is trapped in a damaged, duplicated, misplaced, or contradictory surface, preserve the evidence and hand the constructive work to Scriptorium.
 
 Default to `purge_report`. Delete files only when the user explicitly authorizes `purge_execute`, and only after the complete report exists.
 
 ## Scope And Authority
 
-Require a concrete repository or subtree. Census every repository-owned doc-like file in scope: markdown and conventional plaintext documentation, plans, notes, runbooks, ADRs, instruction files, and other prose artifacts regardless of filename. Source doc comments belong to Chronicler, not this corpus.
+Require a concrete repository or subtree. Census every repository-owned doc-like file in scope: markdown and conventional plaintext documentation, plans, notes, runbooks, ADRs, instruction files, and other prose artifacts regardless of filename. Source doc comments belong to Scriptorium, not this corpus.
 
 Do not mistake licenses, legal notices, test fixtures, prompt fixtures, generated artifacts, vendored material, or machine-consumed text for ordinary documentation. Include ambiguous plaintext in the census, establish its role, and exempt it explicitly when it is outside the purge corpus. Do not inflate the census to every machine file containing comments or every binary linked by prose; include a nonconventional artifact only when its primary repository role could plausibly be durable documentation.
 
@@ -31,13 +31,13 @@ Ask the zero-based question continuously:
 
 The answer must name a real audience and consequence. Prose that merely narrates code, commemorates completed work, accumulates abandoned intention, duplicates a stronger owner, or could be regenerated cheaply does not survive. A surviving document must have a coherent role, a stable owner, and authority commensurate with its claims.
 
-Do not preserve a whole file for a few valuable sentences. If those sentences belong in another living surface, the file is a Chronicler handoff pending extraction, not a keeper and not yet safe to delete.
+Do not preserve a whole file for a few valuable sentences. If those sentences belong in another living surface, the file is a Scriptorium handoff pending extraction, not a keeper and not yet safe to delete.
 
-The handoff burden is strict. `chronicler_handoff` is not a refuge for any stale document: deletion must otherwise destroy a necessary documentary role or scarce durable truth that cannot be reconstructed cheaply from code and history. A code-mirroring architecture narrative does not earn transfer merely because a better architecture document could later be written.
+The handoff burden is strict. `scriptorium_handoff` is not a refuge for any stale document: deletion must otherwise destroy a necessary documentary role or scarce durable truth that cannot be reconstructed cheaply from code and history. A code-mirroring architecture narrative does not earn transfer merely because a better architecture document could later be written.
 
 A doomed file may also require a handoff when deletion depends on constructive surgery to a living surface, such as removing or redirecting an inbound navigation link. State that dependency exactly and transfer no content by implication; the file remains doomed, and the handoff does not rehabilitate it.
 
-Fahrenheit adjudicates existence, not full documentary correctness. Establish that a survivor has a live role, a lawful owner, and no decisive supersession or contradiction visible from proportionate evidence. Chronicler owns exhaustive truth reconciliation, link checking, line editing, and reconstruction.
+Damnatio Memoriae adjudicates existence, not full documentary correctness. Establish that a survivor has a live role, a lawful owner, and no decisive supersession or contradiction visible from proportionate evidence. Scriptorium owns exhaustive truth reconciliation, link checking, line editing, and reconstruction.
 
 ## Protocol
 
@@ -46,8 +46,8 @@ Fahrenheit adjudicates existence, not full documentary correctness. Establish th
 When the environment permits, create resumable state before deep reading:
 
 ```text
-/tmp/fahrenheit-451-<repo>-<scope>-<run-id>.md
-/tmp/fahrenheit-451-<repo>-<scope>-<run-id>-report.md
+/tmp/damnatio-memoriae-<repo>-<scope>-<run-id>.md
+/tmp/damnatio-memoriae-<repo>-<scope>-<run-id>-report.md
 ```
 
 Record mode, repository identity, scope, corpus rules, context budget, manifest, reductions, fold hierarchy, judgments, contradictions, and handoffs. Keep the worklog compact; the report owns the final argument. If all writes are forbidden, preserve the same structure in the final response and mark the run nonresumable. Read-only execution is a supported audit mode.
@@ -77,7 +77,7 @@ Every census entry must belong to at least one planned clique or carry an eviden
 
 Read every document in each clique deeply enough to judge its function, claims, authority, neighbors, code anchors, and deletion consequences. Reconcile claims against implementation evidence only as far as needed to adjudicate existence. Once further evidence cannot change the disposition, deletion safety, or handoff dependency, stop probing. A doomed document needs decisive evidence, not an inventory of every stale sentence; a machine-consumed fixture needs enough inspection to establish its role and relevant supersession, not automatic line-by-line review.
 
-Navigate evidence by definitions, references, manifests, and bounded ranges. Never compensate for uncertainty by dumping whole source files, registries, parent workspaces, Git internals, or broad search matches into context. Consult an external owner only when resolving a real authority or transfer question, and charge that material to the same budget. Do not launch network or release-surface validation merely to certify a document that already earns existence; transient external correctness belongs to Chronicler unless it determines deletion or documentary ownership.
+Navigate evidence by definitions, references, manifests, and bounded ranges. Never compensate for uncertainty by dumping whole source files, registries, parent workspaces, Git internals, or broad search matches into context. Consult an external owner only when resolving a real authority or transfer question, and charge that material to the same budget. Do not launch network or release-surface validation merely to certify a document that already earns existence; transient external correctness belongs to Scriptorium unless it determines deletion or documentary ownership.
 
 Before opening another clique, reduce the current one into the smallest durable account from which another intelligent model can integrate its judgment without rereading the documents. Preserve evidence anchors, proposed dispositions, unresolved authority, cross-clique dependencies, and the open frontier. A file is not covered merely because it was opened or skimmed.
 
@@ -93,13 +93,13 @@ Give every census entry exactly one terminal disposition:
 
 - `delete`: destruction loses no living truth or required capability.
 - `survive`: the current file and its role earn continued existence without material reconstruction.
-- `chronicler_handoff`: constructive work on a living surface must precede deletion or acceptance, whether to receive necessary truth, reconstruct a required role, or sever an inbound dependency on an otherwise doomed file.
+- `scriptorium_handoff`: constructive work on a living surface must precede deletion or acceptance, whether to receive necessary truth, reconstruct a required role, or sever an inbound dependency on an otherwise doomed file.
 - `blocked`: authority, legal obligation, or contradiction is genuinely unresolved; leave the evidence intact and name the decision required.
 - `exempt`: the artifact is not repository-owned documentation subject to this purge; state its actual role.
 
 These are actions, not audit lenses. Follow the evidence freely, but leave no `maybe`, implicit omission, or unclassified file.
 
-Deletion safety is cohort-level. A file is not independently deletable when its disappearance would strand navigation, references, required fragments, or documentary ownership. Such a cohort remains a Chronicler handoff until the receiving surface exists.
+Deletion safety is cohort-level. A file is not independently deletable when its disappearance would strand navigation, references, required fragments, or documentary ownership. Such a cohort remains a Scriptorium handoff until the receiving surface exists.
 
 ### 6. Close The Corpus
 
@@ -111,7 +111,7 @@ Do not manufacture work for clean documents. Do not let an alarming incidental d
 
 Write a complete report from the folds rather than concatenating notes. The report must establish the purge thesis, exhaustive coverage, deletion cohorts, survivors and their burden of proof, constructive handoffs, and blocked authority questions.
 
-Stop after the report unless execution was explicit. In `purge_execute`, delete only complete `delete` cohorts whose dependencies remain satisfied. Do not rewrite survivors or improvise the Chronicler work. Re-scan the corpus and references after deletion, account for every changed path, and report any cohort withheld because the evidence drifted.
+Stop after the report unless execution was explicit. In `purge_execute`, delete only complete `delete` cohorts whose dependencies remain satisfied. Do not rewrite survivors or improvise the Scriptorium work. Re-scan the corpus and references after deletion, account for every changed path, and report any cohort withheld because the evidence drifted.
 
 ## Embedded Forms
 
@@ -133,7 +133,7 @@ clique_reductions:
 fold_hierarchy:
 live_judgments:
 contradictions:
-chronicler_handoffs:
+scriptorium_handoffs:
 frontier:
 root_purge_thesis:
 execution:
@@ -169,14 +169,14 @@ supersedes:
 ### Purge Report
 
 ```markdown
-# Fahrenheit 451 Report: <scope>
+# Damnatio Memoriae Report: <scope>
 
 ## Executive Judgment
 ## Corpus And Coverage
 ## Purge Thesis
 ## Deletion Cohorts
 ## Survivors
-## Chronicler Handoffs
+## Scriptorium Handoffs
 ## Blocked Authority And Contradictions
 ## Exempt Artifacts
 ## Incidental High-Severity Findings

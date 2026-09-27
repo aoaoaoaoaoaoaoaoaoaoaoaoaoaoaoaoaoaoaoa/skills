@@ -1,9 +1,9 @@
 ---
-name: release-inquest
+name: advocatus-diaboli
 description: Conduct a hostile, whole-product release-readiness inquest. Use when Codex should decide whether a repository and its actual release artifacts deserve shipment by reconstructing the declared release envelope; verifying canonical gates, dependencies, packaging, installation, lifecycle, user-system conduct, supported targets, author subtraction, and first-contact self-sufficiency; and returning or explicitly executing a dependency-ordered path to an evidence-backed RELEASE or HOLD verdict without inventing features or support.
 ---
 
-# Release Inquest
+# Advocatus Diaboli
 
 ## Mandate
 
@@ -29,7 +29,7 @@ Freeze supported behavior, public contracts, platforms, languages, audiences, an
 
 Load the repository instructions and the `product-doctrine` skill, including every applicable platform projection. Load the relevant `style-doctrine` guides when source or manifest quality bears on release fitness.
 
-Release Inquest owns the integrated ship judgment, not every specialist campaign. Consume source-matched reports from Testing Year Zero, Chronicler, Fahrenheit 451, Bare Metal ALARA, Exterminate Slop, and Majestic Magisteria when available. If a deep campaign is required, specify an exact handoff and continue the inquest; do not silently launch a rewrite, documentation reconstruction, performance campaign, or test-suite redesign.
+Advocatus Diaboli owns the integrated ship judgment, not every specialist campaign. Consume source-matched reports from Tabula Rasa, Scriptorium, Damnatio Memoriae, Bare Metal ALARA, Delenda, and Imperium when available. If a deep campaign is required, specify an exact handoff and continue the inquest; do not silently launch a rewrite, documentation reconstruction, performance campaign, or test-suite redesign.
 
 ## Release Law
 
@@ -66,8 +66,8 @@ Dependency age, TODO markers, warnings, debug symbols, generated files, or uncon
 When writes are available, create resumable state before deep reading:
 
 ```text
-/tmp/release-inquest-<repo>-<candidate>-<run-id>.md
-/tmp/release-inquest-<repo>-<candidate>-<run-id>-report.md
+/tmp/advocatus-diaboli-<repo>-<candidate>-<run-id>.md
+/tmp/advocatus-diaboli-<repo>-<candidate>-<run-id>-report.md
 ```
 
 Create a companion `-high-severity.md` register only if a qualifying defect appears.
@@ -237,7 +237,7 @@ supersedes:
 ### Inquest Report
 
 ```markdown
-# Release Inquest: <candidate>
+# Advocatus Diaboli: <candidate>
 
 ## Executive Verdict
 ## Locked Candidate And Release Envelope

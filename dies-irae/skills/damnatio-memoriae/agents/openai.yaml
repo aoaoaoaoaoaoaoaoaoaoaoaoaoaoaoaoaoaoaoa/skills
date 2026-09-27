@@ -1,0 +1,4 @@
+interface:
+  display_name: "Damnatio Memoriae"
+  short_description: "Purge documentation that no longer earns existence"
+  default_prompt: "Use $damnatio-memoriae to perform a zero-based purge audit over this repository's documentation corpus."

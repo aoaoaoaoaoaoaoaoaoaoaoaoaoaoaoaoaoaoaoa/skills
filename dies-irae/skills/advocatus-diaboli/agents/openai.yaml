@@ -1,0 +1,6 @@
+interface:
+  display_name: "Advocatus Diaboli"
+  short_description: "Prove a release candidate deserves shipment"
+  default_prompt: "Use $advocatus-diaboli to conduct a hostile release-readiness inquest against this project and return an evidence-backed ship or hold verdict."
+policy:
+  allow_implicit_invocation: false

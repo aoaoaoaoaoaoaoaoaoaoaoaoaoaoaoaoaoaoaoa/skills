@@ -4,15 +4,15 @@ This file is the naming authority for authors of the DIES IRAE family. Skills do
 
 ## Judges
 
-| Judge | Jurisdiction |
-|---|---|
-| exterminate-slop | implementation |
-| majestic-magisteria | representation |
-| Confutatis (proposed) | correctness |
-| testing-year-zero | tests |
-| fahrenheit-451 | documentation existence |
-| chronicler | documentation truth |
-| release-inquest | release |
+| Judge | Jurisdiction | Retired name |
+|---|---|---|
+| Imperium | representation | majestic-magisteria |
+| Delenda | implementation | exterminate-slop |
+| Confutatis | correctness | |
+| Tabula Rasa | tests | testing-year-zero |
+| Damnatio Memoriae | documentation existence | fahrenheit-451 |
+| Scriptorium | documentation truth | chronicler |
+| Advocatus Diaboli | release | release-inquest |
 
 ## Family
 

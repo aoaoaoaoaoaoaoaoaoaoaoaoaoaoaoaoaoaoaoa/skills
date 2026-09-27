@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tabula Rasa"
+  short_description: "Rebuild a test suite from first principles"
+  default_prompt: "Use $tabula-rasa to derive a sparse target evidence basis from a blank page, then reconcile the incumbent test suite against it."

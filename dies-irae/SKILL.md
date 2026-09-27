@@ -23,12 +23,12 @@ The product charter and public contract are the human axiological boundary of th
 
 The judges live under [skills/](skills/):
 
-- `exterminate-slop`: implementation contraction and architectural residue
-- `majestic-magisteria`: semantic representations, ownership, and conversion topology
-- `testing-year-zero`: blank-page test-suite reconstruction and evidence austerity
-- `fahrenheit-451`: zero-based documentation purge
-- `chronicler`: documentary concordance and source commentary
-- `release-inquest`: integrated product and release fitness
+- `delenda`: implementation contraction and architectural residue
+- `imperium`: semantic representations, ownership, and conversion topology
+- `tabula-rasa`: blank-page test-suite reconstruction and evidence austerity
+- `damnatio-memoriae`: zero-based documentation purge
+- `scriptorium`: documentary concordance and source commentary
+- `advocatus-diaboli`: integrated product and release fitness
 
 The governing doctrines live under [doctrines/](doctrines/). They inform judges; they are not parallel audits.
 

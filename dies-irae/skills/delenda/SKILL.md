@@ -1,9 +1,9 @@
 ---
-name: exterminate-slop
+name: delenda
 description: "Audit a bounded source subtree or semantic component for aggressive, behavior-preserving semantic contraction while keeping its present responsibilities and outer contract fixed. Use when Codex should make an accreted implementation materially smaller, more lawful, and more intentional without authorizing a rewrite."
 ---
 
-# Exterminate Slop
+# Delenda
 
 Read the target repository's `AGENTS.md` files first. Load every language note that materially applies to the audited surface, and no irrelevant ones:
 
@@ -64,8 +64,8 @@ The question applies to implementation, not requirements. Do not use it to revok
 Create session-resumable artifacts before the first deep source read:
 
 ```text
-/tmp/exterminate-slop-<repo>-<scope>-<run-id>.md
-/tmp/exterminate-slop-<repo>-<scope>-<run-id>-report.md
+/tmp/delenda-<repo>-<scope>-<run-id>.md
+/tmp/delenda-<repo>-<scope>-<run-id>-report.md
 ```
 
 Create a companion `-high-severity.md` register only if a qualifying finding appears.
@@ -253,7 +253,7 @@ Do not include a remediation field. The register is an alarm lane, not an implem
 ### Defect Report
 
 ```markdown
-# Exterminate Slop Report: <scope>
+# Delenda Report: <scope>
 
 ## Executive Summary
 

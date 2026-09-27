@@ -1,9 +1,9 @@
 ---
-name: majestic-magisteria
+name: imperium
 description: Reconcile a project's semantic representation topology. Use when Codex should exhaustively trace domain concepts across types, schemas, conversions, identifiers, state encodings, boundary projections, and subsystem dialects; establish one canonical owner and lawful representation family for each concept; and produce or explicitly execute a dependency-ordered canonicalization program.
 ---
 
-# Majestic Magisteria
+# Imperium
 
 ## Mandate
 
@@ -25,7 +25,7 @@ The model includes whatever the project uses to name, distinguish, store, valida
 
 Freeze supported behavior and the outer public contract unless the user separately authorizes change. If concordance demands a contract break, specify it as a blocked major-version move rather than hiding it inside cleanup. Internal compatibility has no independent claim to survival.
 
-Documentation is evidence and may acquire obligations from the new topology, but documentary authorship belongs to Chronicler. Record those obligations as handoffs rather than rewriting or resurrecting prose under this skill. Honor any current Fahrenheit or Chronicler dispositions supplied with the run.
+Documentation is evidence and may acquire obligations from the new topology, but documentary authorship belongs to Scriptorium. Record those obligations as handoffs rather than rewriting or resurrecting prose under this skill. Honor any current Damnatio Memoriae or Scriptorium dispositions supplied with the run.
 
 Read repository instructions and applicable style doctrine before designing the canonical model. Load product doctrine when a representation governs persistence, configuration, identity, lifecycle, or other user-system conduct. Use the language at full power. Traits, generics, macros, associated types, phantom distinctions, generated projections, and similarly strong machinery are first-class when they reduce independent truths or make laws inexpressible to violate.
 
@@ -50,8 +50,8 @@ Judge the result by semantic description length: fewer independent definitions o
 When writes are available, create resumable state before deep reading:
 
 ```text
-/tmp/majestic-magisteria-<repo>-<scope>-<run-id>.md
-/tmp/majestic-magisteria-<repo>-<scope>-<run-id>-report.md
+/tmp/imperium-<repo>-<scope>-<run-id>.md
+/tmp/imperium-<repo>-<scope>-<run-id>-report.md
 ```
 
 Record mode, source identity, semantic scope, frozen envelope, applicable doctrine, context budget, model manifest, representation atlas, clique cover, reductions, fold hierarchy, canonical topology, change program, contradictions, verification, and frontier. The worklog preserves global orientation; the report owns the final argument. If all writes are forbidden, carry the same state into the final response and mark the run nonresumable.
@@ -107,7 +107,7 @@ Account for the net topology after migration. A proposal that adds canonical typ
 
 Turn the topology into a dependency-ordered change program. Establish canonical owners before migrating consumers; move laws with ownership; collapse mediation and conversion barnacles after their callers have crossed; remove duplicate validation and obsolete representations only when no semantic obligation remains stranded.
 
-Do not expand into general implementation contraction. Adjacent code lesions may be recorded, but Exterminate Slop owns their audit unless repairing them is inseparable from representation concordance.
+Do not expand into general implementation contraction. Adjacent code lesions may be recorded, but Delenda owns their audit unless repairing them is inseparable from representation concordance.
 
 ### 6. Close The Frontier
 
@@ -195,7 +195,7 @@ supersedes:
 ### Concordance Report
 
 ```markdown
-# Majestic Magisteria Concordance Report: <scope>
+# Imperium Concordance Report: <scope>
 
 ## Executive Judgment
 ## Semantic Scope And Frozen Envelope

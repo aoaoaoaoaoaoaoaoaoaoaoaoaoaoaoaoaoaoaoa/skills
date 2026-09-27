@@ -1,9 +1,9 @@
 ---
-name: testing-year-zero
+name: tabula-rasa
 description: Rebuild an incumbent test suite from a blank-page admission standard. Use when Codex should audit, consolidate, or replace a whole test suite or bounded cohort without granting existing tests incumbency credit; derive a sparse, cost-justified evidence basis first, then retain, fuse, replace, or delete accordingly. Defaults to a complete read-only report; executes test changes and bounded behavior- and performance-preserving testability refactors only when explicitly authorized.
 ---
 
-# Testing Year Zero
+# Tabula Rasa
 
 Load `$unit-test-doctrine` before proceeding. It is normative for unit-test
 judgments. This skill extends its discipline to the incumbent suite as a whole;
@@ -157,8 +157,8 @@ business-logic or optimization change and requires separate authority.
 When writes are available, create resumable state before deep reading:
 
 ```text
-/tmp/testing-year-zero-<repo>-<scope>-<run-id>.md
-/tmp/testing-year-zero-<repo>-<scope>-<run-id>-report.md
+/tmp/tabula-rasa-<repo>-<scope>-<run-id>.md
+/tmp/tabula-rasa-<repo>-<scope>-<run-id>-report.md
 ```
 
 Create a companion `-high-severity.md` only if a qualifying product defect

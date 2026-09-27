@@ -1,9 +1,9 @@
 ---
-name: chronicler
+name: scriptorium
 description: Reconcile a project's durable documentation with its actual contracts and present system. Use when Codex should create, reconstruct, consolidate, relocate, or repair READMEs, guides, architecture documents, runbooks, examples, module docs, public API docs, docstrings, rustdoc, and comments that carry nonrecoverable rationale or proof obligations. Supports exhaustive report-only audits and explicitly authorized documentation edits without changing product behavior or public contracts.
 ---
 
-# Chronicler
+# Scriptorium
 
 ## Mandate
 
@@ -15,7 +15,7 @@ The fixed point is:
 
 Documentation is part of the semantic machine. It owns truths that code cannot state to the relevant audience: public contracts, operational acts, design intent, external constraints, proof obligations, failure semantics, and rationale whose recovery would be costly or ambiguous. It must not become a shadow implementation, a historical scrapbook, or explanatory mulch around self-evident code.
 
-Fahrenheit decides which documentary vessels deserve existence. Chronicler is the constructive complement: it repairs living surfaces and safely transfers scarce truth out of doomed ones. If a Fahrenheit report exists, consume its handoffs and deletion dependencies as evidence; do not rerun the purge or casually reverse its zero-based judgments.
+Damnatio Memoriae decides which documentary vessels deserve existence. Scriptorium is the constructive complement: it repairs living surfaces and safely transfers scarce truth out of doomed ones. If a Damnatio Memoriae report exists, consume its handoffs and deletion dependencies as evidence; do not rerun the purge or casually reverse its zero-based judgments.
 
 Default to `concordance_report`. Edit documentation only when the user explicitly requests execution, and only after the complete report exists.
 
@@ -50,8 +50,8 @@ Ordinary comments earn survival only by carrying information unavailable from th
 When writes are available, create resumable state before deep reading:
 
 ```text
-/tmp/chronicler-<repo>-<scope>-<run-id>.md
-/tmp/chronicler-<repo>-<scope>-<run-id>-report.md
+/tmp/scriptorium-<repo>-<scope>-<run-id>.md
+/tmp/scriptorium-<repo>-<scope>-<run-id>-report.md
 ```
 
 Record mode, source identity, scope, documentary envelope, applicable doctrine, context budget, surface census, obligation atlas, ownership map, reductions, fold hierarchy, change program, contradictions, verification, and residual frontier. The worklog preserves orientation; the report owns the final argument. If all writes are forbidden, carry the same state into the final response and mark the run nonresumable.
@@ -99,11 +99,11 @@ Use the fold to rectify names, choose canonical owners, eliminate duplicated tru
 
 Turn the ownership model into a dependency-ordered program precise enough to execute without repeating the audit. Each change must identify the truth or obligation, present and proposed owner, evidence, exact documentary shape, affected duplicates, authority, and verification.
 
-Derive the terminal documentary model from required truths rather than existing vessels. Prefer removal, consolidation, transfer, and mechanical derivation within Chronicler's authority; repair or create only where an obligation would otherwise lack a lawful owner. Each change must identify the duplicate or obsolete surfaces retired, the canonical owner that remains, and any irreducible new surface. An addition-only change must name the audience and necessary truth that no existing stable owner can carry.
+Derive the terminal documentary model from required truths rather than existing vessels. Prefer removal, consolidation, transfer, and mechanical derivation within Scriptorium's authority; repair or create only where an obligation would otherwise lack a lawful owner. Each change must identify the duplicate or obsolete surfaces retired, the canonical owner that remains, and any irreducible new surface. An addition-only change must name the audience and necessary truth that no existing stable owner can carry.
 
 Use action language that states what will actually happen: remove, consolidate, transfer, derive, repair, reconstruct, create, or accept. These are outcomes, not a menu of reasoning methods. Do not keep vague “improve docs” entries or defer every hard judgment to implementation.
 
-Whole-file deletion remains Fahrenheit's jurisdiction unless it is the already-proved tail of a constructive transfer or consolidation. Source comments and duplicate fragments may be removed directly when their truth has a lawful owner.
+Whole-file deletion remains Damnatio Memoriae's jurisdiction unless it is the already-proved tail of a constructive transfer or consolidation. Source comments and duplicate fragments may be removed directly when their truth has a lawful owner.
 
 ### 6. Close The Frontier
 
@@ -169,7 +169,7 @@ residual:
 ### Concordance Report
 
 ```markdown
-# Chronicler Concordance Report: <scope>
+# Scriptorium Concordance Report: <scope>
 
 ## Executive Judgment
 ## Documentary Envelope
