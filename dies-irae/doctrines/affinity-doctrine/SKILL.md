@@ -52,8 +52,10 @@ retired. Inspect native Slurm jobs and their live cgroups; the persistent
   lanes, bulk-only services such as `xmrig` to the bulk lanes, and `system.slice`
   stays off the priority lanes.
 - **Wrappers**: `~/.local/libexec/cpu-lanes` binds a process tree to
-  `BULK_CPUSET` at `BULK_NICE` and `BULK_CPU_WEIGHT` in a user scope; the PATH
-  `cargo` wrapper enters it; `cpu-queue` submits and contains experiments.
+  `BULK_CPUSET` at `BULK_NICE` and `BULK_CPU_WEIGHT` in a user scope; PATH
+  Cargo and standalone Rust build-tool wrappers enter it. Rust-analyzer is
+  intentionally exempt for interactive MCP/editor analysis. `cpu-queue`
+  submits and contains experiments.
 
 `/home/main/programming/projects/mcps/cpu_claim` installs all of this: its
 `assets/affinity-lanes` is the projection's source, and `scripts/install-slurm.sh`
@@ -98,6 +100,10 @@ override its target selection for ordinary work, or add an outer `taskset`,
 
 `~/.local/libexec/cpu-lanes` is the stable internal launcher when no maintained
 wrapper exists. A missing or malformed machine manifest is a stop condition.
+Missing launchers or unavailable user-systemd containment are also stop
+conditions; never fall back to unconfined execution. Nested launches reuse
+containment only after checking effective cgroup limits, not an environment
+flag. Set resource overrides before the outermost bulk launch.
 Brief administration needs no extra placement ceremony; the systemd parent
 already bounds user work.
 
