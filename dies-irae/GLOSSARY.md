@@ -41,8 +41,12 @@ This file is the naming authority for authors of the DIES IRAE family. Skills do
 
 ## Engine
 
+These nouns belong to `clique-fold`, which judges use as their reading engine.
+
 | Noun | Meaning | Retired synonyms |
 |---|---|---|
+| caller | the user or skill that invokes clique-fold | |
+| subject | what a clique-fold run evaluates, and the judgment each item receives; supplied by the caller | |
 | manifest | the locked list of items a run must cover | census, audit manifest, model manifest, surface manifest |
 | fringe | material read as evidence but not covered | context fringe, evidence fringe |
 | budget | the per-clique limits `line_ceiling` and `byte_ceiling` | source budget, context budget, circuit breaker, `source_line_ceiling`, `context_line_ceiling` |
@@ -59,7 +63,7 @@ This file is the naming authority for authors of the DIES IRAE family. Skills do
 | Noun | Meaning | Retired synonyms |
 |---|---|---|
 | worklog | the resumable state of a run | run state, resumable state |
-| ledger | one row per manifest item, with the columns the judge supplies | corpus ledger, ownership ledger, representation ledger, claim ledger |
+| ledger | one row per manifest item, with the columns the caller supplies | corpus ledger, ownership ledger, representation ledger, claim ledger |
 | finding | one judged problem, with evidence and a disposition | defect, lesion |
 | disposition | the terminal action for a ledger row or finding; each judge defines its set | |
 | cohort | items whose dispositions must execute together | |

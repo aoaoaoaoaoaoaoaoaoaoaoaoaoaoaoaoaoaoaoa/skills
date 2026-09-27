@@ -1,0 +1,4 @@
+interface:
+  display_name: "Clique-Fold"
+  short_description: "Exhaustive coverage in budgeted semantic cliques"
+  default_prompt: "Use $clique-fold to cover this material exhaustively for the given subject and ledger columns."
