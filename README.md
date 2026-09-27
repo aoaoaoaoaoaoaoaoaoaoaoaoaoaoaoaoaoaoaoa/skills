@@ -21,7 +21,7 @@ Repository-owned Codex skills.
 `dies-irae` convenes applicable read-only judges and compiles their reports into one prioritized defect register:
 
 - `delenda`: contract an implementation without changing its outer contract.
-- `imperium`: reconcile semantic representations, ownership, and conversion topology.
+- `imperium`: derive the correct domain model and bring the program's global nouns into it.
 - `tabula-rasa`: rebuild an incumbent test suite from a blank-page admission standard.
 - `damnatio-memoriae`: purge documentation that no longer earns existence.
 - `scriptorium`: reconcile durable documentation and source commentary with reality.

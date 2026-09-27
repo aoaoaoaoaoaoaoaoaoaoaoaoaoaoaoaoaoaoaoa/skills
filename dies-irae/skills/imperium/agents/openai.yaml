@@ -1,4 +1,4 @@
 interface:
   display_name: "Imperium"
-  short_description: "Rectify the project's semantic representation topology"
-  default_prompt: "Use $imperium to reconcile this project's data model into canonical owners and lawful representation families."
+  short_description: "Derive the correct domain model and canonicalize the program onto it"
+  default_prompt: "Use $imperium to derive this program's domain model de novo and bring its types, schemas, and conversions into it."
