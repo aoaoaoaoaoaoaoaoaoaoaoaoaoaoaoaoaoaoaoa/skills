@@ -1,191 +1,138 @@
 ---
 name: scriptorium
-description: Reconcile a project's durable documentation with its actual contracts and present system. Use when Codex should create, reconstruct, consolidate, relocate, or repair READMEs, guides, architecture documents, runbooks, examples, module docs, public API docs, docstrings, rustdoc, and comments that carry nonrecoverable rationale or proof obligations. Supports exhaustive report-only audits and explicitly authorized documentation edits without changing product behavior or public contracts.
+description: "Reconcile a project's durable documentation with its actual contracts and present system: every truth that must be communicated gets one owner at the narrowest stable layer, and missing, stale, duplicated, or stranded truth is created, repaired, consolidated, or transferred. Covers READMEs, guides, architecture documents, runbooks, examples, module and API documentation, docstrings, and comments that carry rationale or proof obligations. Produces a report; edits documentation only when explicitly authorized, and never product behavior."
 ---
 
 # Scriptorium
 
 ## Mandate
 
-Bring the project's documentary model into concordance with the system it governs.
+Bring the project's documentation into agreement with the system it describes.
 
-The fixed point is:
+The fixed point is a project in which every durable truth that must be communicated has one canonical owner, at the narrowest stable layer that can state it truthfully, and no required truth is missing, stale, duplicated, or stranded in transient prose.
 
-> Every durable fact that must be communicated has one canonical documentary owner, at the narrowest stable layer that can state it truthfully; no required truth is missing, stale, duplicated, or stranded in transient prose.
+Documentation owns truths that code cannot state to their audience: public contracts, operational procedures, design intent, external constraints, proof obligations, failure behavior, and rationale that would be costly or ambiguous to recover. It must not become a shadow implementation, a historical scrapbook, or explanatory padding around self-evident code.
 
-Documentation is part of the semantic machine. It owns truths that code cannot state to the relevant audience: public contracts, operational acts, design intent, external constraints, proof obligations, failure semantics, and rationale whose recovery would be costly or ambiguous. It must not become a shadow implementation, a historical scrapbook, or explanatory mulch around self-evident code.
+Damnatio Memoriae decides which documents deserve to exist; Scriptorium is its constructive complement. It repairs living documents and transfers scarce truth out of doomed ones. When a current Damnatio Memoriae report is supplied, consume its handoffs and deletion dependencies as evidence; do not rerun the purge or casually reverse its judgments. Consume documentation handoffs from the other judges the same way.
 
-Damnatio Memoriae decides which documentary vessels deserve existence. Scriptorium is the constructive complement: it repairs living surfaces and safely transfers scarce truth out of doomed ones. If a Damnatio Memoriae report exists, consume its handoffs and deletion dependencies as evidence; do not rerun the purge or casually reverse its zero-based judgments.
+Default to `report`. Edit documentation only under explicit `execute` authority, and only after the complete report exists.
 
-Default to `concordance_report`. Edit documentation only when the user explicitly requests execution, and only after the complete report exists.
+## Scope and envelope
 
-## Scope And Envelope
+A project-wide run covers all of the project's documentation. A run scoped to a feature, subsystem, audience, or API region follows that region across the whole project; a directory is not a reasoning boundary. State any unavoidable exclusion; never substitute a convenient sample.
 
-For a project-wide request, cover the whole documentary model. For a named feature, subsystem, audience, or API region, follow that semantic region across the entire project rather than treating one directory as the reasoning boundary. State any unavoidable exclusion; never silently substitute a convenient sample.
+The documentation includes prose files that carry a role, user and operator documents, examples, module and item documentation, public API documentation, and internal comments that preserve an invariant, proof, safety condition, external fact, or non-obvious rationale. It also includes documents that are missing but implied by a real audience or an exported contract.
 
-The documentary surface includes role-bearing prose files, user and operator surfaces, examples, module and item documentation, public API commentary, and internal comments that preserve a law, proof, safety condition, external fact, or non-obvious causal rationale. It also includes missing surfaces implied by a real audience or exported contract.
+Do not write prose for every symbol; trivial private mechanics may stay silent. A comment that paraphrases syntax, narrates control flow, preserves obsolete structure, or compensates for a poor name or a bad abstraction should disappear. When the code itself is the defect, record an out-of-scope defect for Delenda or Imperium instead of making the comment more eloquent.
 
-Do not manufacture prose for every symbol. Trivial private mechanics may remain silent. Comments that paraphrase syntax, narrate control flow, preserve obsolete topology, or compensate for a poor name or unlawful abstraction should disappear or provoke a code finding rather than grow more eloquent.
+Language visibility is evidence of an audience, not proof of an intended durable API. When a nominally public surface is credibly accidental, do not immortalize it in documentation: raise an authority question about the API, preserve any truth current consumers need, and defer its canonical documentation until the surface is decided.
 
-Language visibility is evidence of an audience, not always proof of an intended durable API. When a nominally public surface is credibly accidental, do not transmute contract freeze into a mandate to immortalize every exposed artifact. Record the API-authority blocker, preserve any truth current consumers require, and defer canonical public documentation until the surface itself is adjudicated.
+The envelope is the product's behavior and public contract, which Scriptorium never changes. Code, tests, configuration, generated behavior, documentation, history, standards, and upstream contracts are evidence; none is automatically authoritative. When authority is unclear, raise an authority question instead of writing one side into the documentation.
 
-Freeze product behavior and public contracts unless the user separately authorizes their change. Code, tests, configuration, generated behavior, documentation, history, standards, and upstream contracts are evidence; none is automatically sovereign. When authority is genuinely unclear, expose the decision instead of laundering one side into documentation.
+Read the repository's `AGENTS.md` files, `$style-doctrine`, and `$product-doctrine` before judging source commentary and user-facing contracts. Write under `$vox-nihili` unless the project's own instructions set another voice.
 
-Read repository instructions and applicable style and product doctrine before judging or editing source commentary and user-facing contracts. Preserve the project's voice, but not its accidents.
+## Placement
 
-## Placement Law
+Put a truth where it remains true and where its audience meets the thing it governs. The narrowest stable owner wins: a type's invariant belongs with the type, an effect or failure contract with the callable, a module invariant with the module, an operator procedure with the command or runbook, and a project-wide decision with the smallest project document that can govern it.
 
-Put a truth where it will remain true and where its audience encounters the governed thing. The narrowest stable owner wins: a type law belongs with the type, an effect or failure contract with the callable surface, a module invariant with the module, an operator act with the command or runbook, and a project-wide decision with the smallest durable project document capable of governing it.
+Store each truth once. Broader documents may orient and link; they must not copy volatile details from narrower owners. Prefer a generated or mechanically checked projection wherever prose would otherwise have to stay synchronized with code. Move commentary when ownership moves.
 
-Store each truth once. Broader surfaces may orient and link; they must not recopy volatile details from narrower owners. Prefer generated or mechanically checked projection where prose would otherwise synchronize with code. Move commentary when ownership moves.
+Doc comments state semantic contracts, not implementation tours: invariants, units, preconditions, effects, failure and panic behavior, concurrency and safety obligations, and surprising costs, where they matter. An example teaches a correct use or resolves an ambiguity; it does not decorate an obvious signature.
 
-Doc comments state semantic contracts, not implementation tours. Make invariants, units, preconditions, effects, failure and panic behavior, concurrency or safety obligations, and surprising cost visible where they matter. Examples should teach a lawful use or resolve an ambiguity, not decorate an obvious signature.
+An ordinary comment survives only by carrying information the code cannot: the why, the proof boundary, the external constraint. Delete the what.
 
-Ordinary comments earn survival only by carrying information unavailable from the code itself. Preserve the why, the proof boundary, and the external constraint; delete the what.
+## Procedure
 
-## Protocol
+### 1. Open the run
 
-### 0. Open The Run
-
-When writes are available, create resumable state before deep reading:
+Create the worklog and report before deep reading:
 
 ```text
 /tmp/scriptorium-<repo>-<scope>-<run-id>.md
 /tmp/scriptorium-<repo>-<scope>-<run-id>-report.md
 ```
 
-Record mode, source identity, scope, documentary envelope, applicable doctrine, context budget, surface census, obligation atlas, ownership map, reductions, fold hierarchy, change program, contradictions, verification, and residual frontier. The worklog preserves orientation; the report owns the final argument. If all writes are forbidden, carry the same state into the final response and mark the run nonresumable.
+In a tribunal, use the directory the tribunal assigns. Record the mode, source identity, scope, envelope, and applicable doctrine. The worklog preserves orientation; the report owns the final argument. If writes are forbidden, carry the same state in the final response and state that the run cannot be resumed.
 
-### 1. Build The Census And Obligation Atlas
+### 2. Cover the documentation
 
-Discover existing documentary surfaces broadly. Use symbol and API indexes, manifests, command surfaces, schemas, lints, and package metadata to expose missing obligations without dumping the implementation into context.
+Run `$clique-fold` with:
 
-Record both existing owners and required truths with no owner. For source commentary, manifest semantic symbols or bounded ranges rather than pretending a whole large source file is one document. Distinguish generated, vendored, legal, fixture, and machine-consumed material before proposing changes.
+- `subject`: for each document or communication obligation, the truths it must carry, to which audience, under what authority, and at which owner
+- `columns`: `audience | present_owner | terminal_owner | ownership_delta | authority`
 
-Exhaustiveness attaches to documentary surfaces and communication obligations, not to every tracked artifact. Code, configuration, tests, history, binaries, and visual assets enter as bounded authority evidence. Do not promote them into the census merely because they exist, contain comments, or are linked from prose; inspect a non-text asset only when it independently communicates a material contract that could change the documentary judgment.
+The manifest holds both the existing documents and the communication obligations: truths that must be communicated, including those with no owner yet. Discover them broadly, using symbol and API indexes, manifests, command surfaces, schemas, lints, and package metadata to expose missing obligations without pulling the implementation into context. For source commentary, list semantic symbols or bounded ranges instead of treating a large source file as one document. Distinguish generated, vendored, legal, fixture, and machine-consumed material before proposing changes.
 
-Run a cheap `wc -l -c` preflight over file-backed surfaces. Use these default circuit breakers for all raw material entering one deep-reading clique:
+Exhaustiveness applies to documents and communication obligations, not to every tracked artifact. Code, configuration, tests, history, binaries, and images enter the fringe as evidence. Inspect an image or other non-text asset only when it communicates a material contract that could change a judgment.
 
-```text
-context_line_ceiling: 3000
-context_byte_ceiling: 131072
-```
+Follow claims only as far as the documentation judgment requires; exhaustive coverage of obligations does not license exhaustive reading of the implementation. Use the folds to rectify names, choose canonical owners, eliminate duplicated truths, and settle audience boundaries.
 
-Either ceiling trips the budget. Count documentation, source, configuration, tests, history, dependencies, standards, and command output. Cheap indexes and anchored semantic probes may range widely; large search output is a deep read. Oversized files must be covered through coherent symbol or range slices.
+Record a `critical` discovery or an exposed secret in the critical register and continue; it neither triggers code rectification nor derails coverage.
 
-### 2. Seed An Adaptive Semantic Clique Cover
+### 3. Design the change program
 
-Group documentary owners, obligations, governed code, examples, and authority evidence into overlapping cliques that resolve coherent communication questions under budget. Let the project's ontology and audiences determine the cover; do not force a fixed catalogue of documentation genres or audit lenses.
+Derive the terminal documentation from the required truths, not from the existing documents. Prefer removal, consolidation, transfer, and mechanical derivation; repair or create only where an obligation would otherwise lack an owner. Each change names the truth or obligation, its present and proposed owner, the evidence, the exact shape of the documentation, the duplicates and obsolete documents it retires, the authority, and the verification. An addition-only change names the audience and the truth that no existing owner can carry.
 
-Every in-scope surface and material obligation must belong to the cover. Split, merge, overlap, or replace cliques as ownership becomes clearer. Do not manufacture cliques merely to reset the context budget.
+State each change as what will happen: remove, consolidate, transfer, derive, repair, reconstruct, create, or accept. Do not keep a vague "improve docs" entry or defer a hard judgment to execution.
 
-### 3. Read And Reduce
+Whole-file deletion belongs to Damnatio Memoriae, except as the proved tail of a transfer or consolidation. Source comments and duplicate fragments may be removed directly once their truth has an owner.
 
-For each clique, determine what must be communicated, to whom, under what authority, and at which stable owner. Reconcile the current prose against bounded implementation evidence. Follow claims to the point of documentary judgment, not into a general code audit.
+The program is complete when every durable truth has one proposed owner, every required audience and exported contract has adequate documentation, and every example and cross-reference has a verification path. Absence is a valid judgment: do not create documentation to fill a category or balance a report. Order the program by dependency: receiving documents before deletions of old truth, then dependents and navigation.
 
-Stop opening evidence when additional implementation, history, dependency, or external material cannot change ownership, required content, authority, or the change program. Exhaustive obligation coverage does not license exhaustive implementation reading.
+### 4. Report
 
-Before opening another clique, reduce the current one into the smallest durable account another intelligent model can integrate without rereading its sources. Preserve present owners, missing truths, duplication, authority conflicts, proposed ownership, evidence anchors, cross-clique dependencies, and the open frontier. Merely opening a file or enumerating symbols does not constitute coverage.
+Write the report from the folds. Stop there unless `execute` was authorized.
 
-If a catastrophic defect or secret appears, record it in a separate high-severity register and continue coverage. Discovery does not authorize code rectification or derail the documentation campaign.
+### 5. Execute
 
-### 4. Fold Ownership Hierarchically
+Recheck the source identity and withhold any change whose authority has drifted. Execute the program in order: establish receiving documents before deleting old truth, then repair dependents and navigation. Edit documentation and source commentary only; never smuggle in a behavioral refactor or public-API change.
 
-Fold related clique reductions into bounded branch syntheses, then reconcile branches through bounded bridge reductions until one project- or region-level documentary model remains. Higher folds consume reductions, not raw sources. The same context ceilings govern fold inputs; introduce another level rather than flooding one global pass.
+Run the project's documentation verification: documentation builds, doctests, examples, links, references, formatting, and applicable lints or schema checks, chosen from the actual project. Verification supports inspection; it does not replace it. Finish with a residual `$clique-fold` over the changed documentation.
 
-Use the fold to rectify names, choose canonical owners, eliminate duplicated truths, and resolve audience boundaries. A fold output must materially compress its inputs while preserving evidence and unresolved authority.
+## Forms
 
-### 5. Design The Change Program
-
-Turn the ownership model into a dependency-ordered program precise enough to execute without repeating the audit. Each change must identify the truth or obligation, present and proposed owner, evidence, exact documentary shape, affected duplicates, authority, and verification.
-
-Derive the terminal documentary model from required truths rather than existing vessels. Prefer removal, consolidation, transfer, and mechanical derivation within Scriptorium's authority; repair or create only where an obligation would otherwise lack a lawful owner. Each change must identify the duplicate or obsolete surfaces retired, the canonical owner that remains, and any irreducible new surface. An addition-only change must name the audience and necessary truth that no existing stable owner can carry.
-
-Use action language that states what will actually happen: remove, consolidate, transfer, derive, repair, reconstruct, create, or accept. These are outcomes, not a menu of reasoning methods. Do not keep vague “improve docs” entries or defer every hard judgment to implementation.
-
-Whole-file deletion remains Damnatio Memoriae's jurisdiction unless it is the already-proved tail of a constructive transfer or consolidation. Source comments and duplicate fragments may be removed directly when their truth has a lawful owner.
-
-### 6. Close The Frontier
-
-Continue until:
-
-- every in-scope surface and material obligation is covered
-- every durable truth has one proposed canonical owner
-- required audiences and exported contracts have adequate surfaces
-- material contradictions are resolved or explicitly blocked
-- duplicated and stranded truth has a disposition
-- examples and cross-references have a verification path
-- no open frontier could materially change the documentary model or change program
-
-Absence is a valid judgment. Do not create documentation solely to fill a category or satisfy the visual symmetry of a report.
-
-### 7. Report, Then Optionally Execute
-
-Write a complete concordance report from the folds. Stop there unless execution was explicit.
-
-When authorized, implement the program in ownership order: establish receiving surfaces before deleting old truth, then repair dependents and navigation. Edit documentation and source commentary only; do not smuggle behavioral refactors or public-API changes into the campaign. Recheck source identity before mutation and withhold changes whose authority has drifted.
-
-Run the repository's documentary verification: documentation builds, doc tests, examples, links, references, formatting, and applicable lints or schema checks. Choose checks from the actual project. Verification supports semantic inspection; it does not replace it. Finish with a residual census and ownership fold over the changed surface.
-
-## Embedded Forms
-
-### Run State
+### Worklog
 
 ```text
-mode: concordance_report | execute_after_report
+mode: report | execute
 repository:
 source_identity:
 scope:
-documentary_envelope:
+envelope:
 applicable_doctrine:
 worklog_path:
 report_path:
-context_line_ceiling: 3000
-context_byte_ceiling: 131072
+critical_register: none
 
-surface_census:
-obligation_atlas:
-ownership_map:
-clique_cover:
-clique_reductions:
-fold_hierarchy:
+clique_fold:
+ownership_model:
 change_program:
-contradictions:
-high_severity:
-frontier:
-root_documentary_model:
-implementation:
+authority_questions:
+execution:
 verification:
 residual:
 ```
 
-### Ownership Ledger
-
-```text
-| truth_or_obligation | audience | present_owner | terminal_owner | ownership_delta | authority | evidence | coverage |
-|---------------------|----------|---------------|----------------|-----------------|-----------|----------|----------|
-```
-
-### Concordance Report
+### Report
 
 ```markdown
-# Scriptorium Concordance Report: <scope>
+# Scriptorium Report: <scope>
 
-## Executive Judgment
-## Documentary Envelope
-## Coverage And Reduction
-## Canonical Ownership Model
-## Missing Documentation
-## Stale, Duplicated, And Misplaced Truth
-## Public API And Source Commentary
-## Change Program
-## Authority Conflicts And Blockers
-## High-Severity Register
-## Verification Program
-## Residual Unknowns
+## Executive judgment
+## Envelope
+## Coverage
+## Canonical ownership model
+## Missing documentation
+## Stale, duplicated, and misplaced truth
+## Public API and source commentary
+## Change program
+## Authority questions
+## Critical register
+## Out-of-scope defects and handoffs
+## Verification program
+## Residual unknowns
 
-### Complete Ownership Ledger
+### Ledger
 
-| obligation | present owner | terminal owner | ownership delta | evidence | dependencies |
-|------------|---------------|----------------|-----------------|----------|--------------|
+The complete clique-fold ledger, one row per document or communication obligation.
 ```
