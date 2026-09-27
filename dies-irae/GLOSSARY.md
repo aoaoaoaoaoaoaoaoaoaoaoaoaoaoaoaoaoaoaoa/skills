@@ -21,6 +21,8 @@ This file is the naming authority for authors of the DIES IRAE family. Skills do
 | judge | a skill that audits one jurisdiction, or a running instance of it | worker, audit, specialist |
 | doctrine | normative guidance a judge applies; never audits | |
 | jurisdiction | the subject a judge owns | |
+| domain noun | a type that would appear in a medium-granularity pseudocode description of the program; Imperium owns its meaning | global noun |
+| implementation noun | a type that exists only to serve an implementation; Delenda's | local noun |
 | bench | the judges convened for one case | |
 | tribunal | one DIES IRAE run: convene, judge in parallel, compile | compiler |
 
@@ -33,7 +35,7 @@ This file is the naming authority for authors of the DIES IRAE family. Skills do
 | scope | what a run covers: its jurisdiction applied to the paths or concepts it names; any subtree is valid | |
 | charter | the product's intent: claims, invariants, known-bad behaviors, and open contradictions; owned by the user, recovered into the case file on each run, never committed | product charter, frozen outer contract, supported behavior |
 | claim | one promise the product declares, in a README, help text, API, or metadata | |
-| invariant | one law that must hold, from house doctrine or the product | |
+| invariant | a condition that must always hold, from house doctrine or the product | law, except in the algebraic sense |
 | public contract | the part of the charter that external consumers rely on; changing it requires a major version | outer contract |
 | envelope | what one run must preserve: the charter within its scope plus the scope's obligations to the rest of the system; frozen by definition | semantic envelope, frozen envelope, documentary envelope, release envelope, frozen product |
 | oracle | a source of the right answer | |

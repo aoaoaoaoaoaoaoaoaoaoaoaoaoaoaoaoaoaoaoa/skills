@@ -1,4 +1,4 @@
 interface:
   display_name: "Delenda"
-  short_description: "Contract code without rewriting its contract"
-  default_prompt: "Use $delenda to audit a bounded semantic surface for aggressive behavior-preserving contraction and produce an implementation-ready report."
+  short_description: "Contract an implementation to what its responsibilities require"
+  default_prompt: "Use $delenda to audit this implementation for aggressive contraction within its envelope and produce an implementation-ready report."

@@ -1,278 +1,150 @@
 ---
 name: delenda
-description: "Audit a bounded source subtree or semantic component for aggressive, behavior-preserving semantic contraction while keeping its present responsibilities and outer contract fixed. Use when Codex should make an accreted implementation materially smaller, more lawful, and more intentional without authorizing a rewrite."
+description: "Audit an implementation, whole or any subtree, for aggressive contraction within its envelope: remove the control flow, transformations, implementation types, and structural waste its present responsibilities do not require, until it reads as though implemented once, today. Use when accreted code should become materially smaller and more intentional. Produces a report; executes only when explicitly authorized."
 ---
 
 # Delenda
 
-Read the target repository's `AGENTS.md` files first. Load every language note that materially applies to the audited surface, and no irrelevant ones:
-
-- Rust: [references/languages/rust.md](references/languages/rust.md)
-- Java: [references/languages/java.md](references/languages/java.md)
-- Python: [references/languages/python.md](references/languages/python.md)
-
-Load the applicable `style-doctrine` guides. Load `product-doctrine` as well when the surface governs conduct on the user's system. Apply both within the frozen semantic envelope; doctrine sharpens the judgment but does not authorize a contract change.
-
 ## Mandate
 
-Make a bounded semantic surface look as though its present responsibilities had been implemented once, coherently, without historical sediment.
+Make the scope look as though its present responsibilities had been implemented once, coherently, without historical sediment.
 
-This is aggressive implementation contraction under a frozen semantic envelope. Delete implementation, not requirements. Preserve the envelope's supported behavior and external obligations. Do not preserve internal compatibility, obsolete structure, or historical decomposition by default.
+This is aggressive contraction of the implementation within the envelope. Delete implementation, not requirements. Internal compatibility, obsolete structure, and historical decomposition have no claim to survive, and diff size is not a cost.
 
-Default to `defect_report`. Edit source only when the user explicitly requests implementation, and only after the complete report exists.
+Default to `report`. Edit source only under explicit `execute` authority, and only after the complete report exists.
 
-## Semantic Envelope
+## Jurisdiction
 
-Before judging the implementation, identify the surface's current responsibilities, supported capabilities, observable behavior, failure semantics, public protocols, persistence obligations, trust boundaries, and material nonfunctional constraints.
+Delenda owns verbs, implementation nouns, and the storage of domain nouns: control flow, call structure, layering, transformations, algorithms and their cost, the types that exist only to serve an implementation, and the concrete representation of domain types.
 
-The implementation, callers, tests, documentation, configuration, and history are evidence for this envelope. None is automatically authoritative. The current implementation may reveal what must survive; it does not dictate the form in which it survives.
+Imperium owns domain nouns, the types that would appear in a medium-granularity pseudocode description of the program, and their meaning. Take the domain model as given, or take Imperium's terminal model when a current Imperium report is supplied. A finding whose root cause is a domain-noun defect, such as a guard that exists because a type admits an invalid state or a local copy of a domain entity, belongs to Imperium. A terminal shape never copies a domain entity to add local state; it contains the entity in a local type.
 
-A filesystem subtree is an edit and coverage boundary, not a reasoning boundary. Read outward as needed to understand callers and real boundaries. Keep prescribed cuts within the authorized semantic envelope.
+When accidental structure caused a correctness defect and the proposed contraction resolves it, integrate the defect into the finding. Otherwise record correctness, domain-model, and documentation problems as out-of-scope defects and hand them to Confutatis, Imperium, and Scriptorium respectively.
 
-## Architectural Standard
+## Scope and envelope
+
+The scope is the implementation the user names: a whole repository, a subtree, or a component. A subtree is an edit and coverage boundary, not a reasoning boundary: read outward as far as needed to understand callers and real boundaries, and keep prescribed changes inside the scope.
+
+Before judging the implementation, establish the envelope: what the scope must keep doing for its callers, including the obligations that are easy to forget: how it fails, what it persists, what it trusts, and the performance it must sustain. When a charter is supplied, the envelope is its part within the scope. The implementation, callers, tests, documentation, configuration, and history are evidence for the envelope; none is automatically authoritative. The current implementation shows what must survive, not the form in which it survives.
+
+A change that would alter the envelope, including a language-version or toolchain migration the doctrine would prefer, is an authority question: name it with its evidence, tersely, without an unsolicited redesign.
+
+Read the repository's `AGENTS.md` files and `$style-doctrine`. Load `$product-doctrine` when the scope governs conduct on the user's system. Doctrine sharpens the judgment; it does not authorize a change to the envelope.
+
+## Standard
 
 Treat the existing implementation as historical evidence, not as an authoritative decomposition of the problem.
 
-An internal structure earns survival only by carrying required behavior, enforcing a real law, satisfying a necessary representation constraint, or marking a genuine boundary. Distinctions with no distinct law should collapse. Truth with no canonical owner should acquire one.
+An internal structure survives only by carrying required behavior, enforcing an invariant, or marking a real boundary. Paths that differ in no required behavior collapse into one, and a computation or decision made in several places gets one owner.
 
-Judge abstractions by their net effect on semantic description length: how many independent facts, degrees of freedom, synchronization obligations, and change sites remain after the move. Familiarity, local brevity, and conventional simplicity carry no independent weight.
+Seek the smallest correct implementation `I*` with `I* ≡_E I₀`: equivalent to the incumbent `I₀` on the envelope `E`. Minimize semantic description length: the independent concepts, representations, owners, states, paths, boundaries, and obligations required to state and maintain the implementation. Judge an abstraction by its net effect on that length: how many independent facts, degrees of freedom, synchronization obligations, and change sites remain after the move. Familiarity, local brevity, and conventional simplicity carry no independent weight. Lines and bytes corroborate; they are not the objective. Local expansion is correct when it reduces global state space or independent truths.
 
-Use the full power of the language whenever it yields a smaller lawful machine.
+Remove waste that structural inspection shows without a benchmark: a quadratic scan where a linear one serves, repeated passes over the same data, needless copies and allocations, and work recomputed instead of carried. A contraction must not slow a path the envelope cares about; where size and cost conflict, the style doctrine's ranking decides. Waste that only measurement can establish belongs to Bare Metal ALARA.
 
-## Contraction Objective
+## Search
 
-Seek the smallest lawful implementation `I*` such that `I* ≡ₑ I₀`, where `E` is the frozen semantic envelope.
-
-Minimize semantic description length: the independent concepts, representations, owners, states, paths, boundaries, and obligations required to state and maintain the implementation. Lines and bytes are corroborating measures, not the objective. Local expansion is correct when it reduces global state space or independent truths.
-
-## Search Posture
-
-Let the system reveal its own dominant forms of accidental complexity. Do not organize the audit around a fixed smell catalogue, attempt to exercise named passes evenly, or force findings into predefined categories.
+Let the system reveal its own dominant forms of accidental complexity. Do not organize the audit around a fixed smell catalogue, exercise named passes evenly, or force findings into predefined categories.
 
 Reason both subtractively and reconstructively. Ask what can vanish, what can become derived, which distinctions are fictitious, which truths lack an owner, and which boundaries exist only because history placed code on opposite sides of them. Follow the strongest semantic pressure wherever it leads.
 
-Use the counterfactual continuously:
+Ask continuously:
 
-> If this exact semantic envelope were implemented today, would this internal construct exist?
+> If this envelope were implemented today, would this construct exist?
 
-The question applies to implementation, not requirements. Do not use it to revoke supported responsibilities or renegotiate the outer contract.
+The question applies to implementation, not requirements; do not use it to revoke a supported responsibility.
 
-## Protocol
+## Procedure
 
-### 0. Open The Run
+### 1. Open the run
 
-Create session-resumable artifacts before the first deep source read:
+Create the worklog and report before the first deep read:
 
 ```text
 /tmp/delenda-<repo>-<scope>-<run-id>.md
 /tmp/delenda-<repo>-<scope>-<run-id>-report.md
 ```
 
-Create a companion `-high-severity.md` register only if a qualifying finding appears.
+In a tribunal, use the directory the tribunal assigns. Record the mode, source identity, scope, provisional envelope, and applicable doctrine. The worklog is the resumable state of the audit, not a draft of the report; chat is only a summary.
 
-Record the mode, repository and source identity, scope, provisional semantic envelope, applicable language notes, source budget, worklog path, and report path. Chat is a summary surface; the worklog is the resumable audit state. It must not become a shadow copy of the final report.
+### 2. Cover the scope
 
-If the user names only a repository, choose the smallest semantically coherent surface that answers the request and state the assumption. Do not silently substitute an arbitrary directory for a semantic boundary.
+Run `$clique-fold` with:
 
-### 1. Lock The Manifest And Budget
+- `subject`: for each implementation source, the structure, paths, and waste the envelope does not require, and the findings that would remove them
+- `columns`: `findings`
 
-Build an exhaustive audit manifest of handwritten implementation sources inside the authorized surface. Include handwritten schema, configuration, or build files when they materially define that surface, recording why. Exclude generated, vendored, dependency, snapshot, fixture, and build-output material unless the user explicitly includes it.
+The manifest holds the handwritten implementation sources in scope, and the handwritten schema, configuration, or build files that materially define it, each with the reason. Generated, vendored, dependency, snapshot, fixture, and build-output material stays out unless the user includes it. The thesis is the contraction thesis; before it closes, reconcile competing local abstractions into one global shape.
 
-Maintain a separate context fringe for out-of-manifest callers, tests, schemas, configuration, and neighboring modules consulted as evidence. Fringe inspection does not expand audit coverage or mutation authority.
+If a credible catastrophic defect appears, record it in the critical register at once and continue coverage. Discovery does not authorize source modification, scope expansion, remediation, or abandonment of coverage; even under `execute`, rectification waits for the complete report. The audit must remain satisfiable against a read-only source tree.
 
-Run a cheap `wc -l -c` preflight over the manifest and persist per-file and total physical lines and bytes. The default deep-source budget for one clique is:
+### 3. Adjudicate findings
 
-```text
-source_line_ceiling: 3000
-source_byte_ceiling: 131072
-```
+One finding is one coherent contraction, not one source site. It may accumulate evidence across many cliques and may be strengthened, split, merged, or discharged before the report. Promote a finding when the evidence establishes a material accidental burden, the proposed shape is correct and concrete, and the move stays within the envelope. Foundational contractions may be broad; a finding need not be locally actionable.
 
-Either ceiling trips the budget. These are circuit breakers, not packing targets. A user may override them explicitly. Never increase them ad hoc merely to avoid decomposing a difficult surface.
+Recover the terminal shape from the surviving obligations instead of attaching remedies to the incumbent structure. State what disappears or becomes derived before what remains or must be introduced. Every survivor and addition must carry an obligation not already discharged elsewhere; a purely additive change is valid only when the envelope contains an unmet obligation, which it names.
 
-Once locked, the audit manifest is immutable except for a logged correction of an initially omitted in-scope file. An oversized file must be covered through coherent symbol or range slices whose union accounts for its semantically relevant contents.
+Record a rejected hypothesis only when the rejection is material, subtle, or likely to prevent repeated rediscovery. Do not write an obituary for every fleeting suspicion.
 
-### 2. Seed An Adaptive Semantic Clique Cover
+### 4. Report
 
-Use cheap whole-surface indexing and semantic navigation to seed an overlapping cover of the manifest. Each clique should gather the largest source set below budget that belongs in one working context because it resolves one coherent semantic question.
+Write a complete, proportional report that can be implemented without repeating the audit, synthesizing one contraction thesis instead of collecting notes. Do not demand or reward length, and do not classify findings into a fixed taxonomy. Every finding field is a proof obligation: when a field has no material content, say so tersely instead of omitting it. Keep honest uncertainty and evidence anchors. Stop after the report unless `execute` was authorized; in a read-only environment, a complete report is the successful end of the run.
 
-The cover is provisional. Split, merge, replace, overlap, or add cliques as evidence changes the correct decomposition. Name cliques by the relationship or question they resolve, not by arbitrary adjacency.
+### 5. Execute
 
-Every manifest source or source slice must belong to at least one planned clique. Context-fringe material may be attached to a clique as evidence but never counts toward manifest coverage.
+Under `execute`, begin a new phase. Recheck the source identity and refresh any affected clique if the tree has drifted. Execute coherent moves in dependency order, never in file order, and never across the envelope. Use the repository's own verification. Afterward, build a final manifest that accounts for created, deleted, fused, and moved sources, run a residual `$clique-fold` over the changed surface, and report the contraction achieved with line and byte deltas, without mistaking either for the objective.
 
-### 3. Read And Reduce Cliques
+## Forms
 
-Process one clique at a time. Deeply inspect all semantically relevant contents in its declared source set, using whatever navigation order best reduces uncertainty. Narrow indexing and definition/reference probes do not themselves open another clique; source brought into deep working context counts against the budget.
-
-Before opening the next clique, reduce the current one into the worklog. The reduction must be the smallest durable semantic message sufficient for another intelligent model to integrate the clique without rereading its sources. Use the embedded reduction form, but let the substance remain free-form.
-
-A source is covered only when its relevant contents have been inspected and incorporated into a reduction. Merely opening or skimming it does not count.
-
-Rereading is expected when later evidence changes a boundary or abstraction hypothesis. A material reread must amend or supersede the affected reduction before more source is opened.
-
-If a credible catastrophic defect appears, record it immediately in the high-severity register and continue the audit. Discovery does not authorize source modification, scope expansion, remediation, or abandonment of coverage. Even in `defect_report_then_execute` mode, rectification waits until the report phase is complete.
-
-All audit requirements must remain satisfiable against a read-only source tree.
-
-### 4. Fold Reductions Hierarchically
-
-Do not concatenate every leaf reduction into one monolithic global pass.
-
-Fold related leaf reductions into bounded branch syntheses. When a hypothesis crosses branches, form a bounded bridge reduction from the relevant child reductions and only the minimum additional source context needed. Recursively fold branch and bridge reductions until one root contraction thesis remains.
-
-Higher folds consume child reductions, not their raw sources. Reopen a child or source anchor only to resolve a material conflict or uncertainty. Preserve evidence pointers and unresolved frontier edges through every fold.
-
-Before a fold, measure the reductions it will ingest. The same line and byte ceilings are hard upper bounds on fold input. If the input exceeds either ceiling, introduce another reduction level. A fold output must be materially smaller than its inputs; otherwise it has not reduced them.
-
-The reduction hierarchy may be a tree or a small DAG because bridge reductions can join branches. Record its child relationships explicitly.
-
-### 5. Close The Frontier
-
-Manifest coverage is necessary but not sufficient. Continue adaptive cliques and bounded folds until:
-
-- every manifest source is deeply covered
-- every planned or discovered clique has a durable reduction
-- material cross-clique hypotheses are resolved or explicitly uncertain
-- competing local abstractions have been reconciled globally
-- no open frontier could materially change the contraction thesis or a report finding
-
-Do not manufacture findings to justify a clique. A clean reduction is a valid result.
-
-### 6. Adjudicate Findings
-
-One finding represents one coherent semantic contraction, not one source site. It may accumulate evidence across many cliques and may be strengthened, split, merged, or discharged before the report.
-
-Promote a finding when the evidence establishes a material accidental burden, the proposed shape is lawful and sufficiently concrete, and the move stays within the semantic envelope. Do not require local actionability; foundational contractions may be broad within the authorized surface.
-
-Recover the terminal machine from the surviving obligations rather than by attaching remedies to the incumbent structure. State what disappears or becomes derived before describing what remains or must be introduced. Every survivor and addition must carry an obligation not already discharged elsewhere. A purely additive change is valid only when the frozen envelope contains a genuine unmet obligation; name it explicitly.
-
-Record rejected hypotheses only when the rejection is material, subtle, or likely to prevent repeated rediscovery. Do not write an obituary for every fleeting suspicion.
-
-Do not force safety or correctness discoveries into contraction vocabulary. Integrate them when accidental structure caused them and the proposed contraction resolves them. Otherwise place them in the high-severity or incidental-defect section as appropriate.
-
-Out-of-envelope lesions may be named and evidenced tersely. Do not elaborate them into an unsolicited redesign specification.
-
-### 7. Write The Report
-
-Write a complete, proportional, implementation-ready report using the embedded report form. Do not demand or reward length. Do not use a closed `kind` taxonomy.
-
-The report must synthesize one coherent contraction thesis rather than dump checkpoint notes. Every required finding field is a proof obligation; if no material concern exists for a field, say so tersely rather than omitting it.
-
-The implementation specification must be precise enough to execute without repeating the audit, while retaining honest uncertainty and evidence anchors.
-
-### 8. Optional Implementation
-
-Stop after the report unless implementation was explicitly authorized. A read-only environment is a successful report-only run, not a blocker.
-
-When implementation is authorized, treat it as a new phase. Recheck source identity and refresh any affected clique if the tree has drifted since audit. Execute coherent semantic moves in dependency order, never arbitrary file order, and never cross the frozen envelope without new authorization.
-
-Use the target repository's own verification contract. After implementation, preserve the baseline manifest, construct a final manifest that accounts for created, deleted, fused, and moved sources, and run a budgeted residual cover and fold over the changed semantic surface. Report actual semantic contraction and cheap line/byte deltas without confusing either for the objective.
-
-## Embedded Forms
-
-### Worklog State
+### Worklog
 
 ```text
-worklog_path:
-report_path:
-high_severity_path: none
-run_id:
-mode: defect_report | defect_report_then_execute
+mode: report | execute
 repository:
 source_identity:
 scope:
-semantic_envelope:
-language_notes:
-source_line_ceiling: 3000
-source_byte_ceiling: 131072
+envelope:
+applicable_doctrine:
+worklog_path:
+report_path:
+critical_register: none
 
-audit_manifest:
-context_fringe:
-manifest_corrections:
-clique_cover:
-leaf_reductions:
-fold_hierarchy:
+clique_fold:
 live_findings:
 material_rejections:
-frontier:
-root_contraction_thesis:
-implementation:
+contraction_thesis:
+execution:
 residual:
 ```
 
-### Manifest
-
-```text
-| path_or_slice | lines | bytes | planned_cliques | coverage |
-|---------------|-------|-------|-----------------|----------|
-| src/foo.rs | 240 | 8120 | C01, C04 | covered |
-| src/giant.rs:1-1800 | 1800 | 70110 | C02 | pending |
-```
-
-### Clique Reduction
-
-```text
-clique_id:
-purpose:
-source_set:
-context_fringe:
-source_lines:
-source_bytes:
-coverage_delta:
-
-reduction:
-
-frontier:
-
-supersedes:
-```
-
-### Fold Reduction
-
-```text
-fold_id:
-children:
-input_lines:
-input_bytes:
-
-synthesis:
-
-conflicts_or_counterevidence:
-
-frontier:
-```
-
-### High-Severity Register
+### Critical register
 
 ```text
 | id | site | finding | evidence | confidence | severity_basis | status |
 |----|------|---------|----------|------------|----------------|--------|
 ```
 
-Do not include a remediation field. The register is an alarm lane, not an implementation detour.
+The register has no remediation field: it is an alarm, not an implementation detour.
 
-### Defect Report
+### Report
 
 ```markdown
 # Delenda Report: <scope>
 
-## Executive Summary
+## Executive summary
+## Envelope
+## Coverage
 
-## Semantic Envelope
+Manifest coverage, exclusions, fringe, fold hierarchy, worklog path, and baseline sizes.
 
-## Coverage And Reduction
-
-Record manifest coverage, exclusions, context fringe, language notes, source budget, clique cover, reduction hierarchy, worklog path, and cheap baseline.
-
-## Contraction Thesis
-
-## Priority And Dependency Map
+## Contraction thesis
+## Priority and dependencies
 
 | order | finding | leverage | confidence | implementation_risk | dependencies |
 |-------|---------|----------|------------|---------------------|--------------|
 
-## High-Severity Register
+## Critical register
 
-State `none` or summarize and link the companion register.
+`none`, or a summary linking the register.
 
 ## Findings
 
@@ -281,28 +153,25 @@ State `none` or summarize and link the companion register.
 **Sites:**
 **Evidence:**
 **Judgment:**
-**Semantic Contraction:** What declarations, states, paths, representations, dependencies, and synchronization obligations disappear or become derived.
-**Terminal Shape:** The smallest lawful structure remaining after the contraction.
-**Irreducible Additions:** New machinery required by the terminal shape, or `none`; name the law each addition uniquely carries.
-**Implementation Specification:**
-**Envelope Preservation:**
-**Relations / Dependencies:**
+**Contraction:** the declarations, states, paths, representations, dependencies, and synchronization obligations that disappear or become derived
+**Terminal shape:** the smallest structure that remains
+**Irreducible additions:** new machinery and the obligation each alone carries, or `none`
+**Implementation specification:**
+**Envelope preservation:**
+**Dependencies:**
 **Verification:**
 **Uncertainty:**
 
-## Retained Complexity And Rejected Hypotheses
+## Retained complexity and rejected hypotheses
 
-Include only material defenses and rejections.
+Material defenses and rejections only.
 
-## Incidental Defects
-
-## Out-Of-Envelope Lesions
-
-## Execution Notes
-
-## Residual Unknowns
+## Out-of-scope defects and handoffs
+## Authority questions
+## Execution notes
+## Residual unknowns
 ```
 
-## Final Response
+## Final response
 
-Report the worklog and report paths, semantic envelope, complete manifest coverage, clique and fold counts, root contraction thesis, highest-leverage findings, high-severity status, out-of-envelope lesions, and cheap baseline. If implementation occurred, also report verification, residual closure, final manifest changes, and observed contraction.
+Report the worklog and report paths, the envelope, manifest coverage, clique and fold counts, the contraction thesis, the highest-leverage findings, the critical register's status, authority questions, and baseline sizes. After execution, also report verification, residual closure, final manifest changes, and the contraction achieved.
