@@ -8,6 +8,7 @@ Repository-owned Codex skills.
 - `ask-for-sudo`: mediate privileged commands through a reason-bearing graphical authentication dialog.
 - `assemble-pro-review-package`: build GitHub-native expert handoffs from exact source coordinates and decisive non-code evidence.
 - `bare-metal-alara`: reduce authoritative wallclock runtime to its economic frontier under a frozen semantic envelope.
+- `rust-bootstrap`: install or tighten the house Rust lint posture from a template.
 - `seal`: bring completed work to the canonical stable state of every exposed surface.
 - `shopping`: minimize landed cost for an exact bill of materials.
 - `vox-nihili`: canonicalize technical writing to its facts and relations.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rust Bootstrap"
+  short_description: "Install or tighten the house Rust lint posture"
+  default_prompt: "Use $rust-bootstrap to install or ratchet the house Rust lint posture in this repository."
