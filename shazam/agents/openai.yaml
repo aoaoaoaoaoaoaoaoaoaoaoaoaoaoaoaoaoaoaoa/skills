@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shazam"
+  short_description: "Identify music from linked media"
+  default_prompt: "Use $shazam to identify the music in this link."

@@ -10,6 +10,7 @@ Repository-owned Codex skills.
 - `bare-metal-alara`: reduce authoritative wallclock runtime to its economic frontier under a frozen semantic envelope.
 - `rust-bootstrap`: install or tighten the house Rust lint posture from a template.
 - `seal`: bring completed work to the canonical stable state of every exposed surface.
+- `shazam`: identify music from linked media.
 - `shopping`: minimize landed cost for an exact bill of materials.
 - `vox-nihili`: canonicalize technical writing to its facts and relations.
 - `x11-gui-testing`: test X11 GUIs without touching the live desktop.
