@@ -1,75 +1,68 @@
 ---
 name: vox-nihili
-description: The default house doctrine for all English natural-language prose unless explicit user or local project instructions require another voice. Use whenever Codex writes, edits, or reviews English prose, and especially to contract existing exposition by removing AI-sounding warmth, floridity, filler, rhetorical hooks, synthetic gravitas, redundant framing, or sentence-level slack while preserving facts, logic, qualifications, and necessary structure.
+description: "House doctrine for technical writing: documentation, skills and agent instructions, commit messages, reports, and any text for which it is explicitly invoked. Use when Codex writes, edits, or reviews such text, unless user or local project instructions require another style. Produces dry, impersonal prose that states each fact and relation once in the fewest well-formed words, without padding, private jargon, dropped logic, or performed voice. Does not govern conversation."
 ---
 
 # Vox Nihili
 
-Reduce prose to the semantic fixed point:
+Vox Nihili governs technical writing: documentation, skills and agent instructions, commit messages, reports, and any text for which it is explicitly invoked. It does not govern conversation. Explicit user or local project instructions override it.
 
-> The text contains every proposition and relation required for its purpose, and nothing whose removal leaves that purpose unchanged.
+The ideal is an English-to-English canonicalizer. Its input is a set of facts and the relations among them; its output is the shortest well-formed English that states each fact and relation exactly once. Real prose only approximates this machine. Use it as the direction of every revision, not as a style to imitate.
 
-Every sentence must alter the reader's necessary knowledge, inference, or action. Every paragraph must perform one coherent part of the document's work. Anything else is residue.
+## Properties of canonical prose
 
-This is the default house doctrine for all English natural-language prose unless explicit user or local project instructions countermand it. Apply the fixed point generatively as well as revisionally: compose new prose without first manufacturing slack to remove.
+**Lossless.** Every fact and relation in the source survives, including qualifications, uncertainty, attribution, scope, the steps of an argument, and the purpose of a rule. A dropped *because* is a dropped relation. Never shorten a text by strengthening a claim, removing a caveat, or hiding a step.
 
-## The Null Voice
+**Unambiguous.** Each sentence has one reading and parses on the first pass. Compression stops where it would break grammar, create a second reading, or require the reader to decode a term. Noun stacks, undefined coinages, dropped articles and connectives, and telegraphic fragments violate this property. So does a nominalization that hides the actor: write "the server verifies its configuration," not "verification of the configuration is performed."
 
-Null voice is the absence of a performed speaker. It is not an intentionally bland, terse, cold, severe, academic, or machine-like style. Those are voices.
+**Minimal.** Within the first two properties, fewer words are better; length is a cost in its own right. Add nothing beyond the facts: no motivation, orientation, persuasion, previews, recaps, or reassurance. An example belongs only when it states something the prose cannot state as briefly. Assume the knowledge the intended audience can be expected to have, define anything beyond it, and explain nothing else.
 
-Let the subject determine vocabulary, syntax, pace, and emphasis. State what must be communicated in the form its relations require. If a long sentence carries a precise dependency better than three short ones, keep it long. If attribution, uncertainty, warning, or motivation changes the reader's understanding, retain it. The result need not sound simple; it should sound unmediated.
+**Normalized.** Each concept has one name, and each name one concept. Prefer an established term to a coinage, and define a coinage where it first appears. State relations of the same kind in the same sentence form and parallel items in parallel syntax. Order facts so that each follows what it depends on. Use lists for parallel items, tables for items that share attributes, and paragraphs for arguments. Name a category instead of enumerating its members, adding only the members a reader might not include.
 
-Do not replace cheeriness with dourness, floridity with staccato, or synthetic warmth with synthetic gravitas. Phrases such as “No fluff. No noise. Only truth.” are not null voice; they are a performance of it. The subject should appear to have written itself.
+**Impersonal.** No writer is present: no mood, humor, warmth, enthusiasm, or beauty pursued for its own sake. Severity is also a voice. Slogans, aphorisms, reflexive antithesis ("not X but Y"), triads for rhythm, legal or liturgical diction (*law*, *lawful*, *shall*, *discharge*) for ordinary requirements, and emphasis for urgency (bold, capitals, *critical*) are performances; remove them.
 
-## Recover The Semantic Contract
+**Idempotent.** Revising canonical prose changes nothing. Revision stops at this fixed point.
 
-Before cutting locally, determine the text's audience, telos, required propositions, and dependency structure. Infer these from the text, its surrounding artifact, and the user's request. Ask only when materially different readings would produce different documents.
+## Examples
 
-Preserve the semantic envelope: facts, definitions, claims, evidence, inferential relations, scope, modality, qualifications, uncertainty, attribution, citations, instructions, warnings, and examples that resolve a real ambiguity. Preserve terminology and notation unless correction is authorized. Never obtain compression by strengthening a claim, erasing a caveat, hiding a proof step, or assuming knowledge the audience cannot be expected to have.
+> Treat code as liability. Under a fixed semantic envelope, begin by asking what can disappear and prefer the lawful design with the least total machinery. Every declaration, path, layer, dependency, configuration axis, and compatibility form must discharge an irreducible obligation. New code must state a missing law or enable a larger contraction. Once the obligations are met, less code wins.
 
-Motivation survives when it establishes relevance, selects the right abstraction, or enables a later inference. It does not survive merely to stage curiosity or make the reader feel accompanied.
+> Code is a liability. With behavior held fixed, start by asking what can be removed, and prefer the smallest correct design. Every construct, including each dependency, configuration option, and compatibility shim, must be required by that behavior. New code must enforce a missing invariant or enable a larger deletion.
 
-For prose embedded in source, markup, or a structured document, preserve non-prose behavior and contracts. Presentation is not itself a semantic contract. Edit headings, captions, labels, list items, metadata, and surrounding structure when their communicative work warrants it. Consolidate or remove cards, pull quotes, callouts, and other prose containers when their payload is better owned elsewhere, then remove styling made unreachable by that contraction. Leave code, equations, identifiers, stable anchors, and executable machinery intact unless explicitly authorized.
+Legal diction becomes the facts it stood for, the enumeration becomes a category plus its easily overlooked members, and the final sentence, which repeated the second, is gone.
 
-## Reduce To The Fixed Point
+> Lock the repository root, source identity, dirty-state digest, scope, authoritative user constraints, frozen outer contract, and user-selected jurisdictions before dispatch.
 
-Read the bounded surface as a whole before rewriting it. Recover the argument or instruction graph so that local cuts do not destroy global orientation.
+> Before launching the judges, record the repository root, the source revision, a hash of the uncommitted changes, the scope, the user's constraints, the outer contract, and the judges the user selected. None of these may change during the run.
 
-Then examine each communicative unit in order. For every sentence, heading, caption, label, or list item, identify privately what it contributes and which later understanding depends on it.
+The text grows: private terms become what they denote, and *lock* becomes its two facts.
 
-- If deletion changes no necessary knowledge, inference, or action, delete it.
-- If another unit already owns the contribution, merge into that owner or delete the duplicate.
-- If the contribution is real but diffuse, state it in the smallest exact form.
-- If its present form is already exact, leave it alone.
+> The product charter and public contract are the human axiological boundary of the case. Judges may expose contradictions, identify a controlled major-version desire path, or show that the boundary lacks authority; neither a judge nor the compiler may revise it. Only explicit user authority changes the case.
 
-Treat logical connective tissue as information. A transition earns its place when it states a relation the reader would otherwise have to guess. Conversely, chronology, scene-setting, reader simulation, staged surprise, reassurance, cheerleading, and summary do not earn survival merely because exposition conventionally contains them.
+> Only the user can change the product charter, the public contract, or the case. A judge may report contradictions in the charter or contract, show that they lack authority, or identify a breaking change that actual use argues for in a future major version. Neither the judges nor the compiler may revise them.
 
-Audit each replacement sentence again; rewriting can manufacture fresh slack. Continue sentence by sentence until every surviving unit has an articulable payload.
+Metaphors become the relations they stood for, and the rule stated twice is stated once, first.
 
-Do not accept a local optimum assembled from individually defensible sentences. Assign each contribution one canonical owner across the entire surface. Fold scattered fragments into that owner and remove weaker restatements. Existing order, sectioning, paragraph boundaries, and visual compartments have no presumption of survival.
+## Scope of a revision
 
-Then audit paragraphs and document topology. Each paragraph must advance one necessary expository purpose, and its sentences must form the shortest intelligible path through that purpose. Merge, split, reorder, or remove paragraphs and sections according to semantic dependency rather than narrative theater. Headings name real structure; they do not solicit attention or decorate it.
+Preserve the source's terminology and notation unless correcting them is authorized. Infer the audience and purpose from the text, its surroundings, and the request; ask only when plausible readings yield materially different documents.
 
-Finally reread the whole result against the recovered contract. Restore anything whose removal broke scope, inference, orientation, or intelligibility. Resolve repetition, terminology drift, orphaned references, and seams introduced by contraction. Repeat until another pass finds no safe semantic deletion or merger.
+In prose embedded in code, markup, or structured documents, preserve all non-prose behavior. Headings, captions, labels, callouts, and cards are prose: rewrite, merge, or remove them when their content belongs elsewhere, and delete styling the change leaves unused. Leave code, equations, identifiers, anchors, and executable content unchanged unless authorized.
 
-The target is not minimum word count. Ambiguity, excessive decoding effort, and hidden logical steps are inefficiencies too. Prefer the least prose that communicates the full intended structure on one careful reading.
+Judge what each sentence does, not its surface form; do not run a banned-word pass. Replacing *crucial* with *load-bearing* changes nothing. A metaphor used consistently to name real structure is vocabulary. A statement repeated for readers who arrive separately, as in a README and a docstring or in independently installed skills, is not a duplicate.
 
-## Resist Cargo Cults
+## Procedure
 
-Do not conduct a banned-word substitution pass. Hooks, questions, first person, analogy, examples, emphasis, and rhythm are not categorically forbidden; each survives only when it performs necessary work. An epistemic actor may need to be named. An example may be the shortest proof of comprehension. A repeated statement may serve distinct audiences at distinct boundaries. Judge the contribution, not the surface form.
+1. Read the whole text. Extract its audience, purpose, facts, and relations, and the order in which the facts depend on each other.
+2. Examine each unit: sentence, heading, caption, or list item.
+   - Delete it if it states no needed fact or relation.
+   - Merge it into the stronger statement if another unit states the same fact.
+   - Restate it in fewer words if it is diffuse.
+   - Expand it if it is ambiguous, undecodable, or missing a relation.
+   - Leave it if it is already canonical.
 
-Common model residue includes fake reader dialogue, throat-clearing, mood-setting, self-congratulation, redundant previews and recaps, claims that something is “simple,” “natural,” “powerful,” or “surprising” without informational consequence, and miniature fables about why a technical object looks harmless. Remove the underlying rhetorical transaction; do not merely exchange its adjectives.
+   Examine rewritten units the same way.
+3. Reorder, merge, and split paragraphs and sections by dependency. Each paragraph has one purpose. Existing structure carries no weight of its own, and headings name real divisions of content.
+4. Reread the result as its intended reader. Restore any lost fact, scope, or relation, and fix seams, orphaned references, and terms whose meaning drifted. Repeat from step 2 until a pass changes nothing.
 
-Do not make prose choppy to demonstrate economy. Do not inflate ordinary statements with austere diction. Do not erase humane clarity when it is carrying information. Do not leave conspicuous scars where deleted performance used to be.
-
-## Deliver The Result
-
-The sentence-wise audit is a reasoning discipline, not a mandatory output rubric. Unless the user requests a critique or change log, return or apply the contracted text without narrating every deletion. Preserve the artifact's native format and run any cheap structural or documentary checks that the edit makes relevant.
-
-Before closing, verify:
-
-- every surviving unit has a necessary, specific payload
-- every paragraph has a coherent telos
-- the full semantic contract remains present and correctly ordered
-- no sentence exists mainly to project personality, rapport, gravity, or literary polish
-- the text reads as communication of its subject, not as an imitation of null voice
+The unit audit is a reasoning procedure, not output. Unless a critique or change log is requested, deliver the revised text without describing the edits. Keep the artifact's native format, and run the cheap checks the edit makes relevant, such as links, anchors, and rendering.

@@ -10,7 +10,7 @@ Repository-owned Codex skills.
 - `bare-metal-alara`: reduce authoritative wallclock runtime to its economic frontier under a frozen semantic envelope.
 - `seal`: bring completed work to the canonical stable state of every exposed surface.
 - `shopping`: minimize landed cost for an exact bill of materials.
-- `vox-nihili`: reduce English prose to its semantic fixed point.
+- `vox-nihili`: canonicalize technical writing to its facts and relations.
 - `x11-gui-testing`: test X11 GUIs without touching the live desktop.
 
 ## DIES IRAE
