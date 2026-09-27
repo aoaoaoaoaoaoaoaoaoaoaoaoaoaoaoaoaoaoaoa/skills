@@ -1,14 +1,15 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.14"
+# dependencies = []
+# ///
 """Reject Cargo path dependencies that escape the repository."""
-
-from __future__ import annotations
 
 import subprocess
 import sys
 import tomllib
 from pathlib import Path
 from typing import Any
-
 
 DEPENDENCY_TABLES = ("dependencies", "dev-dependencies", "build-dependencies")
 
