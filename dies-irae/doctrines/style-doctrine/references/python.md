@@ -1,15 +1,23 @@
-# Python Style Doctrine
+# Python Addendum
 
-Treat Python as a statically specified program hosted by a dynamic runtime. Every core value and callable should have a type-checker-legible shape. Ambient `Any` is semantic amnesia; seal untyped dependencies, I/O, and reflective surfaces behind typed refinement façades. Once a value enters the core, its typed representation is authoritative.
+This addendum extends [universal.md](universal.md).
 
-Model closed value worlds as unions of slotted, frozen records and exhaust them with `match` and `assert_never`. Model open capabilities with `Protocol` and exact generics. Give identities and units distinct static types. `T | None` denotes exactly one absence alternative, never an unlabeled phase machine.
+A Python program is statically specified and hosted by a dynamic runtime. Every core value and callable has a shape the type checker can read. `Any` erases what the checker knows: wrap untyped dependencies, I/O, and reflection in typed façades that refine their output, and treat the typed representation as authoritative once a value is inside the core.
 
-Command Python’s data model. Make domain objects participate directly in iteration, context management, callability, indexing, and algebra instead of surrounding them with ceremonial helper APIs. Decorators, descriptors, metaclasses, registration machinery, and code generation are primary abstraction tools. Spend dynamism centrally to generate lean, typed surfaces; do not smear reflection through live logic.
+Model closed sets of values as unions of frozen, slotted records, and exhaust them with `match` and `assert_never`. Model open capabilities with `Protocol` and exact generics. Give identities and units distinct static types. `T | None` denotes exactly one absence, never an unlabeled sequence of phases.
 
-Target the latest Python permitted by live dependencies. Dependency support, not habit, sets the version floor. Maintain no syntactic backward compatibility without a live contract. Use the current dialect throughout and enforce Ruff’s `UP` rules; obsolete spellings and compatibility scaffolding must die.
+Make domain objects participate directly in the data model, through iteration, context management, calling, indexing, and operators, instead of surrounding them with helper functions. Dynamic machinery, including decorators, descriptors, metaclasses, and code generation, is subject to the type checker: use it only where the checker can see its result, as with `dataclass_transform`, and spend it centrally to produce typed interfaces instead of spreading reflection through live logic.
 
-Express transformations through iterator algebra, comprehensions, pattern matching, and data-driven dispatch so the whole operation remains visible. Treat interpreter work as real cost: choose the right algorithm, push bulk operations through builtins or native libraries, and eliminate object churn. Never purchase a tidy surface with repeated Python-level work.
+Target the latest Python that live dependencies permit; dependency support, not habit, sets the floor. Write the current dialect throughout, and delete obsolete spellings and compatibility scaffolding.
 
-Refine input at boundaries and trust the resulting representation inside. Model expected failure with structured result or exception types. Catch only to recover or translate semantically; otherwise propagate. Reject dishonest `.get` defaults, broad catch-and-limp wrappers, redundant `None` guards, and validation theater. `assert` states an internal proof obligation; it is not input validation.
+Express transformations with iterators, comprehensions, pattern matching, and dispatch tables keyed by enums or types, so that the whole operation stays visible. Interpreter work is real cost: choose the right algorithm, push bulk work into builtins or native libraries, and avoid needless object creation.
 
-The Astral stack is build law. `uv` owns environments, dependencies, locking, and execution; `pyproject.toml` is canonical metadata, and maintained projects check in `uv.lock`. Ruff owns formatting, linting, and modernization, with `UP` enabled. `ty check` is a strict build step; `Any`, suppressions, and lint exceptions must be narrow, local, and explicit. Standalone scripts use PEP 723 metadata and `#!/usr/bin/env -S uv run --script`.
+Model expected failure with structured result or exception types. `dict.get` with an invented default and redundant `None` guards are the Python forms of dummy defaults. `assert` states an internal proof obligation; it does not validate input.
+
+## Tooling
+
+- uv owns environments, dependencies, locking, and execution. `pyproject.toml` is the canonical metadata, and maintained projects commit `uv.lock`.
+- Ruff owns formatting, linting, and modernization, with the `UP` rules enabled.
+- `ty check` runs as a strict build step.
+- `Any`, suppressions, and lint exceptions are narrow, local, and explicit.
+- Standalone scripts use PEP 723 inline metadata and `#!/usr/bin/env -S uv run --script`.

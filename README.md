@@ -27,7 +27,7 @@ Repository-owned Codex skills.
 ## Doctrines
 
 - `affinity-doctrine`: keep throughput work out of benchmark CPU domains.
-- `style-doctrine`: load the applicable code doctrine and Vox Nihili for English prose.
+- `style-doctrine`: load the universal code doctrine and the matching language addendum.
 - `product-doctrine`: govern software conduct on the user's system.
 - `ui-doctrine`: make every visible element earn its place.
 - `unit-test-doctrine`: reserve unit tests for carefully selected, durable interactions.

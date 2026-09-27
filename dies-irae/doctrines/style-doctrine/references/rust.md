@@ -1,21 +1,28 @@
-# Rust Style Doctrine
+# Rust Addendum
 
-Rust is a proof-bearing systems language. Use ownership, borrowing, lifetimes, visibility, and RAII as semantic machinery: encode authority, topology, temporal validity, and destruction rather than appeasing the compiler after the design is settled. Borrow-checker resistance is architectural evidence. Cloning, leaking, interior mutability, synchronization, and allocation are deliberate domain and cost choices, never mere escape hatches.
+This addendum extends [universal.md](universal.md).
 
-RAII is the default law for OS resources. Construction must return an owner that closes, kills and waits, unlocks, unmaps, unregisters, or removes on `Drop`; partial construction must unwind through already-created owners. A freshly created temporary directory represented only by `PathBuf`, a raw child process separated from its reaper, or cleanup postponed to the bottom of a function is an ownership defect. Use `TempDir`, guard types, scoped tasks, and process-group owners directly or forge the missing owner. `mem::forget`, leaked handles, detached children, and `TempDir::keep` are explicit lifetime transfers and must be justified as such. Add an OS supervisor or startup reaper when process death can bypass `Drop`.
+Ownership, borrowing, lifetimes, visibility, and RAII are design tools: use them to encode authority, topology, temporal validity, and destruction, instead of appeasing the borrow checker after the design is settled. Resistance from the borrow checker is evidence about the architecture. Cloning, leaking, interior mutability, synchronization, and allocation are deliberate domain and cost decisions, not escape hatches.
 
-Rust types are simultaneously propositions and layouts. Make module boundaries proof boundaries: keep representations private and expose constructors and transformations whose signatures preserve invariants. Use exhaustive enums to close actual closed worlds and newtypes to create genuine identity, units, capability, or representation power. Design state space and machine representation together; abstraction should resolve into the intended code rather than conceal accidental cost.
+Every OS resource has an owner that releases it on `Drop`. Construction returns an owner that closes, kills and waits, unlocks, unmaps, unregisters, or removes; partial construction unwinds through the owners already created. A temporary directory held only as a `PathBuf`, a child process separated from its reaper, and cleanup deferred to the end of a function are ownership defects. Use `TempDir`, guard types, scoped tasks, and process-group owners, or write the missing owner. `mem::forget`, leaked handles, detached children, and `TempDir::keep` are explicit ownership transfers and need a stated contract. Where process death can bypass `Drop`, add an OS-level supervisor or a startup reaper.
 
-Reach for traits eagerly. Traits state laws, capabilities, and type relations; they are not merely object-oriented method bags. Use the trait system at full depth, including associated types, GATs, higher-ranked bounds, const generics, sealing, and generic constraints, to express those relations exactly. Let strong trait structure replace repeated concrete plumbing.
+Types are both propositions and memory layouts; design the state space and the representation together, so that abstractions compile to the intended code. Module boundaries are proof boundaries: keep representations private and expose constructors and transformations whose signatures preserve invariants. Use exhaustive enums for closed sets; newtypes for identities, units, capabilities, and representations; and typestates or phase-separated types for protocols.
 
-Reach for macros with equal confidence. Declarative macros, procedural macros, derives, and code generation are primary abstraction machinery. Use them to make one source of truth emit every necessary projection, create domain syntax, enforce structural uniformity, and collapse hand-maintained regularity. Dense generative machinery belongs behind lean expansions and call sites.
+Traits state laws, capabilities, and relations between types; they are not bags of methods. Use the trait system at full depth, including associated types, GATs, higher-ranked bounds, const generics, and sealing, and let trait structure replace repeated concrete plumbing. Declarative and procedural macros, derives, and code generation are primary means of abstraction: one source of truth emits every projection, domain syntax replaces boilerplate, and structural uniformity is generated instead of maintained by hand.
 
-Use `unsafe` as an explicit theorem boundary. State and discharge the safety invariant, concentrate the proof, then expose a lawful safe surface or an exact caller obligation. Reach beyond the safe type system where representation, performance, foreign machinery, or a stronger abstraction requires it. The safe subset is not the design ceiling.
+`unsafe` marks a proof boundary. State the safety invariant, concentrate its proof, and expose either a safe interface or an exact obligation for the caller. Go beyond the safe subset when representation, performance, foreign code, or a stronger abstraction requires it.
 
-`Result` models an expected domain or environmental alternative crossing an API boundary; it is not ritual anxiety. `Option` denotes one exact absence state. Panic or `expect` on violated invariants, with domain context. Keep errors structured until the presentation boundary; do not launder them into strings, defaults, or ambient logging.
+`Result` models an expected alternative that crosses an API boundary. `Option` models exactly one absence. A violated invariant panics, or fails an `expect`, with domain context.
 
-Build dense local vocabularies with direct imports. Intentional prelude and enum-variant glob imports are proper tools for cheap notation. Suppress naming lints concerned only with lexical appearance; retain those that encode binding intent, API semantics, or module topology.
+Import the symbols you use and call them unqualified; prelude and enum-variant glob imports are proper tools for a dense local vocabulary. Destructure wherever it removes noise. Do not write Rust as Python with type annotations.
 
-Formatting and lint policy are build law. Enforce `cargo fmt` and manifest-owned rustc and Clippy lints. Deny warnings and pedantic lints by default. Function line and parameter counts are not complexity measures. Internal tooling does not owe boilerplate API documentation. Canonical house exceptions are global; make every other exception precise, local, and recorded where lint taste conflicts with stronger design.
+## Tooling
 
-Rust unit tests obey `$unit-test-doctrine`. A patch does not owe a new `#[test]`.
+- `cargo fmt` formats all code.
+- The root `Cargo.toml` owns lint policy in `[workspace.lints.{rust,rustdoc,clippy}]`, and every member crate declares `[lints] workspace = true`.
+- Deny warnings and Clippy's `pedantic` group. Enable `restriction` lints individually, never as a group.
+- House exceptions: function length and argument count; naming lints about lexical appearance, while those that encode binding intent, API semantics, or module topology stay enabled; glob-import lints; Unicode and confusable-identifier lints; `multiple_crate_versions`, since source linting cannot settle transitive version convergence; missing-documentation lints in internal code.
+- Every local suppression carries `reason = "..."`; a temporary one uses `#[expect]`.
+- Use the latest system toolchain; never pin a Rust version from memory.
+- `$rust-bootstrap` installs and tightens this posture in a repository.
+- rust-analyzer is available through the `lsp` MCP.

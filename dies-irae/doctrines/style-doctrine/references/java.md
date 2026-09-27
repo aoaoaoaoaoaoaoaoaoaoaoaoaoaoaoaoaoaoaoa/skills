@@ -1,15 +1,20 @@
-# Java Style Doctrine
+# Java Addendum
 
-Target the newest viable JDK and class-file level. Old bytecode, Java 8 idioms, bean conventions, framework compatibility, serialization shapes, and deployment assumptions carry no presumption; only a live contract keeps them. Use current language and runtime features, including preview facilities under a pinned toolchain. Modernize the design, not merely its spelling.
+This addendum extends [universal.md](universal.md).
 
-Model products as records and closed sums as sealed interfaces with record or enum variants; make pattern switches exhaustive. Control construction so domain values are born lawful, and use package and module visibility as proof boundaries. Null is never an implicit domain variant: represent real absence or richer alternatives explicitly. Keep value graphs immutable; mutation belongs to an explicit owner. Delete mutable beans, DTO twins, telescoping constructors, and ceremonial builders.
+Target the newest viable JDK and class-file level, including preview features under a pinned toolchain. Old bytecode levels, Java 8 idioms, bean conventions, framework compatibility, serialization shapes, and deployment assumptions survive only under a live contract. Modernize the design, not only its spelling.
 
-Treat interfaces as traits: use them to state laws, capabilities, and type relations, not to manufacture service-layer indirection. Apply generics, sealedness, and default or static methods until the algebra is exact. Annotation processors and source generation are primary abstraction machinery; one domain declaration should emit every mechanical projection. Concentrate reflection, method handles, and `invokedynamic` behind typed surfaces rather than smearing stringly machinery through live logic.
+Model products as records and closed sums as sealed interfaces with record or enum variants, and make pattern switches exhaustive. Control construction so that domain values are valid from birth, and use package and module visibility as proof boundaries. Null is never an implicit domain variant; represent absence and richer alternatives explicitly. Keep value graphs immutable and give every mutation an explicit owner. Delete mutable beans, DTO twins, telescoping constructors, and ceremonial builders.
 
-Make lifetime and concurrency structural. Use try-with-resources to bind resource ownership lexically. Use virtual threads for abundant blocking concurrency and structured task ownership and cancellation instead of detached future or callback graphs. Scoped context must remain lexical, never ambient `ThreadLocal` folklore.
+Interfaces play the role of traits: they state laws, capabilities, and type relations, not service-layer indirection. Use generics, sealing, and default and static methods until the algebra is exact. Annotation processors and source generation let one domain declaration emit every mechanical projection. Keep reflection, method handles, and `invokedynamic` behind typed interfaces.
 
-Treat the object graph as machine representation. Allocation, boxing, copying, dispatch, retention, and reflection are real costs. Choose streams, collectors, or direct loops by the work they generate, not by stylistic allegiance. Drive hot data through primitives, arrays, or current native and vector facilities as the cost model demands. Adjudicate performance claims with JMH, JFR, allocation profiles, and compiler evidence.
+Bind resource ownership lexically with try-with-resources. Use virtual threads for abundant blocking concurrency, with structured task ownership and cancellation instead of detached futures or callback graphs. Scoped context stays lexical; do not use ambient `ThreadLocal` state.
 
-Expected alternatives that callers must handle belong in explicit sealed result types; exceptions carry nonlocal or environmental failure. Catch only to recover or translate semantically, and preserve causes. Validate once at trust boundaries, then trust the domain representation. Crash close to an internal contradiction. Reject null theater, dummy defaults, catch-and-limp wrappers, and exception laundering.
+The object graph is the machine representation: allocation, boxing, copying, dispatch, retention, and reflection are real costs. Choose streams, collectors, or loops by the work each generates. Drive hot data through primitives, arrays, or native and vector facilities where the cost model demands. Settle performance claims with JMH, JFR, allocation profiles, and compiler output.
 
-Formatting, compiler warnings, tests, dependency analysis, and static nullness and bug analysis are build law. Enforce one project-wide nullness regime and strict Error Prone-style checks. Deny warnings by default; make suppressions precise, local, and recorded where tool taste conflicts with stronger design.
+Expected alternatives that callers must handle are sealed result types; exceptions carry nonlocal or environmental failure.
+
+## Tooling
+
+- The build runs formatting, compiler warnings as errors, dependency analysis, static nullness checking, and Error Prone-style bug checks.
+- One nullness regime applies across the project.
