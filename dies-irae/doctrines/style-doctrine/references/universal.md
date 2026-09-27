@@ -42,7 +42,6 @@ Strong types dominate every other consideration of form. A type is an invariant 
 - Parse input at boundaries into domain values instead of carrying unchecked data inward. Parsing may fail; transformations inside the core are total.
 - Let the domain model carry the system's states, transitions, capabilities, effects, and failures.
 - Treat types as architecture: each is at once a proof, a data representation, and an optimization surface.
-- Prefer a type or a compile-time check to a test.
 
 ## Abstraction
 
@@ -86,6 +85,10 @@ Any rule a machine can enforce belongs in tool configuration, not prose. A lint 
 - House exceptions disable lints that enforce the human-reader conventions this doctrine rejects, such as limits on function length or parameter count, checks on the lexical appearance of names, and bans on glob imports or Unicode identifiers. They apply in every project without restated rationale.
 - Any other exception is local and carries, beside it, the design reason that outweighs the lint. Prefer none; a justified exception is ordinary policy.
 - Use compilers, analyzers, and automated refactoring tools at full strength.
+
+## Tests
+
+Unit tests follow `$unit-test-doctrine`. A change does not automatically earn a permanent unit test; prefer a type or a compile-time check to a test.
 
 ## Working method
 

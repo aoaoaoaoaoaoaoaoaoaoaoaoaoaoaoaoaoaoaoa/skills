@@ -16,6 +16,8 @@ Traits state laws, capabilities, and relations between types; they are not bags 
 
 Import the symbols you use and call them unqualified; prelude and enum-variant glob imports are proper tools for a dense local vocabulary. Destructure wherever it removes noise. Do not write Rust as Python with type annotations.
 
+Rust unit tests follow `$unit-test-doctrine`. A patch does not owe a new `#[test]`.
+
 ## Tooling
 
 - `cargo fmt` formats all code.
