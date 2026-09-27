@@ -44,6 +44,7 @@ retired. Inspect native Slurm jobs and their live cgroups; the persistent
   one physical core with one executing sibling; job memory by `--mem`, at most
   pool cores × `PRIORITY_CORE_MEMORY_MIB`; no exclusivity, spare cores, core
   specialization, requeue or running reprioritization; finite time up to 24 h.
+  Job arrays are admitted, each task bounded like a job.
 - **Containment** (required SPANK plugin): per-job PID cap; single-CPU cpuset and
   one-CPU quota per worker task; `oom_score_adj` -900 for every task.
 - **systemd**: `benchmark.slice` hosts `slurmd` with `AllowedCPUs` = the priority
@@ -67,8 +68,10 @@ budget from it.
 Submit ready commands through `cpu-queue` or native Slurm. Request one physical
 core per actual concurrent worker (`--ntasks`, one CPU per task), at most the
 whole pool; both siblings are reserved against other jobs. The default worker
-uses one sibling. A paired block receives one finite gang allocation and keeps
-its scientific barriers.
+uses one sibling. A paired block keeps its arms simultaneous, either as one
+finite gang allocation or as one short array task per paired unit, such as a
+case holding one core per arm replica. Never throttle an array: the scheduler
+fills whatever pool exists, and a drain interrupts only the tasks in flight.
 
 No job may reserve unused neighboring cores, request LLC isolation, demand
 whole-pool exclusivity, or silence the desktop. Dedicated cores do not isolate
