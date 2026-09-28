@@ -36,20 +36,25 @@ limit or cancel another project's jobs merely to expedite your own work.
   `HOST_FLOOR_CPUSET`, `SLURM_ELIGIBLE_CPUSET`, `BENCHMARK_MEMORY_MIB`,
   `BULK_NICE`, `CPU_SCHEDULER=slurm`. CPU capacity and memory admission are
   independent; more eligible cores do not imply more available RAM.
-- **Slurm**: `munge`, `slurmctld` and `slurmd` enabled for one local node and
-  one `benchmark` partition; `select/cons_tres` with `CR_Core_Memory`;
+- **Slurm**: `munge`, `slurmctld` and `slurmd` enabled for one local node;
+  `select/cons_tres` with `CR_Core_Memory` for `benchmark` and
+  `CR_Socket_Memory` for `timing`. `l3cache_as_socket` exposes cache domains
+  as native sockets; timing requires a complete socket and one task per socket.
   `task/cgroup,task/affinity` on `cgroup/v2` constraining cores, RAM (100%) and
   swap (0) under `CgroupSlice=benchmark.slice`; `JobRequeue=0`. The node's
   `CpuSpecList` names the Slurm abstract CPUs (hwloc logical PU indexes) outside
   the eligible pool, `RealMemory` equals the pool slice, and `MemSpecLimit`
   reserves the daemons' share of it.
-- **Admission** (`job_submit.lua`): UID 1000 only; one to pool-size workers, each
-  one physical core with one executing sibling; job memory by `--mem`, at most
-  `BENCHMARK_MEMORY_MIB`; no exclusivity, spare cores, core
+- **Admission** (`job_submit.lua`): UID 1000 only; benchmark reserves one physical
+  core per worker, timing one complete eligible L3 per worker; one executing
+  sibling per worker. Worker capacity follows the partition's granularity.
+  Job memory by `--mem`, at most `BENCHMARK_MEMORY_MIB`; no whole-node
+  exclusivity, spare cores outside timing's cache reservation, core
   specialization, requeue or running reprioritization; finite time up to 24 h.
   Job arrays are admitted, each task bounded like a job.
 - **Containment** (required SPANK plugin): per-job PID cap; single-CPU cpuset and
-  one-CPU quota per worker task; `oom_score_adj` -900 for every task.
+  one-CPU quota per native worker task; batch supervisors coordinate work and
+  are exempt from those per-worker CPU limits; `oom_score_adj` -900 for every task.
 - **systemd**: `benchmark.slice` hosts Slurm job cgroups on the eligible pool,
   with `MemoryMin` = `MemoryMax` = `RealMemory`, `MemorySwapMax=0`. Slurm's
   management daemons stay on the host floor. Ordinary top-level slices boot
@@ -70,16 +75,26 @@ every other mask and budget from it. Drain running jobs before a policy cutover.
 
 ## Experiments
 
-Submit ready commands through `cpu-queue` or native Slurm. Request one physical
-core per actual concurrent worker (`--ntasks`, one CPU per task), at most the
-whole pool; both siblings are reserved against other jobs. The default worker
+Submit ready commands through `cpu-queue` or native Slurm. In the default
+`benchmark` partition, request one physical core per actual concurrent worker
+(`--ntasks`, one CPU per task), at most the whole pool; both siblings are reserved
+against other jobs. The default worker
 uses one sibling. A paired block keeps its arms simultaneous, either as one
 finite gang allocation or as one short array task per paired unit, such as a
 case holding one core per arm replica. Never throttle an array: the scheduler
 fills whatever pool exists, and a drain interrupts only the tasks in flight.
 
-No job may reserve unused neighboring cores, request LLC isolation, demand
-whole-pool exclusivity, or silence the desktop. Dedicated cores do not isolate
+Cache-sensitive work may opt into `--partition timing` through `cpu-queue` or
+native Slurm. It reserves one entire eligible L3 per actual worker, including
+idle neighboring cores; domains sharing the host floor are unavailable. Native
+Slurm chooses placement and arbitrates both partitions. Launch measured workers
+from the batch supervisor with `srun --exact --ntasks="$SLURM_NTASKS"
+--cpus-per-task=1 --cpu-bind=threads`; do not choose CPU/cache IDs or use the
+core-pinned `cpu-queue step` API in timing mode. `CPU_QUEUE_RESERVED_CPUS` and
+launch receipts describe reserved capacity, not executing-worker count.
+
+Outside timing's native cache reservation, jobs may not reserve unused neighbors,
+demand whole-pool exclusivity or silence the desktop. Neither mode isolates
 DRAM, IO, package power or kernel activity; record concurrent work and apply
 the experiment's validity checks without commandeering others' resources.
 
@@ -133,7 +148,8 @@ Never bypass the wrapper or raise the global limit to conceal fixture leaks.
 
 Keep topology, the projection, Slurm configuration, systemd boundaries and
 maintained launchers coherent. A pool change edits the projection's source and
-reruns the installer as a drained handover: close admission, let running jobs
+reruns the installer as a drained handover: set both partitions DOWN to pause
+dispatch while still accepting submissions, let running jobs
 finish, and never leave two allocators active. Verify actual effective cgroup
 masks and SMT sibling separation, not only requested settings. Run
 `scripts/audit-agent-instructions` after modifying agent instructions.
