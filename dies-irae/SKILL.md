@@ -1,6 +1,6 @@
 ---
 name: dies-irae
-description: Convene any explicit or inferred subset of the DIES IRAE audit family as independent parallel read-only judges, then compile their native ledgers and reports into one evidence-backed, globally prioritized defect register typed by auditing source and normalized to a domain-agnostic severity scale. Use for a multi-audit project inquest, comprehensive codebase judgment, or coordinated read-only review across implementation, semantic topology, tests, documentation, product conduct, and release fitness. Produces judgment rather than rectification.
+description: "Convene any explicit or inferred subset of the DIES IRAE judges against one case: recover the case's charter, run the judges in parallel and read-only, and compile their reports into one evidence-backed register ordered by priority on a shared severity scale. Under explicit execute authority, run the judges' fixes in dependency order and reconvene until the case reaches its fixed point. Use for a multi-judge project inquest or a comprehensive judgment of a codebase across its domain model, implementation, correctness, tests, documentation, and release fitness."
 ---
 
 # DIES IRAE
@@ -9,83 +9,94 @@ description: Convene any explicit or inferred subset of the DIES IRAE audit fami
 
 ## Mandate
 
-Convene the applicable judges against one locked case, let each exercise its own doctrine independently, and render one total judgment.
+Convene the applicable judges against one case, let each judge its own jurisdiction independently, and compile one judgment. Under explicit `execute` authority, drive the case to its fixed point.
 
-DIES IRAE is an orchestrator and compiler. It does not perform an object-level audit, prescribe how a specialist reasons, or rectify what the tribunal finds. Its authority is read-only over the target repository. Workers may write only their private ledgers and reports outside it.
+Every artifact bears the burden of its own existence. Models accrete: they add code, types, tests, and prose, and rarely remove any. Each judge counters this by asking of everything in its jurisdiction whether it would exist if built today, and prefers deletion, consolidation, and derivation to repair or new machinery. Apply the pressure continuously, as weight decay does: every change also prunes what nothing sustains.
 
-Across jurisdictions, continued existence bears the burden of proof. Each judge applies minimum machinery only to artifacts within its own jurisdiction and the frozen envelope; absence, consolidation, and derivation are presumptively preferable to parallel repair or new machinery.
+DIES IRAE orchestrates and compiles. It performs no audit itself and prescribes no judge's method. In `report` mode it has read-only authority over the repository, and judges write only their own worklogs and reports.
 
-Exhaustiveness is relative to the declared case. Every material surface within the chosen jurisdictions must be judged or recorded as uncovered; the tribunal does not invent features, audiences, platforms, or obligations outside the project's charter.
+## Case
 
-The product charter and public contract are the human axiological boundary of the case. Judges may expose contradictions, identify a controlled major-version desire path, or show that the boundary lacks authority; neither a judge nor the compiler may revise it. Only explicit user authority changes the case.
+The case is fixed before any judge starts: the repository root, the source revision, a hash of the uncommitted changes, the scope, the user's constraints, the charter, and the bench. None of these may change during a run.
 
-## The Bench
+The charter and the public contract belong to the user. A judge may report contradictions in them, show that they lack authority, or identify a breaking change that actual use argues for in a future major version; neither a judge nor the tribunal may revise them.
+
+Coverage is complete relative to the case: every material surface in the chosen jurisdictions is judged or recorded as uncovered. The tribunal invents no feature, audience, platform, or obligation that the charter lacks.
+
+## Bench
 
 The judges live under [skills/](skills/):
 
-- `delenda`: implementation contraction and architectural residue
-- `imperium`: semantic representations, ownership, and conversion topology
-- `tabula-rasa`: blank-page test-suite reconstruction and evidence austerity
-- `damnatio-memoriae`: zero-based documentation purge
-- `scriptorium`: documentary concordance and source commentary
-- `advocatus-diaboli`: integrated product and release fitness
+- `imperium`: the domain model
+- `delenda`: implementation
+- `confutatis`: correctness
+- `tabula-rasa`: tests
+- `damnatio-memoriae`: which documents deserve to exist
+- `scriptorium`: documentation truth
+- `advocatus-diaboli`: release fitness
 
-The governing doctrines live under [doctrines/](doctrines/). They inform judges; they are not parallel audits.
+The doctrines under [doctrines/](doctrines/) inform the judges; they are not audits.
 
-Honor an explicit user-selected subset. Otherwise inspect the repository only enough to choose the applicable bench, and state why each judge was included or omitted. Do not summon every judge by ritual. A specialist campaign outside this bench, such as Bare Metal ALARA, may be named as a disposition but is not silently executed.
+Convene the subset the user names. Otherwise inspect the repository only enough to choose the applicable judges, and state why each is included or omitted; do not summon every judge by ritual. A campaign outside the bench, such as Bare Metal ALARA, may be named in a disposition but never runs silently.
 
-## Convene
+## Procedure
 
-Lock the repository root, source identity, dirty-state digest, scope, authoritative user constraints, frozen outer contract, and user-selected jurisdictions before dispatch. Create a run directory shaped like:
+### 1. Convene
+
+Create the run directory, with the case in `case.md` and one subdirectory per judge:
 
 ```text
 /tmp/dies-irae-<repo>-<run-id>/
 ```
 
-Record the case identity and bench in `case.md`. Assign each judge a private subdirectory for its native ledger and report.
+### 2. Recover the charter
 
-Launch one independent worker per selected judge, in parallel when the environment permits. Give every worker:
+Run `$clique-fold` over the declared surfaces, such as READMEs, help text, the public API, package metadata, and configuration schemas, and over the code's external boundaries, with:
 
-- the same case identity and scope
-- the same authoritative user constraints and frozen outer contract
-- the exact specialist skill to follow
-- its report-only mode
-- read-only authority over the repository
-- its private output directory
-- no conclusions from sibling judges
+- `subject`: the claims and invariants each item establishes, and where items contradict one another
+- `columns`: `claims | invariants | contradictions`
 
-Standalone `/tmp/<specialist>-...` paths in child skills are fallbacks. In a tribunal run, the assigned private subdirectory governs artifact placement; preserve the specialist's native schemas and filenames within it.
+Where sources disagree, a formal specification outranks declared claims, and declared claims outrank the code's behavior. Add the known-bad behaviors the user names. Write the charter to `case.md`: claims, invariants, known-bad behaviors, and open contradictions. Put its authority questions to the user, who settles them or lets the tribunal proceed with them open. The charter is derived for the run and never committed.
 
-Use the strongest available read-only enforcement. Permission to write the tribunal run directory is not permission to mutate the case. If enforcement is unavailable, instruct the boundary explicitly and verify afterward that the source identity and dirty-state digest are unchanged.
+### 3. Dispatch
 
-Let each judge obey its own scope, ledger, context, evidence, stopping, and report protocol. DIES IRAE adds no object-level checklist. A worker that fails, drifts, or cannot complete remains an explicit hole in jurisdiction; do not improvise its judgment in the parent.
+Launch one worker per judge, in parallel when the environment permits. Give every worker the case and charter, the exact skill to follow, `report` mode, read-only authority over the repository, its own subdirectory, and no conclusions from other judges. A judge may run as several workers over a partition of the scope when that is faster; compilation joins them.
 
-## Compile
+Use the strongest read-only enforcement available. Without enforcement, state the boundary explicitly and verify afterward that the source identity is unchanged.
 
-After every worker has terminated, compile the heterogeneous native ledgers and reports intelligently. Source identity and scope are the shared case facts; do not impose a common child-ledger schema or a reconciliation algorithm.
+Each judge follows its own skill; DIES IRAE adds no checklist. A worker that fails or drifts leaves an explicit hole in its jurisdiction; do not improvise its judgment in the parent.
 
-The desired artifact is one prioritized defect register, not a concatenation of reports. Preserve evidence and auditing provenance, combine or distinguish findings according to their actual semantics, expose unresolved contradictions, and retain clean judgments so absence of findings is not mistaken for absence of inspection. If the combined material exceeds context, fold it without discarding the source reports on disk.
+### 4. Compile
 
-Compile toward terminal causes and terminal shapes. When one lawful deletion, fusion, or derivation resolves findings from several judges, preserve that shared contraction instead of emitting an additive remedy for each symptom. Describe what the disposition retires or subsumes before any irreducible addition. Do not count deletions or treat size as severity; minimum machinery governs the proposed resolution after consequence and contract are fixed.
+After every worker has finished, run `$clique-fold` over the judges' reports and ledgers, with:
 
-Preflight compilation inputs with `wc -l -c`. No fold may ingest more than 3000 lines or 131072 bytes of report or reduction material; introduce bounded branch and bridge folds until the root judgment fits. Higher folds consume reductions, not raw ledgers or reports.
+- `subject`: each finding and clean judgment, its evidence, and the root cause it shares with other findings
+- `columns`: `judges | severity | root_cause | disposition`
 
-### Severity
+Produce one register ordered by priority, not a concatenation of reports. Keep each finding's evidence and originating judge. Merge findings that share a root cause, keep distinct findings distinct, and expose contradictions between judges. Keep clean judgments, so that an absence of findings is not mistaken for an absence of inspection.
 
-Severity describes the credible consequence of leaving a defect in place within the declared case. It does not describe the prestige of its source domain, the cost of its fix, or the intensity of a judge's prose.
+When one deletion, fusion, or derivation resolves findings from several judges, record it once, stating what it retires before any irreducible addition. Size is not severity, and deletions are not counted.
 
-- `critical`: credible catastrophic or irreversible harm, fundamental compromise, or a product unsafe to release or operate; the affected release or operation must stop pending containment, while tribunal coverage continues
-- `high`: material breach of a core contract or serious harm to correctness, data, security, privacy, the user's system, or release integrity; must close before the affected release or use
-- `medium`: real consequential defect with bounded reach or recoverable impact; warrants deliberate correction but does not independently invalidate the whole product
-- `low`: genuine localized defect with limited consequence; worth correcting, but not merely a disagreement in taste
+### 5. Execute
 
-No jurisdiction has a categorical ceiling or floor. Documentation can be critical; architecture can be low. Weak evidence does not make a grave possible consequence “low”: preserve the uncertainty separately.
+Only under explicit `execute` authority, and only after the judgment exists, run the convened judges' `execute` modes one at a time, in dependency order: Imperium, Delenda, Confutatis, Tabula Rasa, Damnatio Memoriae, Scriptorium, Advocatus Diaboli. Each judge refreshes its report against the current tree first, as its skill requires. An authority question stops the loop until the user answers it.
 
-Severity and priority are distinct. Order the register using judgment over the whole case. Do not use a scoring formula.
+Then reconvene the bench in `report` mode against the new source identity, and repeat until a reconvened bench finds nothing material: the case's fixed point. Advocatus Diaboli's verdict at the fixed point closes the run. Delivery, such as `$seal`, is a separate act the tribunal never invokes.
+
+## Severity
+
+Severity is the credible consequence of leaving a finding in place within the case. It does not reflect the prestige of its jurisdiction, the cost of its fix, or the intensity of a judge's prose.
+
+- `critical`: credible catastrophic or irreversible harm, fundamental compromise, or a product unsafe to release or operate; the affected release or operation stops pending containment, while coverage continues
+- `high`: a material breach of a core contract, or serious harm to correctness, data, security, privacy, the user's system, or release integrity; closes before the affected release or use
+- `medium`: a real defect with bounded reach or recoverable impact; warrants deliberate correction but does not by itself invalidate the product
+- `low`: a genuine, localized defect with limited consequence; worth correcting, and more than a disagreement of taste
+
+No jurisdiction has a ceiling or floor: documentation can be critical and architecture low. Weak evidence does not make a grave consequence `low`; record the uncertainty separately. Severity and priority are distinct: order the register by judgment over the whole case, not by a scoring formula.
 
 ## Judgment
 
-Write `/tmp/dies-irae-<repo>-<run-id>/judgment.md` in this form:
+Write `/tmp/dies-irae-<repo>-<run-id>/judgment.md`:
 
 ```markdown
 # DIES IRAE Judgment: <case>
@@ -93,26 +104,37 @@ Write `/tmp/dies-irae-<repo>-<run-id>/judgment.md` in this form:
 ## Case
 
 source_identity:
-dirty_state:
 scope:
-authoritative_user_constraints:
-frozen_outer_contract:
+user_constraints:
+bench:
+
+## Charter
+
+claims:
+invariants:
+known_bad:
+contradictions:
 
 ## Jurisdiction
 
-audits_completed:
-audits_incomplete:
-audits_omitted:
+judges_completed:
+judges_incomplete:
+judges_omitted:
 
-## Defect Register
+## Register
 
-| priority | severity | source | defect | consequence | evidence | disposition and dependencies |
-|----------|----------|--------|--------|-------------|----------|------------------------------|
+| priority | severity | judges | finding | consequence | evidence | disposition and dependencies |
+|----------|----------|--------|---------|-------------|----------|------------------------------|
 
-## Contradictions And Authority Questions
-## Residual Unknowns
+## Authority questions
+## Residual unknowns
+## Execution
+
+iterations:
+fixed_point:
+verdict:
 ```
 
-`source` names one or more originating judges. The ordering itself expresses priority. Evidence must remain traceable to the specialist report and repository anchors. Dispositions may identify dependencies or a subsequent specialist campaign; they do not authorize execution.
+The order of the register is its priority. Evidence stays traceable to the judges' reports and to repository anchors. A disposition may name dependencies or a later campaign; it authorizes nothing.
 
-Return the judgment path and a concise account of the verdict. Preserve every native ledger and report beside it.
+Return the judgment path and a concise account of the verdict, and keep every judge's worklog and report beside the judgment.

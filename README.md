@@ -18,7 +18,7 @@ Repository-owned Codex skills.
 
 ## DIES IRAE
 
-`dies-irae` convenes applicable read-only judges and compiles their reports into one prioritized defect register:
+`dies-irae` convenes the applicable judges against one case, compiles one prioritized register, and, when authorized, drives the case to its fixed point:
 
 - `delenda`: contract an implementation to what its present responsibilities require.
 - `imperium`: derive the correct domain model and bring the program's global nouns into it.
