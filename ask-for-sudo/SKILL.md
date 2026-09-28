@@ -13,27 +13,27 @@ Use the stable façade:
     -- /usr/bin/wg show pwg
 ```
 
-State the concrete purpose, scope, and whether the command reads or mutates state.
-Pass the executable and every argument after `--`; prefer an absolute executable
-path. The dialog displays both the reason and the exact command before accepting
-the password.
+The reason states the concrete purpose, the scope, and whether the command reads
+or changes state. Pass the executable and every argument after `--`, preferring
+an absolute executable path.
 
 Run the façade with the execution tool's escalated sandbox permission. The
 global prefix rule allows that elevation without a second Codex approval; a
-default sandbox sets `NoNewPrivs` and necessarily prevents `sudo` from working.
+default sandbox sets `NoNewPrivs`, which prevents `sudo` from working.
 
-The façade routes the dialog through the caller's forwarded X display in an
-SSH session. Shared-app-server calls recover a reachable SSH Codex client from
-the host process table, preferring clients in the command's working directory.
-Several sessions multiplexed through one SSH connection are equivalent. If
-several distinct clients remain possible, the façade refuses to guess; pass a
-verified display as `--prompt-display DISPLAY` before `--reason`.
+In an SSH session, the façade shows the dialog on the caller's forwarded X
+display. When called from a shared app server, it finds a reachable SSH Codex
+client in the host's process table, preferring clients in the command's working
+directory; sessions multiplexed through one SSH connection count as one client.
+If several distinct clients remain, the façade refuses to guess: pass a verified
+display as `--prompt-display DISPLAY` before `--reason`.
 
-Use one invocation for one coherent privileged operation. If shell syntax is
-irreducible, pass an exact reviewed program to `/bin/bash -c`; do not conceal a
-broad or unrelated operation behind a vague reason.
+Use one invocation for one coherent privileged operation. When the operation
+needs shell syntax, pass an exact reviewed program to `/bin/bash -c`; never
+conceal a broad or unrelated operation behind a vague reason.
 
-The password remains inside the graphical authentication path. Never request,
-receive, store, print, or pipe it through chat or command input; cancellation
-ends the privileged attempt. The prompt names the target host, reason, and exact
-command. Elevate only the operation displayed to the user.
+The dialog shows the target host, the reason, and the exact command before it
+accepts the password; elevate only the operation it shows. The password stays
+inside the graphical authentication path: never request, receive, store, print,
+or pipe it through chat or command input. Cancellation ends the privileged
+attempt.
