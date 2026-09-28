@@ -1,8 +1,8 @@
-# Linux And XDG
+# Linux and XDG
 
-On Linux, a per-user application must honor the XDG base-directory contract. Treat configured paths as policy, not suggestions. XDG path variables are valid only when absolute; ignore relative values rather than interpreting them against an ambient working directory.
+On Linux, a per-user application honors the XDG base-directory contract. Configured paths are policy, not suggestions. An XDG path variable is valid only when absolute; ignore a relative value instead of resolving it against the working directory.
 
-## Place By Meaning
+## Place by meaning
 
 Use an application-specific subdirectory beneath the appropriate root:
 
@@ -14,23 +14,21 @@ Use an application-specific subdirectory beneath the appropriate root:
 | disposable, rebuildable cache | `$XDG_CACHE_HOME` | `$HOME/.cache` |
 | login-session runtime objects | `$XDG_RUNTIME_DIR` | no default |
 
-State includes material worth retaining across restarts but not treating as portable user data or configuration, such as history, logs, recent-use state, window layout, or undo journals. Cache must remain safely disposable. Do not make correctness, ownership, or irreplaceable work depend on it.
+State is material worth keeping across restarts but not portable user data or configuration, such as history, logs, recent-use state, window layout, or undo journals. Cache stays safely disposable: correctness, ownership, and irreplaceable work never depend on it.
 
-Read system data and configuration through `$XDG_DATA_DIRS` and `$XDG_CONFIG_DIRS`, respecting their order and the precedence of the user layer. Their defaults are `/usr/local/share:/usr/share` and `/etc/xdg`. Do not write into search-path entries merely because they were consulted. User-specific executables belong in `$HOME/.local/bin` when the application is responsible for placing them there.
+Read system data and configuration through `$XDG_DATA_DIRS` and `$XDG_CONFIG_DIRS`, respecting their order and the precedence of the user layer. Their defaults are `/usr/local/share:/usr/share` and `/etc/xdg`. Consulting a search-path entry does not license writing to it. User-specific executables belong in `$HOME/.local/bin` when the application is responsible for placing them.
 
-`$XDG_RUNTIME_DIR` is for sockets, pipes, locks, credentials, and other small runtime objects whose lifetime is the login session. Its contents are local, private to the user, and unfit for durable state or bulk storage. If it is absent, either disable the dependent facility or use a private replacement with equivalent ownership, permissions, locality, and lifecycle while warning about the degraded contract; a casual shared `/tmp` path is not equivalent.
+`$XDG_RUNTIME_DIR` holds sockets, pipes, locks, credentials, and other small objects whose lifetime is the login session. Its contents are local, private to the user, and unfit for durable state or bulk storage. If it is absent, disable the dependent facility, or use a private replacement with the same ownership, permissions, locality, and lifecycle and warn about the degraded contract; a casual shared `/tmp` path is not equivalent. Session-lifetime scratch sits beneath one private root whose outer boundary the session manager owns; ownership inside it follows the universal doctrine.
 
-Do not spray dotfiles or application directories directly into `$HOME`, write durable state into the current working directory, or use `/tmp` as persistence. Compatibility with an established legacy location may justify reading or migrating it; it does not make continued proliferation lawful.
+Do not scatter dotfiles or application directories directly into `$HOME`, write durable state into the working directory, or use `/tmp` for persistence. Compatibility with an established legacy location may justify reading or migrating it; it does not justify creating more.
 
-## Respect User Space
+## Respect user space
 
-User-facing directories such as Documents, Downloads, Pictures, and Videos are configured, localized product surfaces. Resolve them through `xdg-user-dir` or a faithful platform library; never infer them from English names or capitalization. Put only material the user intentionally creates, exports, or selects there. Internal databases, thumbnails, logs, models, and indexes remain application internals even when they contain valuable information.
+User-facing directories such as Documents, Downloads, Pictures, and Videos are configured, localized product surfaces. Resolve them through `xdg-user-dir` or a faithful platform library; never infer them from English names or capitalization. Put there only material the user intentionally creates, exports, or selects. Internal databases, thumbnails, logs, models, and indexes remain application internals even when they hold valuable information.
 
-Create only the directories actually needed, with private permissions where their contents are private. Use atomic replacement and suitable synchronization for durable writes. Bound and version caches, remove obsolete generations, and clean runtime artifacts on normal exit while remaining robust to the session manager deleting them first.
+Create only the directories actually needed, with private permissions where their contents are private. Use atomic replacement and suitable synchronization for durable writes. Bound and version caches, remove obsolete generations, and clean up runtime artifacts on normal exit while staying robust to the session manager deleting them first.
 
-Represent each temporary subtree as an owning runtime cell, not a generated `PathBuf` plus a hoped-for removal call. Put related scratch beneath one attributable private root, let the owner remove the whole cell on destruction, and let the session manager own the outer runtime boundary. Preserve a cell beyond the operation only by explicitly transferring it into its durable state or diagnostic destination.
-
-Installation, updates, and removal must respect the ownership boundary between package manager, system administrator, application, and user. A per-user program must not mutate system-wide locations; a system service must use the platform's system configuration, state, cache, log, and runtime facilities rather than pretending to be a desktop user. Uninstall removes installed machinery. User-owned data survives unless an explicit purge operation names and confines its destruction.
+Installation, updates, and removal respect the ownership boundaries between package manager, system administrator, application, and user. A per-user program never mutates system-wide locations; a system service uses the platform's system configuration, state, cache, log, and runtime facilities instead of acting as a desktop user. Uninstall removes installed machinery. User-owned data survives unless an explicit purge operation names and confines its destruction.
 
 Verify the lifecycle under non-default XDG paths, absent optional directories, restrictive permissions, concurrent instances, interrupted writes, upgrades, and removal. A program is not XDG-compliant merely because its happy-path cache happens to land under `~/.cache`.
 
