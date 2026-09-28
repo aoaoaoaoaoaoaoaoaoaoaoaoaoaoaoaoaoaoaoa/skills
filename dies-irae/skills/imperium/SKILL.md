@@ -40,6 +40,8 @@ Read the repository's `AGENTS.md` files and `$style-doctrine`. Load `$product-do
 
 ## Fidelity
 
+`$style-doctrine` owns the standard for the domain model; Imperium audits a program against it and restates the rules it applies.
+
 Count possible values. A struct is the product of its fields' values, an enum the sum of its variants, and `Option<A>` is 1 + A. Two optional fields of which exactly one must be set admit four shapes for two meanings; the sum of the two types admits exactly two. The common infidelities are flags and optional fields standing in for a sum, strings standing in for a closed set, parallel collections standing in for a collection of products, and a repeated bundle of fields or arguments standing in for a missing entity.
 
 Names, shapes, conversion traffic, construction sites, and history are evidence about concepts, not verdicts. Two representations are one concept when they denote the same thing under the same invariants. Identical shapes remain distinct concepts when substituting one for the other would erase an invariant, phase, unit, authority, or meaning; different layouts do not make different concepts. The correct model may have more types than the incumbent or fewer.

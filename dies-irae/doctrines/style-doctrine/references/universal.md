@@ -9,7 +9,7 @@ House code is written and maintained by agents. Five facts about that arrangemen
 1. The maintainer is fluent in every language feature, type-level construction, metaprogramming technique, and mathematical notation. Unfamiliarity costs it nothing, and its successors will be more capable still.
 2. The maintainer is cold. Each session starts without the code's history and sees only the files it opens; it will break any invariant it cannot see from where it edits.
 3. No human reads the code. Types, the compiler, linters, and runtime failures are the only oversight.
-4. Agent labor is cheap. Writing, refactoring, migrating, and rewriting cost little.
+4. Agent labor is cheap. Writing, refactoring, migrating, and rewriting cost little, and diff size is not a cost.
 5. Tokens are expensive. Every token of code is paid again each time an agent reads it.
 
 Conventional practice compensates for human limits: working memory, unfamiliarity, and the cost of rewriting. This doctrine drops those compensations and consequently inverts much conventional advice. Do not translate it back into conventional defaults. Where agent and human readability coincide, as they usually do, write the readable form; where they conflict, agent utility governs.
@@ -33,6 +33,16 @@ Keep backward compatibility, shims, and parallel old and new paths only under a 
 Use a library whenever it supplies stronger machinery than local code would. Imported code is still part of the system; judge it on whole-system merit.
 
 Choose representations and algorithms for the actual machine. A simple surface bought with hidden work is a defect.
+
+## Domain model
+
+Design the domain model first. It is the skeleton of the program: when it is right, business logic composes from it; when it is wrong, control flow compensates with checks, conversions, and repeated validation. The domain model is the set of types that would appear in a medium-granularity pseudocode description of the program.
+
+- Each entity has one canonical definition, program-wide, and one name.
+- A definition's possible values correspond one-to-one with the entity's valid values: it holds exactly the fields that define the entity and admits no instance the domain forbids. Count them. A struct is the product of its fields' values, an enum the sum of its variants, and `Option<A>` is 1 + A; two optional fields of which exactly one must be set admit four shapes for two meanings, where the sum of the two types admits exactly two.
+- Compose compound entities from primitive ones by products, sums, and collections, never by flattening them into flags and optional fields.
+- Code that cannot change a canonical definition is bound by it, and the binding is the purpose: it removes the option of growing a local copy with flags. Local state the entity lacks belongs in a local type that contains the entity.
+- A lossy conversion exposes its loss and a fallible one its failure. Identity conversions are deleted, boundary projections end at their boundary, phase transitions run one way, and validation has one owner.
 
 ## Types
 
