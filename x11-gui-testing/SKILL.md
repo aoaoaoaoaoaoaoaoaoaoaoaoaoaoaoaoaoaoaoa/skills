@@ -43,7 +43,7 @@ Keep project knowledge in a project-local `scripts/playtest` or a throwaway driv
 - assert semantic state or product output in addition to inspecting decisive images
 - preserve logs and artifacts on failure and prove no tested process survives
 
-Under bare Xvfb, do not rely on `windowactivate`; use explicit `xdotool --window`, `windowfocus`, or direct XTEST input. Inspect screenshots with the image viewer. A nonempty image is not proof of correct pixels.
+Under bare Xvfb, do not rely on `windowactivate`; use explicit `xdotool --window`, `windowfocus`, or direct XTEST input. Look at each decisive screenshot with an image-viewing tool; a nonempty image is not proof of correct pixels.
 
 ## Failure
 
