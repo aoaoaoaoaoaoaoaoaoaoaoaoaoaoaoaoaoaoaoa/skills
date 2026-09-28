@@ -1,10 +1,8 @@
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = "==3.13.*"
+# requires-python = ">=3.14"
 # dependencies = ["tiktoken==0.12.0"]
 # ///
-
-from __future__ import annotations
 
 import argparse
 import contextlib
@@ -13,9 +11,9 @@ import sys
 import tempfile
 from collections.abc import Iterator
 from pathlib import Path
+from typing import Never
 
 import tiktoken
-
 
 LANGUAGE_BY_SUFFIX = {
     ".c": "c",
@@ -101,7 +99,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def fail(message: str) -> "NoReturn":
+def fail(message: str) -> Never:
     print(f"error: {message}", file=sys.stderr)
     raise SystemExit(2)
 
@@ -199,10 +197,10 @@ def main() -> None:
 
     start, end = normalize_span(args.start, args.end, len(source_lines))
     excerpt = "".join(source_lines[start - 1 : end])
-    label = args.label or str(source)
+    label = args.label or source.name
     section = render_section(
         label=label,
-        source_name=str(source),
+        source_name=source.name,
         start=start,
         end=end,
         body=excerpt,
