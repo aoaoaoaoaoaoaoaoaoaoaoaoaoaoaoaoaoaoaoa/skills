@@ -25,6 +25,7 @@ In an SSH session, the façade shows the dialog on the caller's forwarded X
 display. When called from a shared app server, it finds a reachable SSH Codex
 client in the host's process table, preferring clients in the command's working
 directory; sessions multiplexed through one SSH connection count as one client.
+If no reachable forwarded client exists, it tries the local graphical desktop.
 If several distinct clients remain, the façade refuses to guess: pass a verified
 display as `--prompt-display DISPLAY` before `--reason`.
 

@@ -172,9 +172,8 @@ elif [[ -n ${SSH_CONNECTION:-} && -n ${DISPLAY:-} ]]; then
     export XAUTHORITY=$xauthority
     printf 'codex-sudo: prompting through %s on %s\n' \
         "${SSH_TTY:-SSH}" "$DISPLAY" >&2
-elif shared_app_server; then
-    route_to_ssh_client || \
-        die 'no reachable SSH-forwarded Codex display; reconnect with X forwarding or use --prompt-display'
+elif shared_app_server && route_to_ssh_client; then
+    :
 else
     recover_local_graphics
     printf 'codex-sudo: prompting on local graphical session\n' >&2
