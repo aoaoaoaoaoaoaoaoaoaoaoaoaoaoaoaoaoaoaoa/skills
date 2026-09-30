@@ -158,4 +158,6 @@ reruns the installer as a drained handover: set both partitions DOWN to pause
 dispatch while still accepting submissions, let running jobs
 finish, and never leave two allocators active. Verify actual effective cgroup
 masks and SMT sibling separation, not only requested settings. Run
-`scripts/audit-agent-instructions` after modifying agent instructions.
+`~/.codex/skills/affinity-doctrine/scripts/audit-agent-instructions` after
+modifying agent instructions. The auditor belongs to this skill, not the
+`cpu_claim` installer repository.

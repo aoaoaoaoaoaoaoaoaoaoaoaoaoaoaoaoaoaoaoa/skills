@@ -140,6 +140,8 @@ run_child() {
     export SDL_VIDEODRIVER=x11
     export WINIT_X11_SCALE_FACTOR=1
     unset WAYLAND_DISPLAY I3SOCK SWAYSOCK SESSION_MANAGER DBUS_SESSION_BUS_ADDRESS
+    unset GTK_IM_MODULE QT_IM_MODULE SDL_IM_MODULE
+    export XMODIFIERS=@im=none
     if [ "$with_wgpu" -eq 1 ]; then
         export WGPU_BACKEND=vulkan
         local_icd="$lavapipe/usr/share/vulkan/icd.d/lvp_icd.json"
