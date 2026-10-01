@@ -65,10 +65,11 @@ limit or cancel another project's jobs merely to expedite your own work.
 - **Wrappers**: `~/.local/libexec/cpu-lanes` places a process tree at
   `BULK_NICE` beneath the system manager's top-level `bulk.slice`, with
   `CPUWeight=idle`. It competes with ordinary system and user slices at their
-  common root, not inside the user manager. A root-owned, narrowly authorized
-  gateway creates the scope and drops permanently to the ordinary user before
-  executing the payload. The slice follows the dynamic ordinary-work fence; PATH
-  Cargo and standalone Rust build-tool wrappers enter it. Rust-analyzer is
+  common root, not inside the user manager. A socket-activated root helper
+  places the connecting launcher in the scope using its peer pidfd; it never
+  executes the payload. The launcher execs in place, preserving its identity,
+  sandbox and inherited descriptors. The slice follows the dynamic ordinary-work
+  fence; PATH Cargo and standalone Rust build-tool wrappers enter it. Rust-analyzer is
   intentionally exempt for interactive MCP/editor analysis. `cpu-queue`
   submits and contains experiments.
 
@@ -131,9 +132,9 @@ override its target selection for ordinary work, or add an outer `taskset`,
 `~/.local/libexec/cpu-lanes` is the stable internal launcher when no maintained
 wrapper exists. A missing or malformed machine manifest is a stop condition.
 Missing launchers or unavailable system containment are also stop conditions;
-never fall back to unconfined execution. In a managed command sandbox, escalate
-the enclosing build command before launch: its no-new-privileges boundary
-otherwise prevents the installed sudo gateway from running. Nested launches reuse
+never fall back to unconfined execution. Socket placement works inside the
+managed command sandbox without sudo or removing no-new-privileges; placement
+alone requires no sandbox escalation. Nested launches reuse
 containment only after checking effective cgroup limits, not an environment
 flag. Set resource overrides before the outermost bulk launch.
 Brief administration needs no extra placement ceremony; the systemd parent
