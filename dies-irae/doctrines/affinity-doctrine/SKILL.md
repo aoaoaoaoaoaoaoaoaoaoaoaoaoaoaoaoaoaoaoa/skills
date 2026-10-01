@@ -62,16 +62,14 @@ limit or cancel another project's jobs merely to expedite your own work.
   on the floor and receive dynamic masks from `cpu-fence`. New top-level
   workload slices must participate in this boundary. IRQs and kernel threads
   are not isolated. A minute timer repairs stale handovers conservatively.
-- **Wrappers**: `~/.local/libexec/cpu-lanes` places a process tree at
-  `BULK_NICE` beneath the system manager's top-level `bulk.slice`, with
-  `CPUWeight=idle`. It competes with ordinary system and user slices at their
-  common root, not inside the user manager. A socket-activated root helper
-  places the connecting launcher in the scope using its peer pidfd; it never
-  executes the payload. The launcher execs in place, preserving its identity,
-  sandbox and inherited descriptors. The slice follows the dynamic ordinary-work
-  fence; PATH Cargo and standalone Rust build-tool wrappers enter it. Rust-analyzer is
-  intentionally exempt for interactive MCP/editor analysis. `cpu-queue`
-  submits and contains experiments.
+- **Wrappers**: `~/.local/libexec/cpu-lanes` lowers its own process tree to
+  `SCHED_IDLE`, idle I/O priority and `BULK_NICE`, then execs in place. These
+  priorities and a sacrificial OOM score descend through every compiler,
+  linker, build script and test without a socket, bus, daemon or privileged
+  transition. The ordinary user slice supplies the dynamic Slurm fence; PATH
+  Cargo and standalone Rust build-tool wrappers enter the launcher.
+  Rust-analyzer is intentionally exempt for interactive MCP/editor analysis.
+  `cpu-queue` submits and contains experiments.
 
 `/home/main/programming/projects/mcps/cpu_claim` installs all of this: its
 `assets/affinity-lanes` is the projection's source, and `scripts/install-slurm.sh`
@@ -115,43 +113,41 @@ teardown retain the allocation and belong in its outer time budget.
 
 ## Bulk Work
 
-Builds, linking, code generation, compression and ordinary test suites run in
-the idle-priority bulk slice. They may share the host floor and borrow any
-unallocated benchmark core, but never overlap a fenced allocation. Idle CPU
-scheduling is work-conserving; do not add a CPU quota or arbitrary small
-parallelism cap merely to lower utilization. Idle priority does not isolate
-SMT, cache, memory bandwidth or IO.
+Builds, linking, code generation, compression and ordinary test suites run at
+idle CPU and I/O scheduling priority. They may share the host floor and borrow
+any unallocated benchmark core, but never overlap a fenced allocation. Idle
+CPU scheduling is work-conserving; do not add a CPU quota or arbitrary small
+parallelism cap merely to lower utilization. Idle priority does not isolate SMT,
+cache or memory bandwidth.
 
 Invoke maintained launchers directly. `command -v cargo` must resolve to
 `~/bin/cargo`, never `~/.cargo/bin/cargo` or a rustup toolchain path. The wrapper
 derives repository-specific disk-backed target custody before entering the
-bulk scope; rustc, build scripts, nextest and test binaries inherit it. Do not
+bulk launcher; rustc, build scripts, nextest and test binaries inherit it. Do not
 override its target selection for ordinary work, or add an outer `taskset`,
 `nice` or `systemd-run`.
 
 `~/.local/libexec/cpu-lanes` is the stable internal launcher when no maintained
 wrapper exists. A missing or malformed machine manifest is a stop condition.
-Missing launchers or unavailable system containment are also stop conditions;
-never fall back to unconfined execution. Socket placement preserves
-no-new-privileges and needs no sudo. Managed profiles permitting Unix-socket
-connections require no placement-only escalation. If a profile blocks
-`connect` to `/run/cpu-lanes.sock`, use reviewed execution escalation or request
-explicit policy support; do not route around the denial. Nested launches reuse
-containment only after checking effective cgroup limits, not an environment
-flag. Set resource overrides before the outermost bulk launch.
+Missing launchers or a failure to establish CPU, I/O or OOM priority are also
+stop conditions; never fall back to ordinary scheduling. The launcher changes
+only its own scheduler state, preserves no-new-privileges, sandbox, PID and
+descriptors, and needs no permissions exception. Nested launches reassert the
+same inherited policy harmlessly.
 Brief administration needs no extra placement ceremony; the systemd parent
 already bounds user work.
 
 ### Memory
 
-Each wrapped command has a 32 GiB cgroup memory ceiling. A cgroup OOM kill can
-trigger scope teardown and SIGTERM the remaining processes; check the scope's
-`memory.events` and journal before attributing unexplained termination.
+Wrapped commands set `oom_score_adj=1000`; under system memory pressure the
+kernel should kill build descendants before agents, desktop processes or
+services. There is no per-command hard memory or PID ceiling: preserving one
+would require the privileged placement control plane this launcher deliberately
+eliminates.
 
-Reduce test concurrency when aggregate memory exceeds the ceiling, not merely
-to lower CPU utilization. Only when a single workload genuinely needs more,
-set `BULK_MEMORY_MAX_BYTES` for that command (for example, `BULK_MEMORY_MAX_BYTES=$((48<<30)) cargo nextest run`).
-Never bypass the wrapper or raise the global limit to conceal fixture leaks.
+Reduce test concurrency when aggregate memory is excessive, not merely to lower
+CPU utilization. Diagnose fixtures that exceed practical memory rather than
+bypassing the wrapper or weakening the machine's OOM priorities.
 
 ## Maintenance
 
