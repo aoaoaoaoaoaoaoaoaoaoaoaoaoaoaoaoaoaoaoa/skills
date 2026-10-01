@@ -132,9 +132,11 @@ override its target selection for ordinary work, or add an outer `taskset`,
 `~/.local/libexec/cpu-lanes` is the stable internal launcher when no maintained
 wrapper exists. A missing or malformed machine manifest is a stop condition.
 Missing launchers or unavailable system containment are also stop conditions;
-never fall back to unconfined execution. Socket placement works inside the
-managed command sandbox without sudo or removing no-new-privileges; placement
-alone requires no sandbox escalation. Nested launches reuse
+never fall back to unconfined execution. Socket placement preserves
+no-new-privileges and needs no sudo. Managed profiles permitting Unix-socket
+connections require no placement-only escalation. If a profile blocks
+`connect` to `/run/cpu-lanes.sock`, use reviewed execution escalation or request
+explicit policy support; do not route around the denial. Nested launches reuse
 containment only after checking effective cgroup limits, not an environment
 flag. Set resource overrides before the outermost bulk launch.
 Brief administration needs no extra placement ceremony; the systemd parent
