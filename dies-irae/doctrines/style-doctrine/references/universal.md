@@ -42,6 +42,7 @@ Design the domain model first. It is the skeleton of the program: when it is rig
 - A definition's possible values correspond one-to-one with the entity's valid values: it holds exactly the fields that define the entity and admits no instance the domain forbids. Count them. A struct is the product of its fields' values, an enum the sum of its variants, and `Option<A>` is 1 + A; two optional fields of which exactly one must be set admit four shapes for two meanings, where the sum of the two types admits exactly two.
 - Compose compound entities from primitive ones by products, sums, and collections, never by flattening them into flags and optional fields.
 - Code that cannot change a canonical definition is bound by it, and the binding is the purpose: it removes the option of growing a local copy with flags. Local state the entity lacks belongs in a local type that contains the entity.
+- Prefer few, widely shared types. Before defining a type, a private one included, look for an existing type to reuse, compose, or wrap; define a new one when it carries an invariant that no existing type carries.
 - A lossy conversion exposes its loss and a fallible one its failure. Identity conversions are deleted, boundary projections end at their boundary, phase transitions run one way, and validation has one owner.
 
 ## Types
