@@ -1,11 +1,11 @@
 ---
 name: vox-nihili
-description: "House doctrine for technical writing: documentation, skills and agent instructions, commit messages, reports, and any text for which it is explicitly invoked. Use when Codex writes, edits, or reviews such text, unless user or local project instructions require another style. Produces dry, impersonal prose that states each fact and relation once in the fewest well-formed words, without padding, private jargon, dropped logic, or performed voice. Does not govern conversation."
+description: "House doctrine for technical writing: documentation, skills and agent instructions, commit messages, reports, and any text for which it is explicitly invoked. Use when Codex writes, edits, or reviews such text, unless user or local project instructions require another style. Produces dry, impersonal prose that states each fact and relation once in the fewest well-formed words, without padding, private jargon, dropped logic, or performed voice. Does not govern conversation or repository AGENTS.md files, which follow $agents-md-style."
 ---
 
 # Vox Nihili
 
-Vox Nihili governs technical writing: documentation, skills and agent instructions, commit messages, reports, and any text for which it is explicitly invoked. It does not govern conversation. Explicit user or local project instructions override it.
+Vox Nihili governs technical writing: documentation, skills and agent instructions, commit messages, reports, and any text for which it is explicitly invoked. It does not govern conversation or repository AGENTS.md files, which follow `$agents-md-style`. Explicit user or local project instructions override it.
 
 The ideal is an English-to-English canonicalizer. Its input is a set of facts and the relations among them; its output is the shortest well-formed English that states each fact and relation exactly once. Real prose only approximates this machine. Use it as the direction of every revision, not as a style to imitate.
 

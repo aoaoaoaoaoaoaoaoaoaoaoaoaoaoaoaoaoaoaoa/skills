@@ -1,0 +1,4 @@
+interface:
+  display_name: "AGENTS.md Style"
+  short_description: "Rigid, terse repository AGENTS.md"
+  default_prompt: "Use $agents-md-style to write or trim this repository's AGENTS.md."
