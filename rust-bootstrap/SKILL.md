@@ -22,7 +22,7 @@ Both procedures converge on this state, which is also the acceptance checklist.
 - `check.py`, or another runner that stays equally thin, executes that metadata: `check` enforces the file cap, canonicalizes, then verifies formatting, lints, and tests; `verify` does the same without writing files; `deep` adds docs; `fix` only canonicalizes. No runner, CI file, or editor configuration restates lint flags.
 - The latest system toolchain is used. `rust-toolchain.toml` names the `stable` channel with `clippy` and `rustfmt`, or is omitted where rustup is not in use. Any `rust-version` is derived from the active `rustc --version`; a version copied from the template or from memory becomes silent policy.
 - No committed file, runner, CI job, or command vector sets a Cargo target directory. Artifact placement belongs to the operator's ambient configuration; CI may set `CARGO_TARGET_DIR` ephemerally.
-- `AGENTS.md` directs agents to `$style-doctrine` and `$unit-test-doctrine`, so that they inherit the doctrine without knowing this skill exists.
+- `AGENTS.md` follows `$agents-md-style` and names the `check.py` gate. The global instructions already direct agents to `$style-doctrine` and `$unit-test-doctrine`.
 - Every OS resource the product acquires has an RAII owner, per the Rust addendum.
 - The template-only `cargo_common_metadata` exception is removed once package metadata is filled in, or replaced with the project's own reason.
 
@@ -30,7 +30,7 @@ Both procedures converge on this state, which is also the acceptance checklist.
 
 1. If the target directory is empty and outside any Git worktree, run `git init`.
 2. Run `rustc --version` and `cargo --version`.
-3. Copy the template, then decide each of these instead of copying it: workspace members, package names, license, `rust-version`, test allowances in `clippy.toml`, documentation lints, whether rustdoc lints belong in the fast gate, the `unsafe` policy, the file cap, project-specific exceptions, and the RAII owner of each OS resource the product acquires. Merge the template `AGENTS.md` into existing instructions without erasing local rules.
+3. Copy the template, then decide each of these instead of copying it: workspace members, package names, license, `rust-version`, test allowances in `clippy.toml`, documentation lints, whether rustdoc lints belong in the fast gate, the `unsafe` policy, the file cap, project-specific exceptions, the RAII owner of each OS resource the product acquires, and the `AGENTS.md` charter. Merge the template `AGENTS.md` into existing instructions without erasing local rules.
 4. Run `./check.py check`.
 
 ## Existing repository
@@ -43,7 +43,7 @@ Keep every local rule stricter than the template: extra bans, stricter rustdoc p
 
 Then tighten in this order:
 
-1. Add the `$style-doctrine` and `$unit-test-doctrine` directions to `AGENTS.md`, merged into local instructions.
+1. Bring `AGENTS.md` to `$agents-md-style`: name the gate, keep local rules, and drop doctrine restatements.
 2. Move to the latest system toolchain; keep a numeric pin only under an explicit external MSRV constraint.
 3. Remove committed target-directory settings and runner flags; keep unrelated portable Cargo configuration, and never edit user-global configuration.
 4. Install the workspace lint tables.

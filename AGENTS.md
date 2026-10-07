@@ -1,10 +1,6 @@
-# AGENTS.md
+skills: house Codex skills, linked into `~/.codex/skills`
 
-## Scripting Policy
-
-- For easy, cheap, standalone Python scripts in this repo, use `uv` inline script metadata.
-- Use the `#!/usr/bin/env -S uv run --script` shebang.
-- Add a PEP 723 inline TOML block with `requires-python` and `dependencies`.
-- Keep dependency pins exact when a script has non-stdlib Python dependencies.
-- Use common sense. Do not force this onto heavy or specialized runtimes, bespoke project environments, or scripts that intentionally run inside a dedicated external environment.
-- In particular, avoid slapping `uv` metadata onto heavyweight OCR/runtime entrypoints just to satisfy the rule mechanically.
+## invariants
+- Cheap standalone Python scripts: uv inline script with `#!/usr/bin/env -S uv run --script` and PEP 723 block declaring `requires-python` and deps
+- Pin non-stdlib script deps exactly
+- No uv metadata on heavyweight or specialized runtimes, bespoke project envs, or scripts run inside dedicated external envs such as OCR entrypoints

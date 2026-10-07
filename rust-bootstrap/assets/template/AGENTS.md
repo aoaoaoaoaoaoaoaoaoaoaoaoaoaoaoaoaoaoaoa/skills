@@ -1,5 +1,4 @@
-# AGENTS.md
+<name>: <what it owns>
 
-Load `$style-doctrine` before meaningful Rust edits. Load `$unit-test-doctrine` before adding, changing, or deleting unit tests; a patch does not automatically earn a permanent unit test.
-
-Run `./check.py check` after meaningful edits; `./check.py verify` runs the same gate without writing files.
+## gate
+- `./check.py check` after edits; `./check.py verify` runs same gate without writes
