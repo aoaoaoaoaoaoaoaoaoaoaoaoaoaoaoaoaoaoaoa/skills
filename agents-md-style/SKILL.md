@@ -74,6 +74,7 @@ Fixed order. Omit empty sections. No title and no other headings.
 - F5. No emphasis: bold, italics, capitals, `!`, "critical", "important", "note".
 - F6. No dates; Git history carries provenance.
 - F7. Model IDs only where the repository departs from the global default.
+- F8. Every path, command, and `$skill` the file names resolves.
 
 ## Register
 
@@ -154,7 +155,7 @@ For a new file, a trim, or one added rule:
 3. Classify each claim through admission.
 4. Move routed material to its document or data file.
 5. Write the kept claims in schema and register.
-6. Check F1–F7; every path, command, and `$skill` resolves; every kept claim retains its scope and exceptions.
+6. Run `scripts/lint` on the repository; it checks P1–P4, the schema, S1, S5, F1–F6, and F8. Judge the rest yourself: admission, register, F7, and that every kept claim retains its scope and exceptions.
 7. Delete subdirectory instruction files; make `CLAUDE.md` a symlink.
 
 A trim changes form, not substance. Keep local claims as found unless grossly suspect, such as a missing path, a dead tool, or a contradiction within the file; do not investigate the code to validate them. Move an oversized top-level section whole and verbatim to its routed document instead of redesigning it.

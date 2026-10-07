@@ -1,0 +1,329 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.14"
+# dependencies = []
+# ///
+"""Check instruction files against the mechanical agents-md-style rules.
+
+Covers placement (P1-P4), the section schema, S1, S5, F1-F6, and F8.
+Admission, register, and scope retention remain judgment.
+"""
+
+import argparse
+import os
+import re
+import subprocess
+import sys
+from collections.abc import Iterator
+from dataclasses import dataclass
+from enum import StrEnum
+from pathlib import Path
+
+SECTIONS = ("gate", "invariants", "routes", "terms", "grants", "hazards")
+PRUNED = frozenset({"node_modules", "target", "vendor", "third_party"})
+MAX_BYTES = 4096
+MAX_BULLET = 160
+MAX_CHARTER_LINES = 2
+MAX_TERMS = 8
+CODE_SPAN = re.compile(r"`[^`]*`")
+SKILL_REF = re.compile(r"\$([a-z][a-z0-9]*(?:-[a-z0-9]+)*)")
+DATE = re.compile(r"\b20\d\d-\d\d-\d\d\b")
+PATH_STOPS = frozenset("<>*{}[]$")
+SKILL_ROOT = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex")) / "skills"
+
+
+class Name(StrEnum):
+    AGENTS = "AGENTS.md"
+    OVERRIDE = "AGENTS.override.md"
+    CLAUDE = "CLAUDE.md"
+
+
+class Rule(StrEnum):
+    P1 = "P1"
+    P2 = "P2"
+    P3 = "P3"
+    P4 = "P4"
+    SCHEMA = "schema"
+    S1 = "S1"
+    S5 = "S5"
+    F1 = "F1"
+    F2 = "F2"
+    F3 = "F3"
+    F4 = "F4"
+    F5 = "F5"
+    F6 = "F6"
+    F8 = "F8"
+
+
+def display(path: Path) -> str:
+    absolute = path.absolute()
+    return str(
+        absolute.relative_to(Path.cwd())
+        if absolute.is_relative_to(Path.cwd())
+        else absolute
+    )
+
+
+@dataclass(frozen=True, slots=True, order=True)
+class Finding:
+    path: Path
+    line: int
+    rule: Rule
+    message: str
+
+    def __str__(self) -> str:
+        return f"{display(self.path)}:{self.line}: {self.rule} {self.message}"
+
+
+@dataclass(frozen=True, slots=True)
+class WorkTree:
+    top: Path
+
+
+@dataclass(frozen=True, slots=True)
+class Bare:
+    pass
+
+
+@dataclass(frozen=True, slots=True)
+class Outside:
+    pass
+
+
+type Location = WorkTree | Bare | Outside
+
+
+def git(directory: Path, *args: str) -> str | None:
+    """Stdout of a successful git command; None when git fails."""
+    result = subprocess.run(
+        ["git", "-C", str(directory), *args],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip() if result.returncode == 0 else None
+
+
+def locate(directory: Path) -> Location:
+    if (top := git(directory, "rev-parse", "--show-toplevel")) is not None:
+        return WorkTree(Path(top).resolve())
+    if git(directory, "rev-parse", "--is-bare-repository") == "true":
+        return Bare()
+    return Outside()
+
+
+def holds_instructions(directory: Path) -> bool:
+    return any((directory / name).exists() for name in Name)
+
+
+def is_repository(directory: Path) -> bool:
+    return (directory / ".git").exists()
+
+
+def discover(root: Path) -> Iterator[Path]:
+    if root.is_file():
+        yield root
+        return
+    for directory, subdirectories, files in os.walk(root):
+        subdirectories[:] = sorted(
+            entry
+            for entry in subdirectories
+            if not entry.startswith(".") and entry not in PRUNED
+        )
+        yield from (Path(directory, name) for name in sorted(Name) if name in files)
+
+
+@dataclass(frozen=True, slots=True)
+class References:
+    """Resolution context for the paths, commands, and skills a file names (F8)."""
+
+    base: Path
+    skill_roots: tuple[Path, ...]
+
+    def unresolved(self, line: str) -> Iterator[str]:
+        for skill in SKILL_REF.findall(line):
+            if not any(
+                (root / skill / "SKILL.md").exists() for root in self.skill_roots
+            ):
+                yield f"skill ${skill} not found"
+        for span in CODE_SPAN.findall(line):
+            token = next(iter(span.strip("`").split()), "")
+            if self.is_local(token) and not (self.base / token).exists():
+                yield f"path {token} not found"
+
+    def is_local(self, token: str) -> bool:
+        if (
+            not token
+            or PATH_STOPS.intersection(token)
+            or "://" in token
+            or token.startswith(("/", "~"))
+        ):
+            return False
+        if token.startswith(("./", "../")):
+            return True
+        head, slash, _ = token.partition("/")
+        return bool(slash) and (self.base / head).exists()
+
+
+def check(path: Path) -> Iterator[Finding]:
+    directory = path.parent.resolve()
+    text = path.read_text(encoding="utf-8")
+    if text.startswith(
+        "<"
+    ):  # template asset (P6): placeholder charter, no placement or references
+        yield from check_form(path, text, None)
+        return
+    match locate(directory):
+        case WorkTree(top) if top != directory:
+            if git(top, "check-ignore", "-q", str(path.absolute())) is None:
+                yield Finding(path, 0, Rule.P1, f"below repository root {display(top)}")
+            return
+        case WorkTree(top):
+            references = References(directory, (SKILL_ROOT, top / ".agents" / "skills"))
+        case Bare():
+            yield Finding(path, 0, Rule.P1, "inside a bare repository directory")
+            return
+        case Outside():
+            yield from check_organizer(path, directory)
+            references = References(directory, (SKILL_ROOT,))
+    match Name(path.name):
+        case Name.CLAUDE:
+            yield from check_claude(path, directory)
+        case Name.AGENTS if (directory / Name.OVERRIDE).exists():
+            pass  # upstream file shadowed by a fork's override (P3)
+        case Name.OVERRIDE if not (directory / Name.AGENTS).exists():
+            yield Finding(
+                path, 0, Rule.P3, f"no upstream {Name.AGENTS} beside the override"
+            )
+            yield from check_form(path, text, references)
+        case _:
+            yield from check_form(path, text, references)
+
+
+def check_organizer(path: Path, directory: Path) -> Iterator[Finding]:
+    children = [child for child in directory.iterdir() if child.is_dir()]
+    if sum(map(is_repository, children)) < 2:
+        yield Finding(
+            path,
+            0,
+            Rule.P2,
+            "directory outside any repository organizes fewer than two",
+        )
+    for child in children:
+        if not is_repository(child) and holds_instructions(child):
+            yield Finding(
+                path,
+                0,
+                Rule.P2,
+                f"organizing directory {display(child)} sits below this one",
+            )
+    if ancestor := next(filter(holds_instructions, directory.parents), None):
+        yield Finding(
+            path, 0, Rule.P2, f"organizing directory sits below {display(ancestor)}"
+        )
+
+
+def check_claude(path: Path, directory: Path) -> Iterator[Finding]:
+    target = directory / (
+        Name.OVERRIDE if (directory / Name.OVERRIDE).exists() else Name.AGENTS
+    )
+    if not (
+        path.is_symlink() and target.exists() and path.resolve() == target.resolve()
+    ):
+        yield Finding(path, 0, Rule.P4, f"not a symlink to {target.name}")
+
+
+def check_form(
+    path: Path, text: str, references: References | None
+) -> Iterator[Finding]:
+    def at(line: int, rule: Rule, message: str) -> Finding:
+        return Finding(path, line, rule, message)
+
+    if (size := len(text.encode())) > MAX_BYTES:
+        yield at(0, Rule.F3, f"{size} bytes > {MAX_BYTES}")
+    lines = text.splitlines()
+    if not lines or not lines[0].strip() or lines[0].startswith(("#", "- ")):
+        yield at(1, Rule.S1, "first line is not a charter")
+    section: str | None = None
+    rank = -1
+    charter = terms = 0
+    blank = False
+    for number, line in enumerate(lines, 1):
+        if not line:
+            if blank:
+                yield at(number, Rule.F1, "consecutive blank lines")
+            blank = True
+            continue
+        blank = False
+        prose = CODE_SPAN.sub("", line)
+        if line.startswith("## ") and line[3:] in SECTIONS:
+            if SECTIONS.index(line[3:]) <= rank:
+                yield at(number, Rule.SCHEMA, f"section {line[3:]} out of order")
+            section, rank = line[3:], SECTIONS.index(line[3:])
+        elif line.startswith("#"):
+            yield at(number, Rule.SCHEMA, f"heading outside the schema: {line}")
+        elif section is None:
+            charter += 1
+            if charter == MAX_CHARTER_LINES + 1:
+                yield at(number, Rule.S1, f"charter exceeds {MAX_CHARTER_LINES} lines")
+        elif not line.startswith("- "):
+            yield at(number, Rule.F1, "neither heading nor single-level bullet")
+        else:
+            if (length := len(line) - 2) > MAX_BULLET:
+                yield at(
+                    number, Rule.F2, f"bullet is {length} characters > {MAX_BULLET}"
+                )
+            if line.endswith("."):
+                yield at(number, Rule.F2, "terminal period")
+            terms += section == "terms"
+        if "```" in line:
+            yield at(number, Rule.F1, "code block")
+        if "](" in prose:
+            yield at(number, Rule.F4, "Markdown link")
+        if "SKILL.md" in line:
+            yield at(number, Rule.F4, "skill named by path")
+        if "**" in prose:
+            yield at(number, Rule.F5, "bold")
+        if DATE.search(prose):
+            yield at(number, Rule.F6, "date")
+        if references is not None:
+            yield from (
+                at(number, Rule.F8, message) for message in references.unresolved(line)
+            )
+    if terms > MAX_TERMS:
+        yield at(
+            0, Rule.S5, f"{terms} terms > {MAX_TERMS}; move them to docs/glossary.md"
+        )
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "paths",
+        nargs="*",
+        type=Path,
+        help="instruction files, or directories to scan recursively (default: current repository root)",
+    )
+    roots = parser.parse_args().paths or [
+        Path(git(Path.cwd(), "rev-parse", "--show-toplevel") or Path.cwd())
+    ]
+    for root in roots:
+        if root.is_file() and root.name not in Name:
+            parser.error(f"{root}: not an instruction file")
+    findings = sorted(
+        {
+            finding
+            for root in roots
+            for path in discover(root)
+            for finding in check(path)
+        }
+    )
+    for finding in findings:
+        print(finding)
+    return 1 if findings else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
