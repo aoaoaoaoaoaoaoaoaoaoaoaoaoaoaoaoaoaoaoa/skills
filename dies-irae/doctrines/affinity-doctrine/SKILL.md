@@ -31,6 +31,14 @@ choose `--immediate` to cancel entire overlapping jobs without replay.
 `cpu-queue limit clear` restores normal capacity early. Do not impose a manual
 limit or cancel another project's jobs merely to expedite your own work.
 
+`cpu-fence-levy.service` adjusts that capacity ambiently. Each minute it
+integrates the busy share of the CPUs ordinary work holds; while that work is
+starved it withholds benchmark cores a whole pool L3 at a time through a leased
+native reservation, always leaving Slurm at least one L3, and returns them as
+load subsides. Queue length never enters the decision; running jobs drain. A
+manual limit and the levy combine to the lesser allowance; `cpu-queue status`
+shows both. Do not stop the levy to expedite your own experiments.
+
 ## Machine Requirements
 
 - **Projection** `~/.config/affinity-lanes`: shell-sourceable `KEY=VALUE` lines
