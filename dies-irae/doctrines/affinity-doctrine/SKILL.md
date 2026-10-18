@@ -79,7 +79,7 @@ shows both. Do not stop the levy to expedite your own experiments.
   Rust-analyzer is intentionally exempt for interactive MCP/editor analysis.
   `cpu-queue` submits and contains experiments.
 
-`/home/main/programming/projects/mcps/cpu_claim` installs all of this: its
+`/home/main/programming/projects/tools/affinity` installs all of this: its
 `assets/affinity-lanes` is the projection's source, and `scripts/install-slurm.sh`
 followed by acceptance and `scripts/reserve-slurm.sh` render, verify and apply
 every other mask and budget from it. Drain running jobs before a policy cutover.
@@ -167,4 +167,4 @@ finish, and never leave two allocators active. Verify actual effective cgroup
 masks and SMT sibling separation, not only requested settings. Run
 `~/.codex/skills/affinity-doctrine/scripts/audit-agent-instructions` after
 modifying agent instructions. The auditor belongs to this skill, not the
-`cpu_claim` installer repository.
+`tools/affinity` installer.
