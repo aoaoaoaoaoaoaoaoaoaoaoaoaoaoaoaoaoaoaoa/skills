@@ -23,7 +23,8 @@ Rust unit tests follow `$unit-test-doctrine`. A patch does not owe a new `#[test
 - `cargo fmt` formats all code.
 - The root `Cargo.toml` owns lint policy in `[workspace.lints.{rust,rustdoc,clippy}]`, and every member crate declares `[lints] workspace = true`.
 - Deny warnings and Clippy's `pedantic` group. Enable `restriction` lints individually, never as a group.
-- House exceptions: function length and argument count; naming lints about lexical appearance, while those that encode binding intent, API semantics, or module topology stay enabled; glob-import lints; Unicode and confusable-identifier lints; `multiple_crate_versions`, since source linting cannot settle transitive version convergence; missing-documentation lints in internal code.
+- House exceptions: function length and argument count; naming lints about lexical appearance, while those that encode binding intent, API semantics, or module topology stay enabled; glob-import lints; Unicode and confusable-identifier lints; `multiple_crate_versions`, since source linting cannot settle transitive version convergence; missing-documentation lints in internal code; `unused_results`, `must_use_candidate`, and `return_self_not_must_use`, which presume every value an obligation.
+- `#[must_use = "..."]` declares an obligation: on a type whose values must not vanish unexamined, such as a guard, handle, or receipt, or on a function whose result reports an outcome the caller must act on. `unused_must_use` enforces it; `let _ =` is the explicit waiver and appears nowhere else.
 - Every local suppression carries `reason = "..."`; a temporary one uses `#[expect]`.
 - Use the latest system toolchain; never pin a Rust version from memory.
 - `$rust-bootstrap` installs and tightens this posture in a repository.
