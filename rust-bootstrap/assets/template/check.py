@@ -120,6 +120,7 @@ def enforce_line_cap(policy: SourceFiles) -> None:
         print(f"[check] source-files: {len(violations)} file(s) exceed the limit", flush=True)
         for relative, lines in violations:
             print(f"[check] source-files: {relative}: {lines} lines", flush=True)
+        print("[check] source-files: split by responsibility into modules (mod / #[path]); do not use include! except for build-script output", flush=True)
         raise SystemExit(1)
 
 
