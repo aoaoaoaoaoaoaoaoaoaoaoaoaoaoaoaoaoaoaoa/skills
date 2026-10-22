@@ -20,7 +20,7 @@ Both procedures converge on this state, which is also the acceptance checklist.
 - `[workspace.metadata.rust-starter]` holds the format, Clippy, test, and doc command vectors and an ordered `canonicalize_commands` pipeline. Clippy covers the whole workspace, never with `--no-deps`, which skips member crates that are path dependencies.
 - `[workspace.metadata.rust-starter.source_files]` sets `max_lines` deliberately, 3000 by default, with explicit `exclude` patterns for checked-in generated code. Clippy's `too_many_lines` measures functions and is a house exception; this cap measures files.
 - `check.py`, or another runner that stays equally thin, executes that metadata: `check` enforces the file cap, canonicalizes, then verifies formatting, lints, and tests; `verify` does the same without writing files; `deep` adds docs; `fix` only canonicalizes. No runner, CI file, or editor configuration restates lint flags.
-- The latest system toolchain is used. `rust-toolchain.toml` names the `stable` channel with `clippy` and `rustfmt`, or is omitted where rustup is not in use. Any `rust-version` is derived from the active `rustc --version`; a version copied from the template or from memory becomes silent policy.
+- `rust-toolchain.toml` exists only where the repository owns its compiler. A repository built under an inherited owner (a shared CI workflow that installs the compiler, or a toolchain file in an enclosing directory) carries none, because a copy would be a second owner. A repository that owns its compiler names the `stable` channel with `clippy` and `rustfmt`, or omits the file where rustup is not in use. Any `rust-version` is derived from the active `rustc --version`; a version copied from the template or from memory becomes silent policy.
 - No committed file, runner, CI job, or command vector sets a Cargo target directory. Artifact placement belongs to the operator's ambient configuration; CI may set `CARGO_TARGET_DIR` ephemerally.
 - `AGENTS.md` follows `$agents-md-style` and names the `check.py` gate. The global instructions already direct agents to `$style-doctrine` and `$unit-test-doctrine`.
 - Every OS resource the product acquires has an RAII owner, per the Rust addendum.
@@ -30,7 +30,7 @@ Both procedures converge on this state, which is also the acceptance checklist.
 
 1. If the target directory is empty and outside any Git worktree, run `git init`.
 2. Run `rustc --version` and `cargo --version`.
-3. Copy the template, then decide each of these instead of copying it: workspace members, package names, license, `rust-version`, test allowances in `clippy.toml`, documentation lints, whether rustdoc lints belong in the fast gate, the `unsafe` policy, the file cap, project-specific exceptions, the RAII owner of each OS resource the product acquires, and the `AGENTS.md` charter. Merge the template `AGENTS.md` into existing instructions without erasing local rules.
+3. Copy the template, then decide each of these instead of copying it: workspace members, package names, license, `rust-version`, the compiler's owner, test allowances in `clippy.toml`, documentation lints, whether rustdoc lints belong in the fast gate, the `unsafe` policy, the file cap, project-specific exceptions, the RAII owner of each OS resource the product acquires, and the `AGENTS.md` charter. Merge the template `AGENTS.md` into existing instructions without erasing local rules.
 4. Run `./check.py check`.
 
 ## Existing repository
@@ -44,7 +44,7 @@ Keep every local rule stricter than the template: extra bans, stricter rustdoc p
 Then tighten in this order:
 
 1. Bring `AGENTS.md` to `$agents-md-style`: name the gate, keep local rules, and drop doctrine restatements.
-2. Move to the latest system toolchain; keep a numeric pin only under an explicit external MSRV constraint.
+2. Settle the compiler's owner: inherit an existing one, otherwise move to the latest stable; keep a numeric pin only under an explicit external MSRV constraint.
 3. Remove committed target-directory settings and runner flags; keep unrelated portable Cargo configuration, and never edit user-global configuration.
 4. Install the workspace lint tables.
 5. Add `[lints] workspace = true` to every member crate.
